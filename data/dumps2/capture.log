@@ -1,0 +1,1323 @@
+# rknpu_capture 启动
+# pid=3535 dump_dir=/tmp/rknpu_dump2
+# sizeof(rknpu_task)=40 sizeof(rknpu_submit)=104 sizeof(rknpu_mem_create)=48
+# ioctl 编号: ACTION=0xc0086440 SUBMIT=0xc0686441 (低16位=0x6441)
+[ACTION] GET_HW_VERSION (flags=0) value=0x46495245 ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] POWER_ON (flags=20) value=0 ret=-1
+[ACTION] SET_PROC_NICE (flags=19) value=0xffffffed ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=1 flags=0x40b size=45056 obj_addr=0xffffff812911e400 dma_addr=0xffff5000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=1 → offset=0x100000000
+[mmap64] handle=1 offset=0x100000000 → cpu=0x7f89fe5000 len=41840  ⇒ dma_addr=0xffff5000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911e400 offset=0 size=41840
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=2 flags=0x403 size=8282112 obj_addr=0xffffff812911e800 dma_addr=0xff80f000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=2 → offset=0x10000b000
+[mmap64] handle=2 offset=0x10000b000 → cpu=0x7f84cea000 len=8281664  ⇒ dma_addr=0xff80f000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911e800 offset=0 size=8281664
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812911e800 offset=0 size=8281664
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812911e400 offset=0 size=41840
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=3 flags=0x403 size=7782400 obj_addr=0xffffff812911e000 dma_addr=0xff0a3000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=3 → offset=0x1007f1000
+[mmap64] handle=3 offset=0x1007f1000 → cpu=0x7f8457e000 len=7782400  ⇒ dma_addr=0xff0a3000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911e000 offset=0 size=7782400
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=4 flags=0x403 size=1228800 obj_addr=0xffffff812911dc00 dma_addr=0xfef77000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=4 → offset=0x100f5d000
+[mmap64] handle=4 offset=0x100f5d000 → cpu=0x7f840cb000 len=1228800  ⇒ dma_addr=0xfef77000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911dc00 offset=0 size=1228800
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=5 flags=0x403 size=1638400 obj_addr=0xffffff812911d800 dma_addr=0xfede7000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=5 → offset=0x101089000
+[mmap64] handle=5 offset=0x101089000 → cpu=0x7f83f3b000 len=1638400  ⇒ dma_addr=0xfede7000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911d800 offset=0 size=1638400
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=6 flags=0x403 size=409600 obj_addr=0xffffff812911d400 dma_addr=0xfed83000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=6 → offset=0x101219000
+[mmap64] handle=6 offset=0x101219000 → cpu=0x7f83ed7000 len=409600  ⇒ dma_addr=0xfed83000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911d400 offset=0 size=409600
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=7 flags=0x403 size=102400 obj_addr=0xffffff812911cc00 dma_addr=0xfed6a000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=7 → offset=0x10127d000
+[mmap64] handle=7 offset=0x10127d000 → cpu=0x7f83ebe000 len=102400  ⇒ dma_addr=0xfed6a000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812911cc00 offset=0 size=102400
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812911e800 offset=7320960 size=918848
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812911dc00 offset=0 size=1228800
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812911e800 offset=7320960 size=918848
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=0 task_number=588 task_counter=588 priority=0 task_obj_addr=0xffffff812911e400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=0 number=196
+           subcore[1]: start=0 number=196
+           subcore[2]: start=0 number=196
+           task 数组: cpu=0x7f89fe5000 size=45056
+           → 原始 task 数组已存 /tmp/rknpu_dump2/tasks_000.bin (23520 字节)
+           task[0] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0a580
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task0.bin
+           task[1] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0a9c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task1.bin
+           task[2] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0ae00
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task2.bin
+           task[3] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0b040
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task3.bin
+           task[4] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0b280
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task4.bin
+           task[5] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0b4c0
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task5.bin
+           task[6] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0b700
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task6.bin
+           task[7] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0b940
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task7.bin
+           task[8] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0bb80
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task8.bin
+           task[9] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0bdc0
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task9.bin
+           task[10] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0c000
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task10.bin
+           task[11] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0c240
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task11.bin
+           task[12] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0c480
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task12.bin
+           task[13] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0c6c0
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task13.bin
+           task[14] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0c900
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task14.bin
+           task[15] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0cb40
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task15.bin
+           task[16] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0cd80
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task16.bin
+           task[17] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=61 regcfg_offset=0 regcmd_addr=0xfff0cfc0
+             ★ regcmd 552 字节 (regcfg=61+slack=64) → /tmp/rknpu_dump2/regcmd_000_task17.bin
+           task[18] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=64 regcfg_offset=0 regcmd_addr=0xfff0d200
+             ★ regcmd 576 字节 (regcfg=64+slack=64) → /tmp/rknpu_dump2/regcmd_000_task18.bin
+           task[19] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0d440
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task19.bin
+           task[20] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0d880
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task20.bin
+           task[21] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=24 regcfg_offset=0 regcmd_addr=0xfff0dcc0
+             ★ regcmd 256 字节 (regcfg=24+slack=64) → /tmp/rknpu_dump2/regcmd_000_task21.bin
+           task[22] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0ddc0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task22.bin
+           task[23] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff0de80
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task23.bin
+           task[24] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0df80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task24.bin
+           task[25] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0e3c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task25.bin
+           task[26] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=20 regcfg_offset=0 regcmd_addr=0xfff0e800
+             ★ regcmd 224 字节 (regcfg=20+slack=64) → /tmp/rknpu_dump2/regcmd_000_task26.bin
+           task[27] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0e8c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task27.bin
+           task[28] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0e980
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task28.bin
+           task[29] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0ea40
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task29.bin
+           task[30] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0eb00
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task30.bin
+           task[31] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0ebc0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task31.bin
+           task[32] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0ec80
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task32.bin
+           task[33] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=24 regcfg_offset=0 regcmd_addr=0xfff0ed40
+             ★ regcmd 256 字节 (regcfg=24+slack=64) → /tmp/rknpu_dump2/regcmd_000_task33.bin
+           task[34] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0ee40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task34.bin
+           task[35] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0f280
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task35.bin
+           task[36] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0f6c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task36.bin
+           task[37] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff0f780
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task37.bin
+           task[38] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff0f840
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task38.bin
+           task[39] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0f940
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task39.bin
+           task[40] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff0fd80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task40.bin
+           task[41] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff101c0
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task41.bin
+           task[42] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff102c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task42.bin
+           task[43] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff10700
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task43.bin
+           task[44] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=27 regcfg_offset=0 regcmd_addr=0xfff10b40
+             ★ regcmd 280 字节 (regcfg=27+slack=64) → /tmp/rknpu_dump2/regcmd_000_task44.bin
+           task[45] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff10c40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task45.bin
+           task[46] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff11080
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task46.bin
+           task[47] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff114c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task47.bin
+           task[48] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff11580
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task48.bin
+           task[49] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff11640
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task49.bin
+           task[50] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff11740
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task50.bin
+           task[51] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff119c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task51.bin
+           task[52] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff11c40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task52.bin
+           task[53] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff12080
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task53.bin
+           task[54] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff124c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task54.bin
+           task[55] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff12580
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task55.bin
+           task[56] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff12640
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task56.bin
+           task[57] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff12740
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task57.bin
+           task[58] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff12b80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task58.bin
+           task[59] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=24 regcfg_offset=0 regcmd_addr=0xfff12fc0
+             ★ regcmd 256 字节 (regcfg=24+slack=64) → /tmp/rknpu_dump2/regcmd_000_task59.bin
+           task[60] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff130c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task60.bin
+           task[61] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff13180
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task61.bin
+           task[62] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff13240
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task62.bin
+           task[63] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=24 regcfg_offset=0 regcmd_addr=0xfff13300
+             ★ regcmd 256 字节 (regcfg=24+slack=64) → /tmp/rknpu_dump2/regcmd_000_task63.bin
+           task[64] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff13400
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task64.bin
+           task[65] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff13840
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task65.bin
+           task[66] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff13c80
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task66.bin
+           task[67] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff13d80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task67.bin
+           task[68] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff141c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task68.bin
+           task[69] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff14600
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task69.bin
+           task[70] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff14a40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task70.bin
+           task[71] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff14e80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task71.bin
+           task[72] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff152c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task72.bin
+           task[73] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff15700
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task73.bin
+           task[74] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff15b40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task74.bin
+           task[75] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff15f80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task75.bin
+           task[76] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff163c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task76.bin
+           task[77] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff16800
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task77.bin
+           task[78] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff16900
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task78.bin
+           task[79] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff16b80
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task79.bin
+           task[80] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff16e00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task80.bin
+           task[81] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff17240
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task81.bin
+           task[82] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff17680
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task82.bin
+           task[83] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff17780
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task83.bin
+           task[84] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff17bc0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task84.bin
+           task[85] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=21 regcfg_offset=0 regcmd_addr=0xfff18000
+             ★ regcmd 232 字节 (regcfg=21+slack=64) → /tmp/rknpu_dump2/regcmd_000_task85.bin
+           task[86] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff18100
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task86.bin
+           task[87] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff181c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task87.bin
+           task[88] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff18280
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task88.bin
+           task[89] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff18340
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task89.bin
+           task[90] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff18400
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task90.bin
+           task[91] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff184c0
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task91.bin
+           task[92] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff18580
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task92.bin
+           task[93] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff18640
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task93.bin
+           task[94] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff18a80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task94.bin
+           task[95] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff18ec0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task95.bin
+           task[96] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff19300
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task96.bin
+           task[97] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff19740
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task97.bin
+           task[98] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff19b80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task98.bin
+           task[99] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff19fc0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task99.bin
+           task[100] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1a400
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task100.bin
+           task[101] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1a840
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task101.bin
+           task[102] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1ac80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task102.bin
+           task[103] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff1b0c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task103.bin
+           task[104] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff1b340
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task104.bin
+           task[105] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1b5c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task105.bin
+           task[106] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1ba00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task106.bin
+           task[107] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1be40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task107.bin
+           task[108] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1c280
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task108.bin
+           task[109] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1c6c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task109.bin
+           task[110] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1cb00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task110.bin
+           task[111] flags=0 op_idx=33 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1cf40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task111.bin
+           task[112] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1d380
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task112.bin
+           task[113] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff1d7c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task113.bin
+           task[114] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff1da40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task114.bin
+           task[115] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1dcc0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task115.bin
+           task[116] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1e100
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task116.bin
+           task[117] flags=0 op_idx=38 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff1e540
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task117.bin
+           task[118] flags=0 op_idx=39 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff1e640
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task118.bin
+           task[119] flags=0 op_idx=40 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff1e740
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task119.bin
+           task[120] flags=0 op_idx=41 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff1e840
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task120.bin
+           task[121] flags=0 op_idx=42 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff1e940
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task121.bin
+           task[122] flags=0 op_idx=43 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff1ea40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task122.bin
+           task[123] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff1eb40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task123.bin
+           task[124] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff1edc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task124.bin
+           task[125] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=9 regcfg_offset=0 regcmd_addr=0xfff1f040
+             ★ regcmd 136 字节 (regcfg=9+slack=64) → /tmp/rknpu_dump2/regcmd_000_task125.bin
+           task[126] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=9 regcfg_offset=0 regcmd_addr=0xfff1f0c0
+             ★ regcmd 136 字节 (regcfg=9+slack=64) → /tmp/rknpu_dump2/regcmd_000_task126.bin
+           task[127] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1f140
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task127.bin
+           task[128] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1f580
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task128.bin
+           task[129] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1f9c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task129.bin
+           task[130] flags=0 op_idx=47 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff1fe00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task130.bin
+           task[131] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff20240
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task131.bin
+           task[132] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff204c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task132.bin
+           task[133] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff20740
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task133.bin
+           task[134] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff20b80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task134.bin
+           task[135] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff20fc0
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task135.bin
+           task[136] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff210c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task136.bin
+           task[137] flags=0 op_idx=51 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff21500
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task137.bin
+           task[138] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff21940
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task138.bin
+           task[139] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff21d80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task139.bin
+           task[140] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff221c0
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task140.bin
+           task[141] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff222c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task141.bin
+           task[142] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff22540
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task142.bin
+           task[143] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff227c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task143.bin
+           task[144] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff22c00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task144.bin
+           task[145] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff23040
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task145.bin
+           task[146] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff23480
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task146.bin
+           task[147] flags=0 op_idx=56 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff238c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task147.bin
+           task[148] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff23d00
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task148.bin
+           task[149] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff23f80
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task149.bin
+           task[150] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff24200
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task150.bin
+           task[151] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff24640
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task151.bin
+           task[152] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff24a80
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task152.bin
+           task[153] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff24b40
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task153.bin
+           task[154] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff24c00
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task154.bin
+           task[155] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff24d00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task155.bin
+           task[156] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff25140
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task156.bin
+           task[157] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff25580
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task157.bin
+           task[158] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff259c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task158.bin
+           task[159] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff25e00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task159.bin
+           task[160] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff26240
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task160.bin
+           task[161] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff26680
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task161.bin
+           task[162] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=18 regcfg_offset=0 regcmd_addr=0xfff26740
+             ★ regcmd 208 字节 (regcfg=18+slack=64) → /tmp/rknpu_dump2/regcmd_000_task162.bin
+           task[163] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff26800
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task163.bin
+           task[164] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff26900
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task164.bin
+           task[165] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff26b80
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task165.bin
+           task[166] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff26e00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task166.bin
+           task[167] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff27240
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task167.bin
+           task[168] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff27680
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task168.bin
+           task[169] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff27780
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task169.bin
+           task[170] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff27bc0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task170.bin
+           task[171] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=24 regcfg_offset=0 regcmd_addr=0xfff28000
+             ★ regcmd 256 字节 (regcfg=24+slack=64) → /tmp/rknpu_dump2/regcmd_000_task171.bin
+           task[172] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=23 regcfg_offset=0 regcmd_addr=0xfff28100
+             ★ regcmd 248 字节 (regcfg=23+slack=64) → /tmp/rknpu_dump2/regcmd_000_task172.bin
+           task[173] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff28200
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task173.bin
+           task[174] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff28480
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task174.bin
+           task[175] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff28700
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task175.bin
+           task[176] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff28b40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task176.bin
+           task[177] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff28f80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task177.bin
+           task[178] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff293c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task178.bin
+           task[179] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff29800
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task179.bin
+           task[180] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff29c40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task180.bin
+           task[181] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff2a080
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task181.bin
+           task[182] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff2a300
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task182.bin
+           task[183] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2a580
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task183.bin
+           task[184] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2a9c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task184.bin
+           task[185] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2ae00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task185.bin
+           task[186] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2b240
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task186.bin
+           task[187] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff2b680
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task187.bin
+           task[188] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff2b900
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task188.bin
+           task[189] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2bb80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task189.bin
+           task[190] flags=0 op_idx=75 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2bfc0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task190.bin
+           task[191] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2c400
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task191.bin
+           task[192] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2c840
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task192.bin
+           task[193] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff2cc80
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task193.bin
+           task[194] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff2cf00
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task194.bin
+           task[195] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2d180
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task195.bin
+           task[196] flags=0 op_idx=80 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff2d5c0
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_000_task196.bin
+           task[197] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2f840
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task197.bin
+           task[198] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff2fc80
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_000_task198.bin
+           task[199] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff31f00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task199.bin
+           task[200] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff32340
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task200.bin
+           task[201] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff32780
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_000_task201.bin
+           task[202] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff34a00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task202.bin
+           task[203] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff34e40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task203.bin
+           task[204] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff35280
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task204.bin
+           task[205] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff356c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task205.bin
+           task[206] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff35ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task206.bin
+           task[207] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff35ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task207.bin
+           task[208] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff362c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task208.bin
+           task[209] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff366c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task209.bin
+           task[210] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff36ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task210.bin
+           task[211] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff36ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task211.bin
+           task[212] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff372c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task212.bin
+           task[213] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff376c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task213.bin
+           task[214] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff37ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task214.bin
+           task[215] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff37ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task215.bin
+           task[216] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff382c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task216.bin
+           task[217] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff386c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task217.bin
+           task[218] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff38ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task218.bin
+           task[219] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff38ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task219.bin
+           task[220] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff392c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task220.bin
+           task[221] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff396c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task221.bin
+           task[222] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff39ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task222.bin
+           task[223] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff39ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task223.bin
+           task[224] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3a2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task224.bin
+           task[225] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3a6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task225.bin
+           task[226] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3aac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task226.bin
+           task[227] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3aec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task227.bin
+           task[228] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3b2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task228.bin
+           task[229] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3b6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task229.bin
+           task[230] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3bac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task230.bin
+           task[231] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3bec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task231.bin
+           task[232] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3c2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task232.bin
+           task[233] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3c6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task233.bin
+           task[234] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3cac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task234.bin
+           task[235] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3cec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task235.bin
+           task[236] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3d2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task236.bin
+           task[237] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3d6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task237.bin
+           task[238] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff3dac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task238.bin
+           task[239] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff3dbc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task239.bin
+           task[240] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff3de40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task240.bin
+           task[241] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff3e0c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task241.bin
+           task[242] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3e1c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task242.bin
+           task[243] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3e5c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task243.bin
+           task[244] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3e9c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task244.bin
+           task[245] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3edc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task245.bin
+           task[246] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3f1c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task246.bin
+           task[247] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3f5c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task247.bin
+           task[248] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3f9c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task248.bin
+           task[249] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff3fdc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task249.bin
+           task[250] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff401c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task250.bin
+           task[251] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff405c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task251.bin
+           task[252] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff409c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task252.bin
+           task[253] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff40dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task253.bin
+           task[254] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff411c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task254.bin
+           task[255] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff415c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task255.bin
+           task[256] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff419c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task256.bin
+           task[257] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff41dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task257.bin
+           task[258] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff421c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task258.bin
+           task[259] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff425c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task259.bin
+           task[260] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff429c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task260.bin
+           task[261] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff42dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task261.bin
+           task[262] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff431c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task262.bin
+           task[263] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff435c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task263.bin
+           task[264] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff439c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task264.bin
+           task[265] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff43dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task265.bin
+           task[266] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff441c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task266.bin
+           task[267] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff445c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task267.bin
+           task[268] flags=0 op_idx=16 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff449c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task268.bin
+           task[269] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff44ac0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task269.bin
+           task[270] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff44d40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task270.bin
+           task[271] flags=0 op_idx=17 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff44fc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task271.bin
+           task[272] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff450c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task272.bin
+           task[273] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff454c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task273.bin
+           task[274] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff458c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task274.bin
+           task[275] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff45cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task275.bin
+           task[276] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff460c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task276.bin
+           task[277] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff464c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task277.bin
+           task[278] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff468c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task278.bin
+           task[279] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff46cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task279.bin
+           task[280] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff470c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task280.bin
+           task[281] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff474c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task281.bin
+           task[282] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff478c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task282.bin
+           task[283] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff47cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task283.bin
+           task[284] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff480c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task284.bin
+           task[285] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff484c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task285.bin
+           task[286] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff488c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task286.bin
+           task[287] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff48cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task287.bin
+           task[288] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff490c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task288.bin
+           task[289] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff494c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task289.bin
+           task[290] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff498c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task290.bin
+           task[291] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff49cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task291.bin
+           task[292] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4a0c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task292.bin
+           task[293] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4a4c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task293.bin
+           task[294] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4a8c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task294.bin
+           task[295] flags=0 op_idx=27 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4acc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task295.bin
+           task[296] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4adc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task296.bin
+           task[297] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4b040
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task297.bin
+           task[298] flags=0 op_idx=28 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4b2c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task298.bin
+           task[299] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4b3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task299.bin
+           task[300] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4b7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task300.bin
+           task[301] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4bbc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task301.bin
+           task[302] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4bfc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task302.bin
+           task[303] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4c3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task303.bin
+           task[304] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4c7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task304.bin
+           task[305] flags=0 op_idx=33 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4cbc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task305.bin
+           task[306] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4cfc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task306.bin
+           task[307] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4d3c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task307.bin
+           task[308] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4d4c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task308.bin
+           task[309] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4d740
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task309.bin
+           task[310] flags=0 op_idx=35 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4d9c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task310.bin
+           task[311] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4dac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task311.bin
+           task[312] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4dec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task312.bin
+           task[313] flags=0 op_idx=37 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e2c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task313.bin
+           task[314] flags=0 op_idx=38 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e3c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task314.bin
+           task[315] flags=0 op_idx=39 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task315.bin
+           task[316] flags=0 op_idx=40 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e5c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task316.bin
+           task[317] flags=0 op_idx=41 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e6c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task317.bin
+           task[318] flags=0 op_idx=42 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e7c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task318.bin
+           task[319] flags=0 op_idx=43 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4e8c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task319.bin
+           task[320] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4e9c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task320.bin
+           task[321] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4ec40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task321.bin
+           task[322] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4eec0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task322.bin
+           task[323] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff4f140
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task323.bin
+           task[324] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff4f3c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task324.bin
+           task[325] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4f4c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task325.bin
+           task[326] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4f8c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task326.bin
+           task[327] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff4fcc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task327.bin
+           task[328] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff500c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task328.bin
+           task[329] flags=0 op_idx=47 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff501c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task329.bin
+           task[330] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff50600
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task330.bin
+           task[331] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff50880
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task331.bin
+           task[332] flags=0 op_idx=48 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff50b00
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task332.bin
+           task[333] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff50c00
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task333.bin
+           task[334] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff51000
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task334.bin
+           task[335] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff51400
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task335.bin
+           task[336] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff51800
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task336.bin
+           task[337] flags=0 op_idx=51 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff51c00
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task337.bin
+           task[338] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff52000
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task338.bin
+           task[339] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff52400
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task339.bin
+           task[340] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff52800
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task340.bin
+           task[341] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff52c00
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task341.bin
+           task[342] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff52d00
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task342.bin
+           task[343] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff52f80
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task343.bin
+           task[344] flags=0 op_idx=53 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff53200
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task344.bin
+           task[345] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff53300
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task345.bin
+           task[346] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff53700
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task346.bin
+           task[347] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff53b00
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task347.bin
+           task[348] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff53f00
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task348.bin
+           task[349] flags=0 op_idx=55 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff54300
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task349.bin
+           task[350] flags=0 op_idx=56 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff54400
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task350.bin
+           task[351] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff54840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task351.bin
+           task[352] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff54ac0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task352.bin
+           task[353] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff54d40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task353.bin
+           task[354] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff54e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task354.bin
+           task[355] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff55240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task355.bin
+           task[356] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff55640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task356.bin
+           task[357] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff55a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task357.bin
+           task[358] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff55e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task358.bin
+           task[359] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff56240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task359.bin
+           task[360] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff56640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task360.bin
+           task[361] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff56a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task361.bin
+           task[362] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff56e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task362.bin
+           task[363] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff57240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task363.bin
+           task[364] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff57640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task364.bin
+           task[365] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff57a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task365.bin
+           task[366] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff57e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task366.bin
+           task[367] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff58240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task367.bin
+           task[368] flags=0 op_idx=61 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff58640
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task368.bin
+           task[369] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff58740
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task369.bin
+           task[370] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff589c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task370.bin
+           task[371] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff58c40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task371.bin
+           task[372] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff58d40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task372.bin
+           task[373] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff59140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task373.bin
+           task[374] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff59540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task374.bin
+           task[375] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff59940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task375.bin
+           task[376] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff59d40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task376.bin
+           task[377] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5a140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task377.bin
+           task[378] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5a540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task378.bin
+           task[379] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5a940
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task379.bin
+           task[380] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5aa40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task380.bin
+           task[381] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5acc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task381.bin
+           task[382] flags=0 op_idx=65 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5af40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task382.bin
+           task[383] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5b040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task383.bin
+           task[384] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5b440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task384.bin
+           task[385] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5b840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task385.bin
+           task[386] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5bc40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task386.bin
+           task[387] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5c040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task387.bin
+           task[388] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5c440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task388.bin
+           task[389] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5c840
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task389.bin
+           task[390] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5c940
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task390.bin
+           task[391] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5cbc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task391.bin
+           task[392] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5ce40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task392.bin
+           task[393] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5cf40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task393.bin
+           task[394] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5d340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task394.bin
+           task[395] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5d740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task395.bin
+           task[396] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5db40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task396.bin
+           task[397] flags=0 op_idx=72 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5df40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task397.bin
+           task[398] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5e040
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task398.bin
+           task[399] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5e2c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task399.bin
+           task[400] flags=0 op_idx=73 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5e540
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task400.bin
+           task[401] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5e640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task401.bin
+           task[402] flags=0 op_idx=75 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5ea40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task402.bin
+           task[403] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5ee40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task403.bin
+           task[404] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5f240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task404.bin
+           task[405] flags=0 op_idx=77 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5f640
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task405.bin
+           task[406] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5f740
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task406.bin
+           task[407] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff5f9c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task407.bin
+           task[408] flags=0 op_idx=78 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff5fc40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task408.bin
+           task[409] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff5fd40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task409.bin
+           task[410] flags=0 op_idx=79 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff60140
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task410.bin
+           task[411] flags=0 op_idx=80 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff60240
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_000_task411.bin
+           task[412] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff624c0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task412.bin
+           task[413] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff62900
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_000_task413.bin
+           task[414] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff64b80
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task414.bin
+           task[415] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff64fc0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task415.bin
+           task[416] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff65400
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_000_task416.bin
+           task[417] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff67680
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task417.bin
+           task[418] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff67ac0
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task418.bin
+           task[419] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff67f00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_000_task419.bin
+           task[420] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff68340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task420.bin
+           task[421] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff68740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task421.bin
+           task[422] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff68b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task422.bin
+           task[423] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff68f40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task423.bin
+           task[424] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff69340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task424.bin
+           task[425] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff69740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task425.bin
+           task[426] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff69b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task426.bin
+           task[427] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff69f40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task427.bin
+           task[428] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6a340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task428.bin
+           task[429] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6a740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task429.bin
+           task[430] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6ab40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task430.bin
+           task[431] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6af40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task431.bin
+           task[432] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6b340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task432.bin
+           task[433] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6b740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task433.bin
+           task[434] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6bb40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task434.bin
+           task[435] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6bf40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task435.bin
+           task[436] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6c340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task436.bin
+           task[437] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6c740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task437.bin
+           task[438] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6cb40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task438.bin
+           task[439] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6cf40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task439.bin
+           task[440] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6d340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task440.bin
+           task[441] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6d740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task441.bin
+           task[442] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6db40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task442.bin
+           task[443] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6df40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task443.bin
+           task[444] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6e340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task444.bin
+           task[445] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6e740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task445.bin
+           task[446] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6eb40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task446.bin
+           task[447] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6ef40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task447.bin
+           task[448] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6f340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task448.bin
+           task[449] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6f740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task449.bin
+           task[450] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6fb40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task450.bin
+           task[451] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff6ff40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task451.bin
+           task[452] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff70340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task452.bin
+           task[453] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff70740
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task453.bin
+           task[454] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff70840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task454.bin
+           task[455] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff70ac0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task455.bin
+           task[456] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff70d40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task456.bin
+           task[457] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff70e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task457.bin
+           task[458] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff71240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task458.bin
+           task[459] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff71640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task459.bin
+           task[460] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff71a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task460.bin
+           task[461] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff71e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task461.bin
+           task[462] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff72240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task462.bin
+           task[463] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff72640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task463.bin
+           task[464] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff72a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task464.bin
+           task[465] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff72e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task465.bin
+           task[466] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff73240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task466.bin
+           task[467] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff73640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task467.bin
+           task[468] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff73a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task468.bin
+           task[469] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff73e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task469.bin
+           task[470] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff74240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task470.bin
+           task[471] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff74640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task471.bin
+           task[472] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff74a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task472.bin
+           task[473] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff74e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task473.bin
+           task[474] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff75240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task474.bin
+           task[475] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff75640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task475.bin
+           task[476] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff75a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task476.bin
+           task[477] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff75e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task477.bin
+           task[478] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff76240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task478.bin
+           task[479] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff76640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task479.bin
+           task[480] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff76a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task480.bin
+           task[481] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff76e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task481.bin
+           task[482] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff77240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task482.bin
+           task[483] flags=0 op_idx=16 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff77640
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task483.bin
+           task[484] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff77740
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task484.bin
+           task[485] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff779c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task485.bin
+           task[486] flags=0 op_idx=17 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff77c40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task486.bin
+           task[487] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff77d40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task487.bin
+           task[488] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff78140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task488.bin
+           task[489] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff78540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task489.bin
+           task[490] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff78940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task490.bin
+           task[491] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff78d40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task491.bin
+           task[492] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff79140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task492.bin
+           task[493] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff79540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task493.bin
+           task[494] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff79940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task494.bin
+           task[495] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff79d40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task495.bin
+           task[496] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7a140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task496.bin
+           task[497] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7a540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task497.bin
+           task[498] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7a940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task498.bin
+           task[499] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7ad40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task499.bin
+           task[500] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7b140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task500.bin
+           task[501] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7b540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task501.bin
+           task[502] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7b940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task502.bin
+           task[503] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7bd40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task503.bin
+           task[504] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7c140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task504.bin
+           task[505] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7c540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task505.bin
+           task[506] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7c940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task506.bin
+           task[507] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7cd40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task507.bin
+           task[508] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7d140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task508.bin
+           task[509] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7d540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task509.bin
+           task[510] flags=0 op_idx=27 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff7d940
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task510.bin
+           task[511] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff7da40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task511.bin
+           task[512] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff7dcc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task512.bin
+           task[513] flags=0 op_idx=28 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff7df40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task513.bin
+           task[514] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7e040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task514.bin
+           task[515] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7e440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task515.bin
+           task[516] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7e840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task516.bin
+           task[517] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7ec40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task517.bin
+           task[518] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7f040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task518.bin
+           task[519] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7f440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task519.bin
+           task[520] flags=0 op_idx=33 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7f840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task520.bin
+           task[521] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff7fc40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task521.bin
+           task[522] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff80040
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task522.bin
+           task[523] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff80140
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task523.bin
+           task[524] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff803c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task524.bin
+           task[525] flags=0 op_idx=35 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff80640
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task525.bin
+           task[526] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff80740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task526.bin
+           task[527] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff80b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task527.bin
+           task[528] flags=0 op_idx=37 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff80f40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task528.bin
+           task[529] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff81040
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task529.bin
+           task[530] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff812c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task530.bin
+           task[531] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff81540
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task531.bin
+           task[532] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff817c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task532.bin
+           task[533] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff81a40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task533.bin
+           task[534] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff81b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task534.bin
+           task[535] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff81f40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task535.bin
+           task[536] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff82340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task536.bin
+           task[537] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff82740
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task537.bin
+           task[538] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff82840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task538.bin
+           task[539] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff82ac0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task539.bin
+           task[540] flags=0 op_idx=48 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff82d40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task540.bin
+           task[541] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff82e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task541.bin
+           task[542] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff83240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task542.bin
+           task[543] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff83640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task543.bin
+           task[544] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff83a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task544.bin
+           task[545] flags=0 op_idx=51 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff83e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task545.bin
+           task[546] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff84240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task546.bin
+           task[547] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff84640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task547.bin
+           task[548] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff84a40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task548.bin
+           task[549] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff84e40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task549.bin
+           task[550] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff84f40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task550.bin
+           task[551] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff851c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task551.bin
+           task[552] flags=0 op_idx=53 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff85440
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task552.bin
+           task[553] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff85540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task553.bin
+           task[554] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff85940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task554.bin
+           task[555] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff85d40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task555.bin
+           task[556] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff86140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task556.bin
+           task[557] flags=0 op_idx=55 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff86540
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task557.bin
+           task[558] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff86640
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task558.bin
+           task[559] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff868c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task559.bin
+           task[560] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff86b40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task560.bin
+           task[561] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff86c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task561.bin
+           task[562] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff87040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task562.bin
+           task[563] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff87440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task563.bin
+           task[564] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff87840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task564.bin
+           task[565] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff87c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task565.bin
+           task[566] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff88040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task566.bin
+           task[567] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff88440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task567.bin
+           task[568] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff88840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task568.bin
+           task[569] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff88c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task569.bin
+           task[570] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff89040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task570.bin
+           task[571] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff89440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task571.bin
+           task[572] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff89840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task572.bin
+           task[573] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff89c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task573.bin
+           task[574] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8a040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task574.bin
+           task[575] flags=0 op_idx=61 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff8a440
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task575.bin
+           task[576] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff8a540
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task576.bin
+           task[577] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff8a7c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task577.bin
+           task[578] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff8aa40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task578.bin
+           task[579] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8ab40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task579.bin
+           task[580] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8af40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task580.bin
+           task[581] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8b340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task581.bin
+           task[582] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8b740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task582.bin
+           task[583] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8bb40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task583.bin
+           task[584] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8bf40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task584.bin
+           task[585] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff8c340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_000_task585.bin
+           task[586] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff8c740
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/rknpu_dump2/regcmd_000_task586.bin
+           task[587] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff8c840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/rknpu_dump2/regcmd_000_task587.bin
+
+[SUBMIT] flags=0x1 core_mask=0x1 timeout=6000 task_start=196 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812911e400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=196 number=2
+           subcore[1]: start=196 number=2
+           subcore[2]: start=196 number=2
+           task 数组: cpu=0x7f89fe5000 size=45056
+           → 原始 task 数组已存 /tmp/rknpu_dump2/tasks_001.bin (240 字节)
+           task[196] flags=0 op_idx=80 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff2d5c0
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_001_task196.bin
+           task[197] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff2f840
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_001_task197.bin
+           task[198] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff2fc80
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_001_task198.bin
+           task[199] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff31f00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_001_task199.bin
+           task[200] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff32340
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_001_task200.bin
+           task[201] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff32780
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_001_task201.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812911cc00 offset=0 size=102400
+
+[SUBMIT] flags=0x1 core_mask=0x1 timeout=6000 task_start=198 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812911e400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=198 number=3
+           subcore[1]: start=198 number=3
+           subcore[2]: start=198 number=3
+           task 数组: cpu=0x7f89fe5000 size=45056
+           → 原始 task 数组已存 /tmp/rknpu_dump2/tasks_002.bin (360 字节)
+           task[198] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff2fc80
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_002_task198.bin
+           task[199] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff31f00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_002_task199.bin
+           task[200] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff32340
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_002_task200.bin
+           task[201] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff32780
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_002_task201.bin
+           task[202] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff34a00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_002_task202.bin
+           task[203] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff34e40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_002_task203.bin
+           task[204] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff35280
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_002_task204.bin
+           task[205] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff356c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_002_task205.bin
+           task[206] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff35ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_002_task206.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812911d400 offset=0 size=409600
+
+[SUBMIT] flags=0x1 core_mask=0x1 timeout=6000 task_start=201 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812911e400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=201 number=4
+           subcore[1]: start=201 number=4
+           subcore[2]: start=201 number=4
+           task 数组: cpu=0x7f89fe5000 size=45056
+           → 原始 task 数组已存 /tmp/rknpu_dump2/tasks_003.bin (480 字节)
+           task[201] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfff32780
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/rknpu_dump2/regcmd_003_task201.bin
+           task[202] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff34a00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_003_task202.bin
+           task[203] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff34e40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_003_task203.bin
+           task[204] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfff35280
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/rknpu_dump2/regcmd_003_task204.bin
+           task[205] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff356c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task205.bin
+           task[206] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff35ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task206.bin
+           task[207] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff35ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task207.bin
+           task[208] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff362c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task208.bin
+           task[209] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff366c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task209.bin
+           task[210] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff36ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task210.bin
+           task[211] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff36ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task211.bin
+           task[212] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff372c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/rknpu_dump2/regcmd_003_task212.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812911d800 offset=0 size=1638400
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812911d800 offset=0 size=1638400
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812911d400 offset=0 size=409600
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812911cc00 offset=0 size=102400
+[ACTION] POWER_OFF (flags=21) value=0 ret=-1
+[MEM_DESTROY] handle=3 obj_addr=0xffffff812911e000 size=7782400
+[MEM_DESTROY] handle=2 obj_addr=0xffffff812911e800 size=8282112
+[MEM_DESTROY] handle=1 obj_addr=0xffffff812911e400 size=45056
+[MEM_DESTROY] handle=4 obj_addr=0xffffff812911dc00 size=1228800
+[MEM_DESTROY] handle=7 obj_addr=0xffffff812911cc00 size=102400
+[MEM_DESTROY] handle=6 obj_addr=0xffffff812911d400 size=409600
+[MEM_DESTROY] handle=5 obj_addr=0xffffff812911d800 size=1638400

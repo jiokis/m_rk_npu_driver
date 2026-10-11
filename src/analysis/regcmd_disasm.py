@@ -36,7 +36,7 @@ import sys
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DUMPS = os.path.join(HERE, "..", "..", "data", "dumps")
+DUMPS = os.environ.get("RKNPU_DUMPS") or os.path.join(HERE, "..", "..", "data", "dumps")
 
 # block_id → 名称（来自外部资料，已用我们的 615 条样本逐条核对通过）
 BLOCK = {

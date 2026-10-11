@@ -36,7 +36,7 @@ import sys
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DUMPS = os.path.join(HERE, "..", "..", "data", "dumps")
+DUMPS = os.environ.get("RKNPU_DUMPS") or os.path.join(HERE, "..", "..", "data", "dumps")
 
 BLOCK = {0x0000: "NONE", 0x0041: "OP40", 0x0081: "EN", 0x0101: "PC",
          0x0201: "CNA", 0x0801: "CORE", 0x1001: "DPU",

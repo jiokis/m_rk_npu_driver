@@ -351,11 +351,20 @@ static void on_submit(struct rknpu_submit *a, long ret)
 		      (unsigned long long)t->regcmd_addr);
 
 		struct objent *rob = find_by_dma(t->regcmd_addr);
-		/* RKNPU_DUMP_SLACK: 在 regcfg_amount 之外多 dump 多少字节。
-		   驱动实际读的是 regcfg_amount + 4（RKNPU_PC_DATA_EXTRA_AMOUNT），
-		   而运行时给每个 regcmd 预留的槽位远大于实际用量，
-		   所以设个 slack 才能看清指令流在哪里结束、后面是什么。 */
-		uint32_t amt = t->regcfg_amount + g_slack;
+		/* ★★ 重大修正：regcfg_amount 是**指令条数**，不是字节数！★★
+		 *
+		 * 用软件模拟器（src/analysis/regcmd_sim.py）在 615 条真实样本上验证：
+		 *   regcfg_amount 精确等于「PC 链指令」在流中的索引，109/109 全中。
+		 * 所以它是**本段命令流的指令条数**（每条 8 字节）。
+		 *
+		 * 之前的错误：当成字节用 → dump 长度 = amt + slack，
+		 * 导致 82% 的样本被截断（平均只看到 41.4%，
+		 * op80 声明 611 条却只看到 108 条）。
+		 * 寄存器表因此只覆盖了每条流的开头。
+		 *
+		 * 正确做法：amt * 8 字节。
+		 */
+		uint32_t amt = t->regcfg_amount * 8 + g_slack;
 
 		if (rob && rob->cpu && amt) {
 			uint64_t off = t->regcmd_addr - rob->dma_addr;

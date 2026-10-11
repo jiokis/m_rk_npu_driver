@@ -64,10 +64,15 @@ rk3588-npu-re/
 │   ├── 07-战略转向.md        ★★ 方向调整 + 事故记录 + 新主战场
 │   ├── 08-量化实验.md        ★ 量化自由度实验（含三个自身错误的复盘）
 │   ├── 09-困惑度实测与硬件终止.md ★ 真实困惑度 + 硬件线终止
-│   └── 10-regcmd逆向成果.md  ★★ 指令编码 / block 映射 / 寄存器语义表
+│   ├── 10-regcmd逆向成果.md  ★★ 指令编码 / block 映射 / 寄存器语义表
+│   ├── 11-静态反汇编.md      ★ 闭源 so 的类层次与发射器定位
+│   └── 12-regcfg语义与语料缺陷.md ★★ 用模拟器破案 + 自曝语料 82% 被截断
 │
 ├── src/analysis/
-│   └── regcmd_disasm.py      ★ regcmd 反汇编器（list/show/analyze/xref/regmap）
+│   ├── regcmd_disasm.py      ★ regcmd 反汇编器（list/show/analyze/xref/regmap）
+│   ├── regcmd_sim.py         ★ regcmd 软件模拟器（模拟仿真，零硬件风险）
+│   ├── find_emitter.py       ★ 闭源 .so 静态反汇编（RTTI/vtable 定位）
+│   └── xref_string.py        字符串交叉引用（低假阳性定位代码）
 ├── src/poc/rknpu_poc.c       最小用户态程序（不依赖 libdrm）
 ├── src/quant/                量化实验（numpy，可独立复跑）
 ├── src/
@@ -95,6 +100,9 @@ rk3588-npu-re/
 | **反汇编器 + 寄存器语义表** | ✅ **见 docs/10** |
 | **定位每个流水级的张量地址寄存器** | ✅ **PC/CNA/DPU/DPU_RDMA/PPU/PPU_RDMA 各一** |
 | 独立复现 OP_ENABLE 位图语义 | ✅ |
+| **破解 `regcfg_amount` 语义** | ✅ **它是指令条数，109/109 零例外验证** |
+| **发现并量化我方语料缺陷** | ⚠️ **82.3% 的样本被截断（平均只看 41.4%）**，工具已修，待重抓 |
+| 静态反汇编：发射器类层次与 vtable | ✅ 见 docs/11 |
 | 定位 DRAM 带宽墙的硬件级绕行方案（SRAM/NBUF） | ✅ 已定位，待量化 |
 | 自造命令流提交 | ⚠️ **把板子搞挂了**（见 docs/07 事故记录） |
 | 战略转向：量化自由度 / 算子覆盖层 | ✅ 已定方向 |

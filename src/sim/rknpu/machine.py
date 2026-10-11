@@ -156,6 +156,7 @@ class Segment:
     next_addr: int = 0
     chain: Optional[rc.Insn] = None      # 段尾 PC 链：下一段地址（0x0010）
     chain_len: Optional[rc.Insn] = None  # 段尾 PC 链：下一段 PC_DATA_AMOUNT（0x0014）
+    enable: Optional[rc.Insn] = None     # 本段的「开火」：OP_ENABLE 位图（0x0081/0x0008）
     end: str = ""                   # "chain"/"end"/"nochain"/"uncaptured"/"cycle"
     truncated: bool = False         # dump 未覆盖完整段
 
@@ -217,8 +218,13 @@ class Machine:
 
     # ── 单段执行 ──
     def run_segment(self, task: Task) -> Segment:
-        # 需要 amount 条「体」+ 2 条 PC 链（地址 + 长度）
-        need = (task.amount + 2) * rc.INSN_SIZE
+        # ★ 完整段布局（见 docs/18，611/615 验证）：
+        #   [0 .. amount-1]      体（向各级写寄存器 = 配置）
+        #   [amount, amount+1]   链（下一段地址 + 下一段 DATA_AMOUNT）
+        #   [amount+2, amount+3] OP40 + ENABLE（总使能位图 = 本段的「开火」）
+        #   之后是 NONE 填充
+        # 读取长度 = round_up(amount + 4, 2)，+4 正是内核 RKNPU_PC_DATA_EXTRA_AMOUNT
+        need = (task.amount + 4) * rc.INSN_SIZE
         buf = self.mem.read(task.addr, need)
         truncated = buf is None
         if truncated:                       # 覆盖不足 → 尽量读能读到的部分
@@ -227,7 +233,7 @@ class Machine:
             self.stats["uncaptured"] += 1
         # ★ 段 = amount 条「体」+ **2 条** PC 链（地址 + 长度）。
         #   实测：0x0010 精确在 index == amount（611/611），0x0014 在其后一条。
-        all_ins = rc.decode(buf, limit=task.amount + 2)
+        all_ins = rc.decode(buf, limit=task.amount + 4)
         body = all_ins[: task.amount]
         chain = all_ins[task.amount] if len(all_ins) > task.amount else None
         chain_len = (all_ins[task.amount + 1]
@@ -247,6 +253,15 @@ class Machine:
         if chain_len is not None:
             seg.chain_len = chain_len
             self._exec(chain_len)
+        # 使能尾部：OP40 + ENABLE（本段的开火指令）
+        for k in (task.amount + 2, task.amount + 3):
+            if len(all_ins) > k:
+                j = all_ins[k]
+                if (j.block, j.reg) == rm.ENABLE_REG:
+                    seg.enable = j
+                    self._exec(j)
+                elif j.block == 0x0041:
+                    self._exec(j)
         if truncated:
             seg.end = "uncaptured"
         elif chain is None:

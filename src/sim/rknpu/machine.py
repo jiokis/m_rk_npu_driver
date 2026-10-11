@@ -154,7 +154,8 @@ class Segment:
     task: Task
     insns: List[rc.Insn]
     next_addr: int = 0
-    chain: Optional[rc.Insn] = None  # 段尾的 PC 链指令
+    chain: Optional[rc.Insn] = None      # 段尾 PC 链：下一段地址（0x0010）
+    chain_len: Optional[rc.Insn] = None  # 段尾 PC 链：下一段 PC_DATA_AMOUNT（0x0014）
     end: str = ""                   # "chain"/"end"/"nochain"/"uncaptured"/"cycle"
     truncated: bool = False         # dump 未覆盖完整段
 
@@ -216,19 +217,24 @@ class Machine:
 
     # ── 单段执行 ──
     def run_segment(self, task: Task) -> Segment:
-        # 需要 amount 条「体」+ 1 条 PC 链
-        need = (task.amount + 1) * rc.INSN_SIZE
+        # 需要 amount 条「体」+ 2 条 PC 链（地址 + 长度）
+        need = (task.amount + 2) * rc.INSN_SIZE
         buf = self.mem.read(task.addr, need)
         truncated = buf is None
         if truncated:                       # 覆盖不足 → 尽量读能读到的部分
             hit = self.mem.find(task.addr)
             buf = (hit[1] if hit else b"")[:need]
             self.stats["uncaptured"] += 1
-        # ★ 段 = amount 条「体」+ 1 条 PC 链（实测：链指令精确在 index == amount，
-        #   611/611 全中）。所以要多解码一条才能看到链。
-        all_ins = rc.decode(buf, limit=task.amount + 1)
+        # ★ 段 = amount 条「体」+ **2 条** PC 链（地址 + 长度）。
+        #   实测：0x0010 精确在 index == amount（611/611），0x0014 在其后一条。
+        all_ins = rc.decode(buf, limit=task.amount + 2)
         body = all_ins[: task.amount]
         chain = all_ins[task.amount] if len(all_ins) > task.amount else None
+        chain_len = (all_ins[task.amount + 1]
+                     if len(all_ins) > task.amount + 1
+                     and (all_ins[task.amount + 1].block,
+                          all_ins[task.amount + 1].reg) == rm.PC_CHAIN_LEN
+                     else None)
 
         seg = Segment(task=task, insns=body, truncated=truncated)
         for i in body:
@@ -238,6 +244,9 @@ class Machine:
             self._exec(chain)
             if (chain.block, chain.reg) == rm.PC_CHAIN_ADDR:
                 seg.next_addr = chain.value
+        if chain_len is not None:
+            seg.chain_len = chain_len
+            self._exec(chain_len)
         if truncated:
             seg.end = "uncaptured"
         elif chain is None:
@@ -306,6 +315,20 @@ class Machine:
                 unknown += 1
         return {"指向已知 task": ok, "指向未知地址": unknown,
                 "链值为 0": zero, "无链指令": bad}
+
+    # ── PC 链长度字段的语义（已全量验证 610/610）──
+    PC_DATA_EXTRA = 4     # RKNPU_PC_DATA_EXTRA_AMOUNT
+    PC_DATA_SCALE = 2     # pc_data_amount_scale（RK3588）
+
+    @classmethod
+    def pc_chain_amount(cls, target_regcfg_amount: int) -> int:
+        """
+        算出链指令 0x0014 的低 16 位 —— 就是内核写 PC_DATA_AMOUNT 的公式：
+            (regcfg_amount + EXTRA + scale − 1) / scale − 1
+        高 16 位是一个相位标志（实测只在某段 task 区间置位），本函数不含。
+        """
+        a, e, s = target_regcfg_amount, cls.PC_DATA_EXTRA, cls.PC_DATA_SCALE
+        return (a + e + s - 1) // s - 1
 
     # ── 状态快照 ──
     def state_dump(self) -> str:

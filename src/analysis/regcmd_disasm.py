@@ -284,16 +284,27 @@ def cmd_regmap():
     regs = load_dma()
     buf = [(r["dma"], r["dma"] + r["size"]) for r in regs]
 
+    def sign_ext_small(v):
+        """是不是「符号扩展的小负数」（如 0xffffff80 = -128）—— 这种值不是地址。
+
+        ⚠️ 曾经的假阳性：CNA 0x1184 的取值 0xffffff80 恰好落在某缓冲区区间内，
+        被误判成"张量地址"。子代理比对 Mesa/内核定义指出它其实是 PAD_VALUE（填充值）。
+        教训：**"值落在缓冲区区间内"是必要不充分条件**，还要排除符号扩展小负数。
+        """
+        return v >= 0xFF000000 and (0x100000000 - v) < 0x400000
+
     def kind(vals):
         u = set(vals)
         if len(u) == 1:
             return "常量", ""
         mx = max(u)
         if mx > 0x100000:
-            n_in = sum(1 for v in u if any(a <= v < b for a, b in buf))
-            if n_in >= len(u) * 0.8:
-                return "**张量地址**", f"{n_in}/{len(u)} 落在已知缓冲区"
-            return "疑似地址", f"仅 {n_in}/{len(u)} 落在已知缓冲区"
+            n_in = sum(1 for v in u if any(a <= v < b for a, b in buf)
+                       and not sign_ext_small(v))
+            n_addr = sum(1 for v in u if not sign_ext_small(v))
+            if n_in >= max(1, n_addr) * 0.8:
+                return "**张量地址**", f"{n_in}/{n_addr} 落在已知缓冲区"
+            return "疑似地址", f"仅 {n_in}/{n_addr} 落在已知缓冲区"
         if len(u) <= 4:
             return "模式/档位", f"{sorted(u)[:4]}"
         return "数值字段", f"范围 {min(u):#x}..{mx:#x}"

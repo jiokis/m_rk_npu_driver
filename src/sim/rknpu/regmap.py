@@ -1,15 +1,12 @@
 """
-rknpu.regmap — 寄存器空间模型（从完整语料 153 个寄存器的实测统计生成）
+rknpu.regmap — 寄存器空间模型（从完整语料实测统计生成）
 
-数据来源：data/dumps2（615 条样本，100% 覆盖）+ src/analysis/regcmd_disasm.py regmap
-生成方式：由分析脚本自动生成，不要手改 —— 改语料后重新生成。
+数据来源：data/dumps2（615 样本，100% 覆盖）+ src/analysis/regcmd_disasm.py regmap
+外部交叉验证：Mesa rocket registers.xml / 内核 rocket_registers.h / NVDLA 公开规格
+（见 rk3588-npu-research/NVDLA规格-vs-RK3588观测寄存器-对照报告.md）
 
-kind 含义（由"取值数 + 值是否落在真实设备缓冲区"推断，非硬件手册）：
-  ADDR       张量地址字段（值落在 MEM_CREATE 的 dma_addr 区间内）
-  CONST      跨全部样本取值唯一 → 固定规格
-  MODE       取值 ≤4 种 → 模式/档位
-  NUM        取值多且数值小 → 形状/步长/长度
-  MAYBE_ADDR 看着像地址但未落在已知缓冲区 → 内部地址或非地址
+kind 含义（推断，非硬件手册）：
+  ADDR / CONST / MODE / NUM / MAYBE_ADDR（见 docs/14）
 """
 
 from typing import NamedTuple
@@ -22,7 +19,6 @@ class Reg(NamedTuple):
     distinct_values: int
 
 
-# (block, offset) -> Reg
 REGISTERS = {
     # ── OP_NONE (block 0x0000) ──
     (0x0000, 0x0000): Reg(0x0000, 0x0000, 'CONST', 1),
@@ -31,7 +27,7 @@ REGISTERS = {
     # ── OP_ENABLE (block 0x0081) ──
     (0x0081, 0x0008): Reg(0x0081, 0x0008, 'MODE', 3),
     # ── OP_REG_PC (block 0x0101) ──
-    (0x0101, 0x0010): Reg(0x0101, 0x0010, 'ADDR', 586),
+    (0x0101, 0x0010): Reg(0x0101, 0x0010, 'MAYBE_ADDR', 586),
     (0x0101, 0x0014): Reg(0x0101, 0x0014, 'NUM', 16),
     # ── OP_REG_CNA (block 0x0201) ──
     (0x0201, 0x100c): Reg(0x0201, 0x100c, 'MAYBE_ADDR', 3),
@@ -81,7 +77,7 @@ REGISTERS = {
     (0x0201, 0x1178): Reg(0x0201, 0x1178, 'CONST', 1),
     (0x0201, 0x117c): Reg(0x0201, 0x117c, 'CONST', 1),
     (0x0201, 0x1180): Reg(0x0201, 0x1180, 'MODE', 2),
-    (0x0201, 0x1184): Reg(0x0201, 0x1184, 'ADDR', 2),
+    (0x0201, 0x1184): Reg(0x0201, 0x1184, 'MAYBE_ADDR', 2),
     # ── OP_REG_CORE (block 0x0801) ──
     (0x0801, 0x3010): Reg(0x0801, 0x3010, 'MODE', 2),
     (0x0801, 0x3014): Reg(0x0801, 0x3014, 'MAYBE_ADDR', 44),
@@ -189,46 +185,54 @@ REGISTERS = {
     (0x8001, 0x7030): Reg(0x8001, 0x7030, 'CONST', 1),
 }
 
-# ── 语义已确证的寄存器（有实证支撑，不是推断）──
-# 判据：值精确落在内核 ioctl 侧独立观测到的 MEM_CREATE.dma_addr 缓冲区内
+# ── 语义已确证的寄存器 ──
+# 判据：值精确落在内核 ioctl 侧独立观测到的 MEM_CREATE.dma_addr 缓冲区内，
+# 且**排除符号扩展的小负数**（0xffffff80 这类曾造成假阳性，见 docs/15）
 TENSOR_ADDR_REGS = {
-    (0x0101, 0x0010),   # PC 链：下一段命令流地址
-    (0x0201, 0x1070),
-    (0x0201, 0x1110),
-    (0x0201, 0x1184),
-    (0x1001, 0x4020),
-    (0x2001, 0x5018),
+    (0x0201, 0x1070),   # CNA 特征/输入张量（NVDLA: CDMA D_DAIN_ADDR_LOW）
+    (0x0201, 0x1110),   # CNA 权重张量
+    (0x1001, 0x4020),   # DPU 目的地址（NVDLA: SDP D_DST_BASE_ADDR_LOW）
+    (0x2001, 0x5018),   # DPU_RDMA 源地址（NVDLA: SDP_RDMA 0xa018）
     (0x2001, 0x5020),
     (0x2001, 0x5038),
-    (0x4001, 0x6070),
-    (0x8001, 0x701c),
+    (0x4001, 0x6070),   # PPU 目的地址（NVDLA: PDP 0xd070，偏移完全相同）
+    (0x8001, 0x701c),   # PPU_RDMA 源地址（NVDLA: PDP_RDMA 0xc01c，偏移完全相同）
 }
 
-# PC 链
-PC_CHAIN_ADDR = (0x0101, 0x0010)   # 值为 0 表示链结束
-PC_CHAIN_LEN  = (0x0101, 0x0014)   # 段长度
+# ── PC 链（Rockchip 独有，NVDLA 无此机制）──
+PC_CHAIN_ADDR = (0x0101, 0x0010)   # 下一段命令流地址
+PC_CHAIN_LEN  = (0x0101, 0x0014)   # 下一段的 PC_DATA_AMOUNT
+#   低 16 位 = (目标段 regcfg_amount + 4 + 2 − 1)/2 − 1   ← 内核公式，全量验证 610/610
+#   高 16 位 = 相位标志（实测 flag=1 覆盖 task 206..586，flag=0 覆盖 1..205/587，零重叠）
 
-# 总使能位图（实测只有 3 种取值）
-ENABLE_REG = (0x0081, 0x0008)
+PC_DATA_EXTRA = 4      # RKNPU_PC_DATA_EXTRA_AMOUNT
+PC_DATA_SCALE = 2      # pc_data_amount_scale（RK3588）
+
+ENABLE_REG = (0x0081, 0x0008)      # NVDLA: GLOBAL 0xf008 OPERATION_ENABLE（NVDLA 无此寄存器）
 ENABLE_BITMAP = {
-    0x18: "CORE + DPU",
-    0x1D: "PC + CNA + CORE + DPU",
-    0x60: "DPU_RDMA + PPU",
+    0x18: "DPU | DPU_RDMA",
+    0x1D: "CNA | CORE | DPU | DPU_RDMA",
+    0x60: "PPU | PPU_RDMA",
 }
 
 
-def lookup(block: int, offset: int):
-    """查寄存器元信息；未观测到的返回 None"""
+def pc_chain_amount(target_regcfg_amount: int) -> int:
+    """按内核公式算 0x0014 的低 16 位"""
+    a, e, s = target_regcfg_amount, PC_DATA_EXTRA, PC_DATA_SCALE
+    return (a + e + s - 1) // s - 1
+
+
+def lookup(block, offset):
     return REGISTERS.get((block, offset))
 
 
-def is_tensor_addr(block: int, offset: int) -> bool:
+def is_tensor_addr(block, offset):
     return (block, offset) in TENSOR_ADDR_REGS
 
 
-def describe(block: int, offset: int) -> str:
+def describe(block, offset):
     if (block, offset) == PC_CHAIN_ADDR: return "PC链:下一段地址"
-    if (block, offset) == PC_CHAIN_LEN:  return "PC链:段长度"
+    if (block, offset) == PC_CHAIN_LEN:  return "PC链:下一段DATA_AMOUNT"
     if (block, offset) == ENABLE_REG:    return "总使能位图"
     r = lookup(block, offset)
     if not r: return "未观测"

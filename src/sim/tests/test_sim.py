@@ -25,8 +25,11 @@ check("字段拆分", (i.block, i.reg, i.value) == (0x0201, 0x1040, 0x1b),
 
 # 3. 寄存器模型
 check("寄存器表非空", len(rm.REGISTERS) == 153, f"{len(rm.REGISTERS)} 个")
-check("张量地址寄存器 10 个", len(rm.TENSOR_ADDR_REGS) == 10)
+check("张量地址寄存器 8 个", len(rm.TENSOR_ADDR_REGS) == 8,
+      "0x1184 已作为假阳性剔除（实为填充值）")
 check("地址判定", rm.is_tensor_addr(0x0201, 0x1070) and not rm.is_tensor_addr(0x0201, 0x1040))
+check("假阳性已剔除", not rm.is_tensor_addr(0x0201, 0x1184))
+check("PC链长度公式", rm.pc_chain_amount(126) == 64 and rm.pc_chain_amount(61) == 32)
 
 # 4. 内存重叠查找（曾经的 bug）
 m = Memory()

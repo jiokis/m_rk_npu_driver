@@ -1,0 +1,1590 @@
+# rknpu_capture 启动
+# pid=5133 dump_dir=/tmp/cm7
+# sizeof(rknpu_task)=40 sizeof(rknpu_submit)=104 sizeof(rknpu_mem_create)=48
+# ioctl 编号: ACTION=0xc0086440 SUBMIT=0xc0686441 (低16位=0x6441)
+[ACTION] GET_HW_VERSION (flags=0) value=0x46495245 ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] POWER_ON (flags=20) value=0 ret=-1
+[ACTION] SET_PROC_NICE (flags=19) value=0xffffffed ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=1 flags=0x40b size=45056 obj_addr=0xffffff8108818400 dma_addr=0xffff5000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=1 → offset=0x100000000
+[mmap64] handle=1 offset=0x100000000 → cpu=0x7f87085000 len=41840  ⇒ dma_addr=0xffff5000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff8108818400 offset=0 size=41840
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=2 flags=0x403 size=8282112 obj_addr=0xffffff810881e400 dma_addr=0xff80f000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=2 → offset=0x10000b000
+[mmap64] handle=2 offset=0x10000b000 → cpu=0x7f81d8a000 len=8281664  ⇒ dma_addr=0xff80f000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff810881e400 offset=0 size=8281664
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff810881e400 offset=0 size=8281664
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff8108818400 offset=0 size=41840
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=3 flags=0x403 size=7782400 obj_addr=0xffffff810881e800 dma_addr=0xff0a3000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=3 → offset=0x1007f1000
+[mmap64] handle=3 offset=0x1007f1000 → cpu=0x7f8161e000 len=7782400  ⇒ dma_addr=0xff0a3000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff810881e800 offset=0 size=7782400
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=4 flags=0x403 size=1228800 obj_addr=0xffffff81034f6c00 dma_addr=0xfef77000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=4 → offset=0x100f5d000
+[mmap64] handle=4 offset=0x100f5d000 → cpu=0x7f8116b000 len=1228800  ⇒ dma_addr=0xfef77000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff81034f6c00 offset=0 size=1228800
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=5 flags=0x403 size=1638400 obj_addr=0xffffff81034f7400 dma_addr=0xfede7000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=5 → offset=0x101089000
+[mmap64] handle=5 offset=0x101089000 → cpu=0x7f80fdb000 len=1638400  ⇒ dma_addr=0xfede7000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff81034f7400 offset=0 size=1638400
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=6 flags=0x403 size=409600 obj_addr=0xffffff8109d05000 dma_addr=0xfed83000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=6 → offset=0x101219000
+[mmap64] handle=6 offset=0x101219000 → cpu=0x7f80f77000 len=409600  ⇒ dma_addr=0xfed83000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff8109d05000 offset=0 size=409600
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=7 flags=0x403 size=102400 obj_addr=0xffffff8109d04400 dma_addr=0xfed6a000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=7 → offset=0x10127d000
+[mmap64] handle=7 offset=0x10127d000 → cpu=0x7f80f5e000 len=102400  ⇒ dma_addr=0xfed6a000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff8109d04400 offset=0 size=102400
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff810881e400 offset=7320960 size=918848
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff81034f6c00 offset=0 size=1228800
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff810881e400 offset=7320960 size=918848
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=618 task_number=21 task_counter=21 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=618 number=7
+           subcore[1]: start=772 number=7
+           subcore[2]: start=618 number=7
+           subcore[3]: start=772 number=7
+           subcore[4]: start=909 number=7
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_000.bin (840 字节)
+           task[618] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff92040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task618.bin
+           task[619] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff92440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task619.bin
+           task[620] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff92840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task620.bin
+           task[621] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff92c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task621.bin
+           task[622] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff93040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task622.bin
+           task[623] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff93440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task623.bin
+           task[624] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff93840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task624.bin
+           task[625] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff93c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task625.bin
+           task[626] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff94040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task626.bin
+           task[627] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff94440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task627.bin
+           task[628] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff94840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task628.bin
+           task[629] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff94c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task629.bin
+           task[630] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff95040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task630.bin
+           task[631] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff95440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task631.bin
+           task[632] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff95840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task632.bin
+           task[633] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff95c40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task633.bin
+           task[634] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff96040
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task634.bin
+           task[635] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff96440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task635.bin
+           task[636] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff96840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_000_task636.bin
+           task[637] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff96c40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_000_task637.bin
+           task[638] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff96d40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_000_task638.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=639 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=625 number=2
+           subcore[1]: start=779 number=2
+           subcore[2]: start=625 number=2
+           subcore[3]: start=779 number=2
+           subcore[4]: start=916 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_001.bin (240 字节)
+           task[639] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff96fc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_001_task639.bin
+           task[640] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff97240
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_001_task640.bin
+           task[641] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff97340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_001_task641.bin
+           task[642] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff97740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_001_task642.bin
+           task[643] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff97b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_001_task643.bin
+           task[644] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff97f40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_001_task644.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=645 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=627 number=4
+           subcore[1]: start=781 number=4
+           subcore[2]: start=627 number=4
+           subcore[3]: start=781 number=4
+           subcore[4]: start=918 number=4
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_002.bin (480 字节)
+           task[645] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff98340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task645.bin
+           task[646] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff98740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task646.bin
+           task[647] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff98b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task647.bin
+           task[648] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff98f40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task648.bin
+           task[649] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff99340
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task649.bin
+           task[650] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff99740
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task650.bin
+           task[651] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff99b40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task651.bin
+           task[652] flags=0 op_idx=16 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff99f40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_002_task652.bin
+           task[653] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff9a040
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_002_task653.bin
+           task[654] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff9a2c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_002_task654.bin
+           task[655] flags=0 op_idx=17 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff9a540
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_002_task655.bin
+           task[656] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9a640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_002_task656.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=657 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=631 number=2
+           subcore[1]: start=785 number=2
+           subcore[2]: start=631 number=2
+           subcore[3]: start=785 number=2
+           subcore[4]: start=922 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_003.bin (240 字节)
+           task[657] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9aa40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_003_task657.bin
+           task[658] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9ae40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_003_task658.bin
+           task[659] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9b240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_003_task659.bin
+           task[660] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9b640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_003_task660.bin
+           task[661] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9ba40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_003_task661.bin
+           task[662] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9be40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_003_task662.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=663 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=633 number=1
+           subcore[1]: start=787 number=1
+           subcore[2]: start=633 number=1
+           subcore[3]: start=787 number=1
+           subcore[4]: start=924 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_004.bin (120 字节)
+           task[663] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9c240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_004_task663.bin
+           task[664] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9c640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_004_task664.bin
+           task[665] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9ca40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_004_task665.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=666 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=634 number=1
+           subcore[1]: start=788 number=1
+           subcore[2]: start=634 number=1
+           subcore[3]: start=788 number=1
+           subcore[4]: start=925 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_005.bin (120 字节)
+           task[666] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9ce40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_005_task666.bin
+           task[667] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9d240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_005_task667.bin
+           task[668] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9d640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_005_task668.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=669 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=635 number=3
+           subcore[1]: start=789 number=3
+           subcore[2]: start=635 number=3
+           subcore[3]: start=789 number=3
+           subcore[4]: start=926 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_006.bin (360 字节)
+           task[669] flags=0 op_idx=27 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff9da40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_006_task669.bin
+           task[670] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff9db40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_006_task670.bin
+           task[671] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff9ddc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_006_task671.bin
+           task[672] flags=0 op_idx=28 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff9e040
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_006_task672.bin
+           task[673] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9e140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_006_task673.bin
+           task[674] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9e540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_006_task674.bin
+           task[675] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9e940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_006_task675.bin
+           task[676] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9ed40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_006_task676.bin
+           task[677] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9f140
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_006_task677.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=678 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=638 number=3
+           subcore[1]: start=792 number=3
+           subcore[2]: start=638 number=3
+           subcore[3]: start=792 number=3
+           subcore[4]: start=929 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_007.bin (360 字节)
+           task[678] flags=0 op_idx=33 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9f540
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_007_task678.bin
+           task[679] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfff9f940
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_007_task679.bin
+           task[680] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfff9fd40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_007_task680.bin
+           task[681] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfff9fe40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_007_task681.bin
+           task[682] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa00c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_007_task682.bin
+           task[683] flags=0 op_idx=35 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa0340
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_007_task683.bin
+           task[684] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa0440
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_007_task684.bin
+           task[685] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa0840
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_007_task685.bin
+           task[686] flags=0 op_idx=37 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa0c40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_007_task686.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=687 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=641 number=2
+           subcore[1]: start=795 number=2
+           subcore[2]: start=641 number=2
+           subcore[3]: start=795 number=2
+           subcore[4]: start=932 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_008.bin (240 字节)
+           task[687] flags=0 op_idx=38 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa0d40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_008_task687.bin
+           task[688] flags=0 op_idx=39 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa0e40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_008_task688.bin
+           task[689] flags=0 op_idx=40 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa0f40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_008_task689.bin
+           task[690] flags=0 op_idx=41 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa1040
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_008_task690.bin
+           task[691] flags=0 op_idx=42 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa1140
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_008_task691.bin
+           task[692] flags=0 op_idx=43 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa1240
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_008_task692.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=693 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=643 number=3
+           subcore[1]: start=797 number=3
+           subcore[2]: start=643 number=3
+           subcore[3]: start=797 number=3
+           subcore[4]: start=934 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_009.bin (360 字节)
+           task[693] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa1340
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_009_task693.bin
+           task[694] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa15c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_009_task694.bin
+           task[695] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa1840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_009_task695.bin
+           task[696] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa1ac0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_009_task696.bin
+           task[697] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa1d40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_009_task697.bin
+           task[698] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa1e40
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_009_task698.bin
+           task[699] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa2240
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_009_task699.bin
+           task[700] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa2640
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_009_task700.bin
+           task[701] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa2a40
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_009_task701.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=702 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=646 number=1
+           subcore[1]: start=800 number=1
+           subcore[2]: start=646 number=1
+           subcore[3]: start=800 number=1
+           subcore[4]: start=937 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_010.bin (120 字节)
+           task[702] flags=0 op_idx=47 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffa2b40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_010_task702.bin
+           task[703] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa2f80
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_010_task703.bin
+           task[704] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa3200
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_010_task704.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=705 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=647 number=1
+           subcore[1]: start=801 number=1
+           subcore[2]: start=647 number=1
+           subcore[3]: start=801 number=1
+           subcore[4]: start=938 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_011.bin (120 字节)
+           task[705] flags=0 op_idx=48 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa3480
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_011_task705.bin
+           task[706] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa3580
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_011_task706.bin
+           task[707] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa3980
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_011_task707.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=708 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=648 number=1
+           subcore[1]: start=802 number=1
+           subcore[2]: start=648 number=1
+           subcore[3]: start=802 number=1
+           subcore[4]: start=939 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_012.bin (120 字节)
+           task[708] flags=0 op_idx=51 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa3d80
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_012_task708.bin
+           task[709] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa4180
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_012_task709.bin
+           task[710] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa4580
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_012_task710.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=711 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=649 number=1
+           subcore[1]: start=803 number=1
+           subcore[2]: start=649 number=1
+           subcore[3]: start=803 number=1
+           subcore[4]: start=940 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_013.bin (120 字节)
+           task[711] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa4680
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_013_task711.bin
+           task[712] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa4900
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_013_task712.bin
+           task[713] flags=0 op_idx=53 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa4b80
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_013_task713.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=714 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=650 number=1
+           subcore[1]: start=804 number=1
+           subcore[2]: start=650 number=1
+           subcore[3]: start=804 number=1
+           subcore[4]: start=941 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_014.bin (120 字节)
+           task[714] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa4c80
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_014_task714.bin
+           task[715] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa5080
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_014_task715.bin
+           task[716] flags=0 op_idx=55 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa5480
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_014_task716.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=717 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=651 number=2
+           subcore[1]: start=805 number=2
+           subcore[2]: start=651 number=2
+           subcore[3]: start=805 number=2
+           subcore[4]: start=942 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_015.bin (240 字节)
+           task[717] flags=0 op_idx=56 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffa5580
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_015_task717.bin
+           task[718] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa59c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_015_task718.bin
+           task[719] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa5c40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_015_task719.bin
+           task[720] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa5ec0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_015_task720.bin
+           task[721] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa5fc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_015_task721.bin
+           task[722] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa63c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_015_task722.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=723 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=653 number=3
+           subcore[1]: start=807 number=3
+           subcore[2]: start=653 number=3
+           subcore[3]: start=807 number=3
+           subcore[4]: start=944 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_016.bin (360 字节)
+           task[723] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa67c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_016_task723.bin
+           task[724] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa6bc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_016_task724.bin
+           task[725] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa6fc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_016_task725.bin
+           task[726] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa73c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_016_task726.bin
+           task[727] flags=0 op_idx=61 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa77c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_016_task727.bin
+           task[728] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa78c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_016_task728.bin
+           task[729] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa7b40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_016_task729.bin
+           task[730] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa7dc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_016_task730.bin
+           task[731] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa7ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_016_task731.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=732 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=656 number=1
+           subcore[1]: start=810 number=1
+           subcore[2]: start=656 number=1
+           subcore[3]: start=810 number=1
+           subcore[4]: start=947 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_017.bin (120 字节)
+           task[732] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa82c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_017_task732.bin
+           task[733] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa86c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_017_task733.bin
+           task[734] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa8ac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_017_task734.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=735 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=657 number=4
+           subcore[1]: start=811 number=4
+           subcore[2]: start=657 number=4
+           subcore[3]: start=811 number=4
+           subcore[4]: start=948 number=4
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_018.bin (480 字节)
+           task[735] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa8bc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_018_task735.bin
+           task[736] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffa8e40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_018_task736.bin
+           task[737] flags=0 op_idx=65 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffa90c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_018_task737.bin
+           task[738] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa91c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_018_task738.bin
+           task[739] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa95c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_018_task739.bin
+           task[740] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa99c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_018_task740.bin
+           task[741] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffa9dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_018_task741.bin
+           task[742] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffaa1c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_018_task742.bin
+           task[743] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffaa2c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_018_task743.bin
+           task[744] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffaa540
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_018_task744.bin
+           task[745] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffaa7c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_018_task745.bin
+           task[746] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffaa8c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_018_task746.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=747 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=661 number=1
+           subcore[1]: start=815 number=1
+           subcore[2]: start=661 number=1
+           subcore[3]: start=815 number=1
+           subcore[4]: start=952 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_019.bin (120 字节)
+           task[747] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffaacc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_019_task747.bin
+           task[748] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffab0c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_019_task748.bin
+           task[749] flags=0 op_idx=72 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffab4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_019_task749.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=750 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=662 number=1
+           subcore[1]: start=816 number=1
+           subcore[2]: start=662 number=1
+           subcore[3]: start=816 number=1
+           subcore[4]: start=953 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_020.bin (120 字节)
+           task[750] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffab5c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_020_task750.bin
+           task[751] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffab840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_020_task751.bin
+           task[752] flags=0 op_idx=73 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffabac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_020_task752.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=753 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=663 number=1
+           subcore[1]: start=817 number=1
+           subcore[2]: start=663 number=1
+           subcore[3]: start=817 number=1
+           subcore[4]: start=954 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_021.bin (120 字节)
+           task[753] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffabbc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_021_task753.bin
+           task[754] flags=0 op_idx=75 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffabfc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_021_task754.bin
+           task[755] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffac3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_021_task755.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=756 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=664 number=1
+           subcore[1]: start=818 number=1
+           subcore[2]: start=664 number=1
+           subcore[3]: start=818 number=1
+           subcore[4]: start=955 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_022.bin (120 字节)
+           task[756] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffac7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_022_task756.bin
+           task[757] flags=0 op_idx=77 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffacbc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_022_task757.bin
+           task[758] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffaccc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_022_task758.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=759 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=665 number=1
+           subcore[1]: start=819 number=1
+           subcore[2]: start=665 number=1
+           subcore[3]: start=819 number=1
+           subcore[4]: start=956 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_023.bin (120 字节)
+           task[759] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffacf40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_023_task759.bin
+           task[760] flags=0 op_idx=78 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffad1c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_023_task760.bin
+           task[761] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffad2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_023_task761.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=762 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=666 number=1
+           subcore[1]: start=820 number=1
+           subcore[2]: start=666 number=1
+           subcore[3]: start=820 number=1
+           subcore[4]: start=957 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_024.bin (120 字节)
+           task[762] flags=0 op_idx=79 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffad6c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_024_task762.bin
+           task[763] flags=0 op_idx=80 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfffad7c0
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/cm7/regcmd_024_task763.bin
+           task[764] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffafa40
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_024_task764.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=765 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=667 number=1
+           subcore[1]: start=821 number=1
+           subcore[2]: start=667 number=1
+           subcore[3]: start=821 number=1
+           subcore[4]: start=958 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_025.bin (120 字节)
+           task[765] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfffafe80
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/cm7/regcmd_025_task765.bin
+           task[766] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffb2100
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_025_task766.bin
+           task[767] flags=0 op_idx=82 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffb2540
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_025_task767.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=768 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=668 number=2
+           subcore[1]: start=822 number=2
+           subcore[2]: start=668 number=2
+           subcore[3]: start=822 number=2
+           subcore[4]: start=959 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_026.bin (240 字节)
+           task[768] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=1097 regcfg_offset=0 regcmd_addr=0xfffb2980
+             ★ regcmd 8840 字节 (regcfg=1097+slack=64) → /tmp/cm7/regcmd_026_task768.bin
+           task[769] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffb4c00
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_026_task769.bin
+           task[770] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffb5040
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_026_task770.bin
+           task[771] flags=0 op_idx=84 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0xfffb5480
+             ★ regcmd 1072 字节 (regcfg=126+slack=64) → /tmp/cm7/regcmd_026_task771.bin
+           task[772] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb58c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_026_task772.bin
+           task[773] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb5cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_026_task773.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=774 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=670 number=3
+           subcore[1]: start=824 number=3
+           subcore[2]: start=670 number=3
+           subcore[3]: start=824 number=3
+           subcore[4]: start=961 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_027.bin (360 字节)
+           task[774] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb60c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task774.bin
+           task[775] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb64c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task775.bin
+           task[776] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb68c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task776.bin
+           task[777] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb6cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task777.bin
+           task[778] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb70c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task778.bin
+           task[779] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb74c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task779.bin
+           task[780] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb78c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task780.bin
+           task[781] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb7cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task781.bin
+           task[782] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb80c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_027_task782.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=783 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=673 number=1
+           subcore[1]: start=827 number=1
+           subcore[2]: start=673 number=1
+           subcore[3]: start=827 number=1
+           subcore[4]: start=964 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_028.bin (120 字节)
+           task[783] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb84c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_028_task783.bin
+           task[784] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb88c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_028_task784.bin
+           task[785] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb8cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_028_task785.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=786 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=674 number=2
+           subcore[1]: start=828 number=2
+           subcore[2]: start=674 number=2
+           subcore[3]: start=828 number=2
+           subcore[4]: start=965 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_029.bin (240 字节)
+           task[786] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb90c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_029_task786.bin
+           task[787] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb94c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_029_task787.bin
+           task[788] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb98c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_029_task788.bin
+           task[789] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffb9cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_029_task789.bin
+           task[790] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffba0c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_029_task790.bin
+           task[791] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffba4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_029_task791.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=792 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=676 number=1
+           subcore[1]: start=830 number=1
+           subcore[2]: start=676 number=1
+           subcore[3]: start=830 number=1
+           subcore[4]: start=967 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_030.bin (120 字节)
+           task[792] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffba5c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_030_task792.bin
+           task[793] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffba840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_030_task793.bin
+           task[794] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffbaac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_030_task794.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=795 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=677 number=1
+           subcore[1]: start=831 number=1
+           subcore[2]: start=677 number=1
+           subcore[3]: start=831 number=1
+           subcore[4]: start=968 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_031.bin (120 字节)
+           task[795] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbabc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_031_task795.bin
+           task[796] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbafc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_031_task796.bin
+           task[797] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbb3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_031_task797.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=798 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=678 number=1
+           subcore[1]: start=832 number=1
+           subcore[2]: start=678 number=1
+           subcore[3]: start=832 number=1
+           subcore[4]: start=969 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_032.bin (120 字节)
+           task[798] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbb7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_032_task798.bin
+           task[799] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbbbc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_032_task799.bin
+           task[800] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbbfc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_032_task800.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=801 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=679 number=2
+           subcore[1]: start=833 number=2
+           subcore[2]: start=679 number=2
+           subcore[3]: start=833 number=2
+           subcore[4]: start=970 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_033.bin (240 字节)
+           task[801] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbc3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_033_task801.bin
+           task[802] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbc7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_033_task802.bin
+           task[803] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbcbc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_033_task803.bin
+           task[804] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbcfc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_033_task804.bin
+           task[805] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbd3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_033_task805.bin
+           task[806] flags=0 op_idx=16 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffbd7c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_033_task806.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=807 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=681 number=3
+           subcore[1]: start=835 number=3
+           subcore[2]: start=681 number=3
+           subcore[3]: start=835 number=3
+           subcore[4]: start=972 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_034.bin (360 字节)
+           task[807] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffbd8c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_034_task807.bin
+           task[808] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffbdb40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_034_task808.bin
+           task[809] flags=0 op_idx=17 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffbddc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_034_task809.bin
+           task[810] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbdec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_034_task810.bin
+           task[811] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbe2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_034_task811.bin
+           task[812] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbe6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_034_task812.bin
+           task[813] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbeac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_034_task813.bin
+           task[814] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbeec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_034_task814.bin
+           task[815] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbf2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_034_task815.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=816 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=684 number=1
+           subcore[1]: start=838 number=1
+           subcore[2]: start=684 number=1
+           subcore[3]: start=838 number=1
+           subcore[4]: start=975 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_035.bin (120 字节)
+           task[816] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbf6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_035_task816.bin
+           task[817] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbfac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_035_task817.bin
+           task[818] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffbfec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_035_task818.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=819 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=685 number=2
+           subcore[1]: start=839 number=2
+           subcore[2]: start=685 number=2
+           subcore[3]: start=839 number=2
+           subcore[4]: start=976 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_036.bin (240 字节)
+           task[819] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc02c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_036_task819.bin
+           task[820] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc06c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_036_task820.bin
+           task[821] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc0ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_036_task821.bin
+           task[822] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc0ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_036_task822.bin
+           task[823] flags=0 op_idx=27 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc12c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_036_task823.bin
+           task[824] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc13c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_036_task824.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=825 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=687 number=6
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_037.bin (240 字节)
+           task[825] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc1640
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_037_task825.bin
+           task[826] flags=0 op_idx=28 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc18c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_037_task826.bin
+           task[827] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc19c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_037_task827.bin
+           task[828] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc1dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_037_task828.bin
+           task[829] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc21c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_037_task829.bin
+           task[830] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc25c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_037_task830.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=831 task_number=15 task_counter=15 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=693 number=5
+           subcore[1]: start=841 number=5
+           subcore[2]: start=693 number=5
+           subcore[3]: start=841 number=5
+           subcore[4]: start=978 number=5
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_038.bin (600 字节)
+           task[831] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc29c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_038_task831.bin
+           task[832] flags=0 op_idx=33 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc2dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_038_task832.bin
+           task[833] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc31c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_038_task833.bin
+           task[834] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc35c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_038_task834.bin
+           task[835] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc36c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_038_task835.bin
+           task[836] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc3940
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_038_task836.bin
+           task[837] flags=0 op_idx=35 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc3bc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_038_task837.bin
+           task[838] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc3cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_038_task838.bin
+           task[839] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc40c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_038_task839.bin
+           task[840] flags=0 op_idx=37 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc44c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_038_task840.bin
+           task[841] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc45c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_038_task841.bin
+           task[842] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc4840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_038_task842.bin
+           task[843] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc4ac0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_038_task843.bin
+           task[844] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc4d40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_038_task844.bin
+           task[845] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc4fc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_038_task845.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=846 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=698 number=2
+           subcore[1]: start=846 number=2
+           subcore[2]: start=698 number=2
+           subcore[3]: start=846 number=2
+           subcore[4]: start=983 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_039.bin (240 字节)
+           task[846] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc50c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_039_task846.bin
+           task[847] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc54c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_039_task847.bin
+           task[848] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc58c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_039_task848.bin
+           task[849] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc5cc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_039_task849.bin
+           task[850] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc5dc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_039_task850.bin
+           task[851] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc6040
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_039_task851.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=852 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=700 number=2
+           subcore[1]: start=848 number=2
+           subcore[2]: start=700 number=2
+           subcore[3]: start=848 number=2
+           subcore[4]: start=985 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_040.bin (240 字节)
+           task[852] flags=0 op_idx=48 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc62c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_040_task852.bin
+           task[853] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc63c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_040_task853.bin
+           task[854] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc67c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_040_task854.bin
+           task[855] flags=0 op_idx=51 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc6bc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_040_task855.bin
+           task[856] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc6fc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_040_task856.bin
+           task[857] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc73c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_040_task857.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=858 task_number=1 task_counter=1 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=702 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_041.bin (40 字节)
+           task[858] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc74c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_041_task858.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=859 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=703 number=3
+           subcore[1]: start=850 number=3
+           subcore[2]: start=703 number=3
+           subcore[3]: start=850 number=3
+           subcore[4]: start=987 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_042.bin (360 字节)
+           task[859] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc7740
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_042_task859.bin
+           task[860] flags=0 op_idx=53 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc79c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_042_task860.bin
+           task[861] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc7ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_042_task861.bin
+           task[862] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc7ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_042_task862.bin
+           task[863] flags=0 op_idx=55 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc82c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_042_task863.bin
+           task[864] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc83c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_042_task864.bin
+           task[865] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffc8640
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_042_task865.bin
+           task[866] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffc88c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_042_task866.bin
+           task[867] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc89c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_042_task867.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=868 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=706 number=1
+           subcore[1]: start=853 number=1
+           subcore[2]: start=706 number=1
+           subcore[3]: start=853 number=1
+           subcore[4]: start=990 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_043.bin (120 字节)
+           task[868] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc8dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_043_task868.bin
+           task[869] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc91c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_043_task869.bin
+           task[870] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc95c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_043_task870.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=871 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=707 number=1
+           subcore[1]: start=854 number=1
+           subcore[2]: start=707 number=1
+           subcore[3]: start=854 number=1
+           subcore[4]: start=991 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_044.bin (120 字节)
+           task[871] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc99c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_044_task871.bin
+           task[872] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffc9dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_044_task872.bin
+           task[873] flags=0 op_idx=61 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffca1c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_044_task873.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=874 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=708 number=1
+           subcore[1]: start=855 number=1
+           subcore[2]: start=708 number=1
+           subcore[3]: start=855 number=1
+           subcore[4]: start=992 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_045.bin (120 字节)
+           task[874] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffca2c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_045_task874.bin
+           task[875] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffca540
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_045_task875.bin
+           task[876] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffca7c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_045_task876.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=877 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=709 number=2
+           subcore[1]: start=856 number=2
+           subcore[2]: start=709 number=2
+           subcore[3]: start=856 number=2
+           subcore[4]: start=993 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_046.bin (240 字节)
+           task[877] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffca8c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_046_task877.bin
+           task[878] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcacc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_046_task878.bin
+           task[879] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcb0c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_046_task879.bin
+           task[880] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffcb4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_046_task880.bin
+           task[881] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffcb5c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_046_task881.bin
+           task[882] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffcb840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_046_task882.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=883 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=711 number=3
+           subcore[1]: start=858 number=3
+           subcore[2]: start=711 number=3
+           subcore[3]: start=858 number=3
+           subcore[4]: start=995 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_047.bin (360 字节)
+           task[883] flags=0 op_idx=65 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffcbac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_047_task883.bin
+           task[884] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcbbc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_047_task884.bin
+           task[885] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcbfc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_047_task885.bin
+           task[886] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcc3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_047_task886.bin
+           task[887] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcc7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_047_task887.bin
+           task[888] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffccbc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_047_task888.bin
+           task[889] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffcccc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_047_task889.bin
+           task[890] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffccf40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_047_task890.bin
+           task[891] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffcd1c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_047_task891.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=892 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=714 number=1
+           subcore[1]: start=861 number=1
+           subcore[2]: start=714 number=1
+           subcore[3]: start=861 number=1
+           subcore[4]: start=998 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_048.bin (120 字节)
+           task[892] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcd2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_048_task892.bin
+           task[893] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcd6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_048_task893.bin
+           task[894] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcdac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_048_task894.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=895 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=715 number=2
+           subcore[1]: start=862 number=2
+           subcore[2]: start=715 number=2
+           subcore[3]: start=862 number=2
+           subcore[4]: start=999 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_049.bin (240 字节)
+           task[895] flags=0 op_idx=72 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffcdec0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_049_task895.bin
+           task[896] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffcdfc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_049_task896.bin
+           task[897] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffce240
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_049_task897.bin
+           task[898] flags=0 op_idx=73 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffce4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_049_task898.bin
+           task[899] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffce5c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_049_task899.bin
+           task[900] flags=0 op_idx=75 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffce9c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_049_task900.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=901 task_number=1 task_counter=1 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=717 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_050.bin (40 字节)
+           task[901] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcedc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_050_task901.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=902 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=718 number=3
+           subcore[1]: start=864 number=3
+           subcore[2]: start=718 number=3
+           subcore[3]: start=864 number=3
+           subcore[4]: start=1001 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_051.bin (360 字节)
+           task[902] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcf1c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_051_task902.bin
+           task[903] flags=0 op_idx=77 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffcf5c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_051_task903.bin
+           task[904] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffcf6c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_051_task904.bin
+           task[905] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffcf940
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_051_task905.bin
+           task[906] flags=0 op_idx=78 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffcfbc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_051_task906.bin
+           task[907] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffcfcc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_051_task907.bin
+           task[908] flags=0 op_idx=79 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffd00c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_051_task908.bin
+           task[909] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd01c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_051_task909.bin
+           task[910] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd05c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_051_task910.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=911 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=721 number=2
+           subcore[1]: start=867 number=2
+           subcore[2]: start=721 number=2
+           subcore[3]: start=867 number=2
+           subcore[4]: start=1004 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_052.bin (240 字节)
+           task[911] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd09c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_052_task911.bin
+           task[912] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd0dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_052_task912.bin
+           task[913] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd11c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_052_task913.bin
+           task[914] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd15c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_052_task914.bin
+           task[915] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd19c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_052_task915.bin
+           task[916] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd1dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_052_task916.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=917 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=723 number=1
+           subcore[1]: start=869 number=1
+           subcore[2]: start=723 number=1
+           subcore[3]: start=869 number=1
+           subcore[4]: start=1006 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_053.bin (120 字节)
+           task[917] flags=0 op_idx=2 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd21c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_053_task917.bin
+           task[918] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd25c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_053_task918.bin
+           task[919] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd29c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_053_task919.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=920 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=724 number=1
+           subcore[1]: start=870 number=1
+           subcore[2]: start=724 number=1
+           subcore[3]: start=870 number=1
+           subcore[4]: start=1007 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_054.bin (120 字节)
+           task[920] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd2dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_054_task920.bin
+           task[921] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd31c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_054_task921.bin
+           task[922] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd35c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_054_task922.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=923 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=725 number=3
+           subcore[1]: start=871 number=3
+           subcore[2]: start=725 number=3
+           subcore[3]: start=871 number=3
+           subcore[4]: start=1008 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_055.bin (360 字节)
+           task[923] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd39c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_055_task923.bin
+           task[924] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd3dc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_055_task924.bin
+           task[925] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd41c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_055_task925.bin
+           task[926] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd45c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_055_task926.bin
+           task[927] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd49c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_055_task927.bin
+           task[928] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffd4dc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_055_task928.bin
+           task[929] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffd4ec0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_055_task929.bin
+           task[930] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffd5140
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_055_task930.bin
+           task[931] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffd53c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_055_task931.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=932 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=728 number=3
+           subcore[1]: start=874 number=3
+           subcore[2]: start=728 number=3
+           subcore[3]: start=874 number=3
+           subcore[4]: start=1011 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_056.bin (360 字节)
+           task[932] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd54c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task932.bin
+           task[933] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd58c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task933.bin
+           task[934] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd5cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task934.bin
+           task[935] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd60c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task935.bin
+           task[936] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd64c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task936.bin
+           task[937] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd68c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task937.bin
+           task[938] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd6cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task938.bin
+           task[939] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd70c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task939.bin
+           task[940] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd74c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_056_task940.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=941 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=731 number=1
+           subcore[1]: start=877 number=1
+           subcore[2]: start=731 number=1
+           subcore[3]: start=877 number=1
+           subcore[4]: start=1014 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_057.bin (120 字节)
+           task[941] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd78c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_057_task941.bin
+           task[942] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd7cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_057_task942.bin
+           task[943] flags=0 op_idx=16 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffd80c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_057_task943.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=944 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=732 number=3
+           subcore[1]: start=878 number=3
+           subcore[2]: start=732 number=3
+           subcore[3]: start=878 number=3
+           subcore[4]: start=1015 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_058.bin (360 字节)
+           task[944] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffd81c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_058_task944.bin
+           task[945] flags=0 op_idx=17 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffd8440
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_058_task945.bin
+           task[946] flags=0 op_idx=17 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffd86c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_058_task946.bin
+           task[947] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd87c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_058_task947.bin
+           task[948] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd8bc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_058_task948.bin
+           task[949] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd8fc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_058_task949.bin
+           task[950] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd93c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_058_task950.bin
+           task[951] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd97c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_058_task951.bin
+           task[952] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd9bc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_058_task952.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=953 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=735 number=3
+           subcore[1]: start=881 number=3
+           subcore[2]: start=735 number=3
+           subcore[3]: start=881 number=3
+           subcore[4]: start=1018 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_059.bin (360 字节)
+           task[953] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffd9fc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task953.bin
+           task[954] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffda3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task954.bin
+           task[955] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffda7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task955.bin
+           task[956] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdabc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task956.bin
+           task[957] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdafc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task957.bin
+           task[958] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdb3c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task958.bin
+           task[959] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdb7c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_059_task959.bin
+           task[960] flags=0 op_idx=27 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffdbbc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_059_task960.bin
+           task[961] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffdbcc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_059_task961.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=962 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=738 number=1
+           subcore[1]: start=884 number=1
+           subcore[2]: start=738 number=1
+           subcore[3]: start=884 number=1
+           subcore[4]: start=1021 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_060.bin (120 字节)
+           task[962] flags=0 op_idx=28 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffdbf40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_060_task962.bin
+           task[963] flags=0 op_idx=28 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffdc1c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_060_task963.bin
+           task[964] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdc2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_060_task964.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=965 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=739 number=1
+           subcore[1]: start=885 number=1
+           subcore[2]: start=739 number=1
+           subcore[3]: start=885 number=1
+           subcore[4]: start=1022 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_061.bin (120 字节)
+           task[965] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdc6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_061_task965.bin
+           task[966] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdcac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_061_task966.bin
+           task[967] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdcec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_061_task967.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=968 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=740 number=1
+           subcore[1]: start=886 number=1
+           subcore[2]: start=740 number=1
+           subcore[3]: start=886 number=1
+           subcore[4]: start=1023 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_062.bin (120 字节)
+           task[968] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdd2c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_062_task968.bin
+           task[969] flags=0 op_idx=33 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdd6c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_062_task969.bin
+           task[970] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffddac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_062_task970.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=971 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=741 number=2
+           subcore[1]: start=887 number=2
+           subcore[2]: start=741 number=2
+           subcore[3]: start=887 number=2
+           subcore[4]: start=1024 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_063.bin (240 字节)
+           task[971] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffddec0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_063_task971.bin
+           task[972] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffddfc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_063_task972.bin
+           task[973] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffde240
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_063_task973.bin
+           task[974] flags=0 op_idx=35 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffde4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_063_task974.bin
+           task[975] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffde5c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_063_task975.bin
+           task[976] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffde9c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_063_task976.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=977 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=743 number=3
+           subcore[1]: start=889 number=3
+           subcore[2]: start=743 number=3
+           subcore[3]: start=889 number=3
+           subcore[4]: start=1026 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_064.bin (360 字节)
+           task[977] flags=0 op_idx=37 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffdedc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_064_task977.bin
+           task[978] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffdeec0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_064_task978.bin
+           task[979] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffdf140
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_064_task979.bin
+           task[980] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffdf3c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_064_task980.bin
+           task[981] flags=0 op_idx=44 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffdf640
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_064_task981.bin
+           task[982] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffdf8c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_064_task982.bin
+           task[983] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdf9c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_064_task983.bin
+           task[984] flags=0 op_idx=45 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffdfdc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_064_task984.bin
+           task[985] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe01c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_064_task985.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=986 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=746 number=1
+           subcore[1]: start=892 number=1
+           subcore[2]: start=746 number=1
+           subcore[3]: start=892 number=1
+           subcore[4]: start=1029 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_065.bin (120 字节)
+           task[986] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe05c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_065_task986.bin
+           task[987] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe06c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_065_task987.bin
+           task[988] flags=0 op_idx=48 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe0940
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_065_task988.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=989 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=747 number=3
+           subcore[1]: start=893 number=3
+           subcore[2]: start=747 number=3
+           subcore[3]: start=893 number=3
+           subcore[4]: start=1030 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_066.bin (360 字节)
+           task[989] flags=0 op_idx=48 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe0bc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_066_task989.bin
+           task[990] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe0cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_066_task990.bin
+           task[991] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe10c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_066_task991.bin
+           task[992] flags=0 op_idx=51 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe14c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_066_task992.bin
+           task[993] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe18c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_066_task993.bin
+           task[994] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe1cc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_066_task994.bin
+           task[995] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe1dc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_066_task995.bin
+           task[996] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe2040
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_066_task996.bin
+           task[997] flags=0 op_idx=53 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe22c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_066_task997.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=998 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=750 number=3
+           subcore[1]: start=896 number=3
+           subcore[2]: start=750 number=3
+           subcore[3]: start=896 number=3
+           subcore[4]: start=1033 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_067.bin (360 字节)
+           task[998] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe23c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_067_task998.bin
+           task[999] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe27c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_067_task999.bin
+           task[1000] flags=0 op_idx=55 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe2bc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_067_task1000.bin
+           task[1001] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe2cc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_067_task1001.bin
+           task[1002] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe2f40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_067_task1002.bin
+           task[1003] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe31c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_067_task1003.bin
+           task[1004] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe32c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_067_task1004.bin
+           task[1005] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe36c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_067_task1005.bin
+           task[1006] flags=0 op_idx=59 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe3ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_067_task1006.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=1007 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=753 number=1
+           subcore[1]: start=899 number=1
+           subcore[2]: start=753 number=1
+           subcore[3]: start=899 number=1
+           subcore[4]: start=1036 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_068.bin (120 字节)
+           task[1007] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe3ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_068_task1007.bin
+           task[1008] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe42c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_068_task1008.bin
+           task[1009] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe46c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_068_task1009.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=1010 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=754 number=1
+           subcore[1]: start=900 number=1
+           subcore[2]: start=754 number=1
+           subcore[3]: start=900 number=1
+           subcore[4]: start=1037 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_069.bin (120 字节)
+           task[1010] flags=0 op_idx=61 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe4ac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_069_task1010.bin
+           task[1011] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe4bc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_069_task1011.bin
+           task[1012] flags=0 op_idx=62 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe4e40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_069_task1012.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=1013 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=755 number=1
+           subcore[1]: start=901 number=1
+           subcore[2]: start=755 number=1
+           subcore[3]: start=901 number=1
+           subcore[4]: start=1038 number=1
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_070.bin (120 字节)
+           task[1013] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe50c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_070_task1013.bin
+           task[1014] flags=0 op_idx=63 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe51c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_070_task1014.bin
+           task[1015] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe55c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_070_task1015.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=1016 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=756 number=2
+           subcore[1]: start=902 number=2
+           subcore[2]: start=756 number=2
+           subcore[3]: start=902 number=2
+           subcore[4]: start=1039 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_071.bin (240 字节)
+           task[1016] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe59c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_071_task1016.bin
+           task[1017] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe5dc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_071_task1017.bin
+           task[1018] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe5ec0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_071_task1018.bin
+           task[1019] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe6140
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_071_task1019.bin
+           task[1020] flags=0 op_idx=65 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe63c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_071_task1020.bin
+           task[1021] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe64c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_071_task1021.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=1022 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=758 number=3
+           subcore[1]: start=904 number=3
+           subcore[2]: start=758 number=3
+           subcore[3]: start=904 number=3
+           subcore[4]: start=1041 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_072.bin (360 字节)
+           task[1022] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe68c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_072_task1022.bin
+           task[1023] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe6cc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_072_task1023.bin
+           task[1024] flags=0 op_idx=69 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe70c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_072_task1024.bin
+           task[1025] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe74c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_072_task1025.bin
+           task[1026] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe75c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_072_task1026.bin
+           task[1027] flags=0 op_idx=70 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe7840
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_072_task1027.bin
+           task[1028] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe7ac0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_072_task1028.bin
+           task[1029] flags=0 op_idx=71 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe7bc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_072_task1029.bin
+           task[1030] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe7fc0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_072_task1030.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=1031 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=761 number=2
+           subcore[1]: start=907 number=2
+           subcore[2]: start=761 number=2
+           subcore[3]: start=907 number=2
+           subcore[4]: start=1044 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_073.bin (240 字节)
+           task[1031] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe83c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_073_task1031.bin
+           task[1032] flags=0 op_idx=72 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe87c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_073_task1032.bin
+           task[1033] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe88c0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_073_task1033.bin
+           task[1034] flags=0 op_idx=73 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe8b40
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_073_task1034.bin
+           task[1035] flags=0 op_idx=73 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe8dc0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_073_task1035.bin
+           task[1036] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe8ec0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_073_task1036.bin
+
+[SUBMIT] flags=0x1 core_mask=0x1 timeout=6000 task_start=1037 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=763 number=2
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_074.bin (80 字节)
+           task[1037] flags=0 op_idx=75 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe92c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_074_task1037.bin
+           task[1038] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe96c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_074_task1038.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff8109d04400 offset=0 size=102400
+
+[SUBMIT] flags=0x1 core_mask=0x1 timeout=6000 task_start=1039 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=765 number=3
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_075.bin (120 字节)
+           task[1039] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffe9ac0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_075_task1039.bin
+           task[1040] flags=0 op_idx=77 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffe9ec0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_075_task1040.bin
+           task[1041] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffe9fc0
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_075_task1041.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff8109d05000 offset=0 size=409600
+
+[SUBMIT] flags=0x1 core_mask=0x1 timeout=6000 task_start=1042 task_number=4 task_counter=4 priority=0 task_obj_addr=0xffffff8108818400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=768 number=4
+           task 数组: cpu=0x7f87085000 size=45056
+           → 原始 task 数组已存 /tmp/cm7/tasks_076.bin (160 字节)
+           task[1042] flags=0 op_idx=78 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0xfffea240
+             ★ regcmd 616 字节 (regcfg=69+slack=64) → /tmp/cm7/regcmd_076_task1042.bin
+           task[1043] flags=0 op_idx=78 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffea4c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_076_task1043.bin
+           task[1044] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0xfffea5c0
+             ★ regcmd 1040 字节 (regcfg=122+slack=64) → /tmp/cm7/regcmd_076_task1044.bin
+           task[1045] flags=0 op_idx=79 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0xfffea9c0
+             ★ regcmd 272 字节 (regcfg=26+slack=64) → /tmp/cm7/regcmd_076_task1045.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff81034f7400 offset=0 size=1638400
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff81034f7400 offset=0 size=1638400
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff8109d05000 offset=0 size=409600
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff8109d04400 offset=0 size=102400
+[ACTION] POWER_OFF (flags=21) value=0 ret=-1
+[MEM_DESTROY] handle=3 obj_addr=0xffffff810881e800 size=7782400
+[MEM_DESTROY] handle=2 obj_addr=0xffffff810881e400 size=8282112
+[MEM_DESTROY] handle=1 obj_addr=0xffffff8108818400 size=45056
+[MEM_DESTROY] handle=4 obj_addr=0xffffff81034f6c00 size=1228800
+[MEM_DESTROY] handle=7 obj_addr=0xffffff8109d04400 size=102400
+[MEM_DESTROY] handle=6 obj_addr=0xffffff8109d05000 size=409600
+[MEM_DESTROY] handle=5 obj_addr=0xffffff81034f7400 size=1638400

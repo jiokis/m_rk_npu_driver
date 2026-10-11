@@ -19,12 +19,19 @@ def main():
     tag = sys.argv[4] if len(sys.argv) > 4 else f"cm{cm}"
 
     os.makedirs(outdir, exist_ok=True)
-    os.environ["RKNPU_DUMP_DIR"] = outdir
-    os.environ.setdefault("RKNPU_DUMP_SLACK", "64")
+    # ⚠️ LD_PRELOAD 只对**新 exec 的进程**生效，在已启动的 Python 里设 os.environ 没用！
+    # 必须由 shell 在启动本脚本前设好，例如：
+    #   LD_PRELOAD=~/rknpu_capture.so RKNPU_DUMP_DIR=/tmp/x python3 capture-run.py ...
     so = os.path.expanduser("~/rknpu_capture.so")
     if not os.path.exists(so):
         print(f"❌ 找不到 {so}，请先编译 rknpu_capture.c"); return 1
-    os.environ["LD_PRELOAD"] = so
+    if so not in os.environ.get("LD_PRELOAD", ""):
+        print("❌ LD_PRELOAD 未生效 —— 请在 shell 里这样启动：")
+        print(f"   LD_PRELOAD={so} RKNPU_DUMP_DIR={outdir} python3 {sys.argv[0]} "
+              f"{model} {cm} {outdir} {tag}")
+        return 1
+    os.environ["RKNPU_DUMP_DIR"] = outdir
+    os.environ.setdefault("RKNPU_DUMP_SLACK", "64")
 
     from rknnlite.api import RKNNLite
     import numpy as np

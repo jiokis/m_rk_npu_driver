@@ -7,6 +7,7 @@ rknpu.cli — RKNPU 模拟开发环境命令行
   python3 -m rknpu.cli trace <task># 跟踪一个算子的完整执行
   python3 -m rknpu.cli state       # 跑完后转储寄存器状态
   python3 -m rknpu.cli regs        # 打印已知寄存器表
+  python3 -m rknpu.cli rebuild     # 重新生成全部算子并逐字节比对（最强验证）
 """
 from __future__ import annotations
 
@@ -132,6 +133,45 @@ def cmd_state(dumps=None):
     return 0
 
 
+def cmd_rebuild(dumps=None):
+    """对**全部**算子做「重新生成并逐字节比对」"""
+    from . import synth
+    mem, tasks, by_addr = (loader.load_corpus(dumps) if dumps
+                           else loader.load_corpus())
+    # 算子起点 = 每个连续同 op_idx 段的首个 task
+    starts, prev = [], None
+    for seq, idx, t in tasks:
+        if seq != 0:
+            continue
+        if prev is None or t.op_idx != prev:
+            starts.append(idx)
+        prev = t.op_idx
+
+    print(f"═══ 全部 {len(starts)} 个算子的重新生成验证 ═══\n")
+    print("  链部分**纯用内核公式算**，不看原字节；体部分逐字节比对\n")
+
+    good = 0; body_ok = chain_ok = body_all = chain_all = 0
+    bad_ops = []
+    for st in starts:
+        ok, info = synth.reconstruct_operator(mem, tasks, by_addr, st, verbose=False)
+        if not isinstance(info, tuple):
+            continue
+        b, c, n = info
+        body_ok += b; chain_ok += c; body_all += n; chain_all += n
+        if ok:
+            good += 1
+        else:
+            bad_ops.append((st, b, c, n))
+    print(f"  ✅ 完全重建成功 : {good} / {len(starts)} 个算子")
+    print(f"     体  逐字节一致: {body_ok} / {body_all} 段")
+    print(f"     链  纯公式重建: {chain_ok} / {chain_all} 段")
+    if bad_ops:
+        print(f"\n  ── 未完全成功的算子（前 8）──")
+        for st, b, c, n in bad_ops[:8]:
+            print(f"    task{st}: 体 {b}/{n}  链 {c}/{n}")
+    return 0
+
+
 def cmd_regs():
     print(f"═══ 已知寄存器表（{len(rm.REGISTERS)} 个）═══\n")
     by = defaultdict(list)
@@ -157,6 +197,7 @@ def main(argv):
     if c == "trace":  return cmd_trace(_num(argv[2]), _num(argv[3]) if len(argv) > 3 else 0)
     if c == "state":  return cmd_state()
     if c == "regs":   return cmd_regs()
+    if c == "rebuild":return cmd_rebuild()
     print(__doc__); return 1
 
 

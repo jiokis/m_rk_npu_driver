@@ -33,3 +33,6 @@ data/traces/*.log.gz
 *.tmp
 *.bak
 /tmp/
+
+# 别把运维探针误入库
+.autopush_probe

@@ -30,8 +30,8 @@
     {
       "tensor": "W per-group(g128, 沿N)",
       "bits": 8,
-      "rel_err": 0.05196012929081917,
-      "zero_frac": 0.10980224609375
+      "rel_err": 0.006602841429412365,
+      "zero_frac": 0.00926971435546875
     },
     {
       "tensor": "X per-tensor",
@@ -72,8 +72,8 @@
     {
       "tensor": "W per-group(g128, 沿N)",
       "bits": 4,
-      "rel_err": 0.6293066143989563,
-      "zero_frac": 0.9731025695800781
+      "rel_err": 0.12016250193119049,
+      "zero_frac": 0.15961074829101562
     },
     {
       "tensor": "X per-tensor",

@@ -27,7 +27,9 @@ DEFAULT = "/home/dunaandone/rkllm-convert/gguf-test/qwen2.5-0.5b-instruct-fp16.g
 # 挑有代表性的张量：注意力投影、FFN 三个、以及嵌入
 WANT = [
     "token_embd.weight",
-    "blk.0.attn_qkv.weight",
+    "blk.0.attn_q.weight",
+    "blk.0.attn_k.weight",
+    "blk.0.attn_v.weight",
     "blk.0.attn_output.weight",
     "blk.0.ffn_gate.weight",
     "blk.0.ffn_up.weight",
@@ -37,24 +39,39 @@ WANT = [
 
 
 def qdq(x, bits, axis=None, group=None, gaxis=-1):
+    """对称量化。
+
+    ⚠️ 曾经的 bug：per-group 分支里调用了 `one(b)`，而 `one` 用的是
+    `np.abs(b).max()`（**全局**最大），不是"每行每组"的最大。
+    结果变成"每 128 列共用一个全局 scale"，是个四不像，
+    于是 per-group 反而比 per-channel 差得多 —— 这违反了
+    「组的 max ≤ 行的 max，所以 per-group 严格不劣于 per-channel」这个硬结论。
+    看到结果违反硬理论时，先怀疑实现而不是怀疑理论。
+    """
     qmax = (1 << (bits - 1)) - 1
 
-    def one(b):
-        s = np.abs(b).max() / qmax
-        if s == 0:
-            return np.zeros_like(b)
-        return (np.clip(np.round(b / s), -qmax - 1, qmax) * s).astype(np.float32)
-
     if group is not None:
-        # 沿 gaxis 分组
         xm = np.moveaxis(x, gaxis, -1)
-        out = np.empty_like(xm)
-        L = xm.shape[-1]
-        for i in range(0, L, group):
-            out[..., i:i + group] = qdq(xm[..., i:i + group], bits, axis=None if gaxis == -1 and axis is None else axis)
-        return np.moveaxis(out, -1, gaxis)
+        shape = xm.shape
+        L = shape[-1]
+        pad = (-L) % group
+        if pad:
+            xm = np.pad(xm, [(0, 0)] * (xm.ndim - 1) + [(0, pad)])
+        g = xm.reshape(xm.shape[:-1] + (xm.shape[-1] // group, group))
+        s = np.abs(g).max(axis=-1, keepdims=True) / qmax      # 每组一个 scale
+        s = np.where(s == 0, 1.0, s)
+        q = np.clip(np.round(g / s), -qmax - 1, qmax) * s
+        q = q.reshape(xm.shape)
+        if pad:
+            q = q[..., :L]
+        return np.moveaxis(q, -1, gaxis).astype(np.float32)
+
     if axis is None:
-        return one(x)
+        s = np.abs(x).max() / qmax
+        if s == 0:
+            return np.zeros_like(x)
+        return (np.clip(np.round(x / s), -qmax - 1, qmax) * s).astype(np.float32)
+
     s = np.abs(x).max(axis=axis, keepdims=True) / qmax
     s = np.where(s == 0, 1.0, s)
     return (np.clip(np.round(x / s), -qmax - 1, qmax) * s).astype(np.float32)

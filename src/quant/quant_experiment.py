@@ -56,10 +56,19 @@ def qdq(x, bits, axis=None, group=None):
         return (np.clip(np.round(b / s), -qmax - 1, qmax) * s).astype(np.float32)
 
     if group is not None:
-        out = np.empty_like(x)
-        for i in range(0, x.shape[-1], group):
-            out[..., i:i + group] = qdq(x[..., i:i + group], bits, axis=axis)
-        return out
+        # ⚠️ 修正：原实现调用 one(block)，而 one 取的是**全局** max，
+        # 导致 per-group 实际是「每 group 一个全局 scale」，四不像，
+        # 结果反而比 per-channel 差 —— 违反「组的 max ≤ 行的 max」这个硬结论。
+        # 正确做法：reshape 成 (..., L//group, group)，在最后一维求 max。
+        pad = (-x.shape[-1]) % group
+        xm = np.pad(x, [(0, 0)] * (x.ndim - 1) + [(0, pad)]) if pad else x
+        g = xm.reshape(xm.shape[:-1] + (xm.shape[-1] // group, group))
+        sc = np.abs(g).max(axis=-1, keepdims=True) / qmax
+        sc = np.where(sc == 0, 1.0, sc)
+        q = (np.clip(np.round(g / sc), -qmax - 1, qmax) * sc).reshape(xm.shape)
+        if pad:
+            q = q[..., :x.shape[-1]]
+        return q.astype(np.float32)
     if axis is None:
         return one(x)
     s = np.abs(x).max(axis=axis, keepdims=True) / qmax
@@ -146,11 +155,13 @@ def main():
     print(f"    而它在输出指标上几乎看不出来（因为巨量通道仍被精确量化）。")
     print(f"  · Hadamard 旋转后零值占比降到 {xr4['zero_frac']*100:.1f}%（相对误差 "
           f"{x4['rel_err']*100:.2f}% → {xr4['rel_err']*100:.2f}%）")
-    print(f"  · per-token 本身也能压住：零值占比 {xt4['zero_frac']*100:.1f}%，"
-          f"旋转后进一步到 {xrt4['zero_frac']*100:.1f}%")
+    print(f"  · per-token **救不了** int4 激活：零值占比仍 {xt4['zero_frac']*100:.1f}%"
+          f"（病根是同一 token 内通道间幅度差 100 倍，那是 per-channel 才能治的）")
+    print(f"    旋转后才降到 {xrt4['zero_frac']*100:.1f}%")
     print()
-    print("  → 可落地组合：**权重 per-输出通道 + 激活 Hadamard 旋转后 per-tensor**。")
+    print("  → 可落地组合：**权重 per-group(g128) + 激活 Hadamard 旋转后量化**。")
     print("    前者是纯离线处理，后者只需在进入量化前做一次正交变换（Hadamard 只有加减法）。")
+    print("    注意：本脚本用的是合成数据；真实权重结论见 src/quant/quant_real.py 与 docs/08。")
 
     out = {"config": {"K": K, "N": N, "M": M, "group": GROUP,
                       "w_outlier_rows": W_OUTLIER_ROWS,

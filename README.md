@@ -73,17 +73,24 @@ rk3588-npu-re/
 │   ├── 15a-NVDLA对照报告-原始.md   子代理原始调研（含全表与来源）
 │   ├── 16-算子重建验证.md    ★★★ 221 个算子逐一重建，可验证范围 100%
 │   ├── 17-字段语义与模板生成.md ★★ 自证 12 个字段 + 可用的模板生成器
-│   └── 18-NPU结构-流水构建-指令集.md ★★★ 段完整布局 / 指令集 / 结构 / 利用率推论
+│   ├── 18-NPU结构-流水构建-指令集.md ★★★ 段完整布局 / 指令集 / 结构 / 利用率推论
+│   └── 19-利用率实验计划.md  ★ 三步计划 + CNA 串行瓶颈（核内天花板仅 16%）
 │
 ├── src/sim/                  ★★ CPU 侧 RKNPU 模拟开发环境（纯 Python，无依赖）
 │   ├── README.md
 │   ├── rknpu/                regcmd / regmap / machine / loader / cli
 │   └── tests/test_sim.py     冒烟测试（11 项全通过）
+├── scripts/npu/
+│   ├── capture-run.py              板子侧：跑一次推理并抓命令流（可选 core_mask）
+│   └── run-multicore-experiment.sh 步骤1：多核对比一键实验
 ├── src/analysis/
 │   ├── regcmd_disasm.py      ★ regcmd 反汇编器（list/show/analyze/xref/regmap）
 │   ├── regcmd_sim.py         ★ regcmd 软件模拟器（模拟仿真，零硬件风险）
 │   ├── chain_walk.py         ★ 顺 PC 链跟踪
 │   ├── chain_group.py        ★ 按链重建完整算子配置
+│   ├── dataflow.py           ★ 从张量地址还原数据流与缓冲复用
+│   ├── profile.py            ★ 算子画像（流水组成+工作量+数据通路）
+│   ├── pipeline.py           ★ 层间重叠空间与配置冗余度
 │   ├── find_emitter.py       ★ 闭源 .so 静态反汇编（RTTI/vtable 定位）
 │   └── xref_string.py        字符串交叉引用（低假阳性定位代码）
 ├── src/poc/rknpu_poc.c       最小用户态程序（不依赖 libdrm）

@@ -1,0 +1,32 @@
+# ── 逆向工程项目的忽略规则 ──
+
+# 编译产物
+*.o
+*.a
+*.so
+*.so.*
+*.elf
+*.bin
+build/
+out/
+
+# 大体积原始 dump（保留说明与解析脚本，原始二进制另存或压缩）
+data/dumps/*.raw
+data/dumps/*.bin
+data/traces/*.log.gz
+
+# 从板子拷回来的大文件
+*.rknn
+*.rkllm
+*.gguf
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# 临时
+*.tmp
+*.bak
+/tmp/

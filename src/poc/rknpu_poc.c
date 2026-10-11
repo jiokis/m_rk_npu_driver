@@ -320,6 +320,13 @@ static int do_submit(int n_cmds, const uint32_t (*cmds)[3], const char *label)
 	uint8_t *rc_cpu = mem_map_to_cpu(&rc);
 	if (!rc_cpu) { printf("  regcmd mmap 失败\n"); return -1; }
 
+	/* ★ 安全加固：先把整个缓冲清零。
+	   驱动实际让硬件读的是 regcfg_amount + 4 字节（RKNPU_PC_DATA_EXTRA_AMOUNT），
+	   多出来的那几个字节如果留在未初始化的 mmap 内存里，
+	   就可能被硬件当作一条指令解释 —— 这正是上次搞挂板子的同类风险。
+	   全零 = OP_NONE（reg=0/blk=0/val=0），读多了也无害。 */
+	memset(rc_cpu, 0, 4096);
+
 	for (int i = 0; i < n_cmds; i++)
 		put_cmd(rc_cpu, i, (uint16_t)cmds[i][0], cmds[i][1], (uint16_t)cmds[i][2]);
 	uint32_t amount = n_cmds * 8;

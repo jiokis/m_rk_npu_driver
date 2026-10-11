@@ -1,0 +1,172 @@
+{
+  "config": {
+    "K": 512,
+    "N": 512,
+    "M": 128,
+    "group": 128,
+    "w_outlier_rows": 8,
+    "x_outlier_chans": 4,
+    "x_outlier_scale": 100.0
+  },
+  "tensor_stats": [
+    {
+      "tensor": "W per-tensor",
+      "bits": 8,
+      "rel_err": 0.060507722198963165,
+      "zero_frac": 0.12874603271484375
+    },
+    {
+      "tensor": "W per-输出通道(列, axis=1)",
+      "bits": 8,
+      "rel_err": 0.007832867093384266,
+      "zero_frac": 0.010753631591796875
+    },
+    {
+      "tensor": "W per-输入通道(行, axis=0)",
+      "bits": 8,
+      "rel_err": 0.026281116530299187,
+      "zero_frac": 0.053508758544921875
+    },
+    {
+      "tensor": "W per-group(g128, 沿N)",
+      "bits": 8,
+      "rel_err": 0.05196012929081917,
+      "zero_frac": 0.10980224609375
+    },
+    {
+      "tensor": "X per-tensor",
+      "bits": 8,
+      "rel_err": 0.07519245147705078,
+      "zero_frac": 0.738067626953125
+    },
+    {
+      "tensor": "X per-token(行, axis=1)",
+      "bits": 8,
+      "rel_err": 0.03988431394100189,
+      "zero_frac": 0.41058349609375
+    },
+    {
+      "tensor": "X per-通道(列, axis=0)",
+      "bits": 8,
+      "rel_err": 0.006244828924536705,
+      "zero_frac": 0.00872802734375
+    },
+    {
+      "tensor": "W per-tensor",
+      "bits": 4,
+      "rel_err": 0.6447135210037231,
+      "zero_frac": 0.9853439331054688
+    },
+    {
+      "tensor": "W per-输出通道(列, axis=1)",
+      "bits": 4,
+      "rel_err": 0.14151056110858917,
+      "zero_frac": 0.18365859985351562
+    },
+    {
+      "tensor": "W per-输入通道(行, axis=0)",
+      "bits": 4,
+      "rel_err": 0.4383946359157562,
+      "zero_frac": 0.7406234741210938
+    },
+    {
+      "tensor": "W per-group(g128, 沿N)",
+      "bits": 4,
+      "rel_err": 0.6293066143989563,
+      "zero_frac": 0.9731025695800781
+    },
+    {
+      "tensor": "X per-tensor",
+      "bits": 4,
+      "rel_err": 0.16609428822994232,
+      "zero_frac": 0.9935455322265625
+    },
+    {
+      "tensor": "X per-token(行, axis=1)",
+      "bits": 4,
+      "rel_err": 0.12910117208957672,
+      "zero_frac": 0.9927520751953125
+    },
+    {
+      "tensor": "X per-通道(列, axis=0)",
+      "bits": 4,
+      "rel_err": 0.10933676362037659,
+      "zero_frac": 0.158203125
+    },
+    {
+      "tensor": "X(未旋转) per-tensor",
+      "bits": 4,
+      "rel_err": 0.16609428822994232,
+      "zero_frac": 0.9935455322265625
+    },
+    {
+      "tensor": "X(旋转后) per-tensor",
+      "bits": 4,
+      "rel_err": 0.15607598283432675,
+      "zero_frac": 0.2147979736328125
+    },
+    {
+      "tensor": "X(未旋转) per-token",
+      "bits": 4,
+      "rel_err": 0.12910117208957672,
+      "zero_frac": 0.9927520751953125
+    },
+    {
+      "tensor": "X(旋转后) per-token",
+      "bits": 4,
+      "rel_err": 0.08028874372074575,
+      "zero_frac": 0.0965576171875
+    },
+    {
+      "tensor": "X(未旋转) per-tensor",
+      "bits": 8,
+      "rel_err": 0.07519245147705078,
+      "zero_frac": 0.738067626953125
+    },
+    {
+      "tensor": "X(旋转后) per-tensor",
+      "bits": 8,
+      "rel_err": 0.008551371925825516,
+      "zero_frac": 0.01214599609375
+    },
+    {
+      "tensor": "X(未旋转) per-token",
+      "bits": 8,
+      "rel_err": 0.03988431394100189,
+      "zero_frac": 0.41058349609375
+    },
+    {
+      "tensor": "X(旋转后) per-token",
+      "bits": 8,
+      "rel_err": 0.004434919154599736,
+      "zero_frac": 0.0052337646484375
+    }
+  ],
+  "output_stats": [
+    {
+      "output": "W int4 per-输出通道",
+      "rel_err": 0.13292117416858673,
+      "cosine": 0.9913186430931091
+    },
+    {
+      "output": "X int4 per-tensor",
+      "rel_err": 0.21478012204170227,
+      "cosine": 0.9769642353057861
+    },
+    {
+      "output": "X 旋转 int4 per-tensor",
+      "rel_err": 0.24078033455597328,
+      "cosine": 0.9722128839839429
+    },
+    {
+      "output": "双 int4(旋转,per-tensor)",
+      "rel_err": 0.3238813579082489,
+      "cosine": 0.9509514570236206
+    },
+    {
+      "output": "双 int8(旋转,per-tensor)",
+      "rel_err": 0.017966454848647118,
+      "cosine": 0.999838650226593
+    }
+  ]
+}

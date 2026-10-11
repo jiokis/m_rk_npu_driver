@@ -124,6 +124,29 @@ static int is_rknpu_ioctl(unsigned long req, int *nr_out)
 
 /* ─────────── 全局状态 ─────────── */
 #define MAX_OBJ 256
+
+/*
+ * ★ 设备地址归一化（踩过的坑）
+ *
+ * 同一块内存，不同运行时给的地址**符号扩展位不一样**：
+ *   librknnrt (yolov5s)  : regcmd_addr = 0x0000000080c48580
+ *   librkllmrt (Qwen2.5) : regcmd_addr = 0xfffffffffed1e000
+ * 而 MEM_CREATE 报的 dma_addr 是 0x00000000fed1e000。
+ *
+ * ⚠️ 第一次修的时候我掩成 40 位（驱动 dma_mask = BIT_MASK(40)），
+ *    结果 0xfffffffffed1e000 & 0xFFFFFFFFFF = 0xfffed1e000，仍然对不上！
+ *    因为它是**从 32 位符号扩展**来的，bit32-39 也是 1。
+ *
+ * 正解：先看高 32 位是不是全 1（= 32 位有符号扩展），是就取低 32 位；
+ *       否则按 40 位 IOVA 取。
+ */
+static uint64_t norm_dma(uint64_t v)
+{
+	if ((v >> 32) == 0xFFFFFFFFULL)
+		return v & 0xFFFFFFFFULL;      /* 32 位符号扩展 */
+	return v & 0xFFFFFFFFFFULL;            /* 40 位 IOVA */
+}
+#define DMA_MASK40 0xFFFFFFFFFFULL
 struct objent {
 	int      used;
 	uint32_t handle;
@@ -195,9 +218,14 @@ static struct objent *find_by_obj(uint64_t obj)
  */
 static struct objent *find_by_dma(uint64_t dma)
 {
+	/* ★ 掩到 40 位再比：不同运行时的符号扩展位不一致
+	   （librknnrt 给 0x0000000080c48580，librkllmrt 给 0xfffffffffed1e000） */
+	uint64_t t = norm_dma(dma);
 	for (int i = 0; i < MAX_OBJ; i++) {
+		uint64_t base;
 		if (!g_obj[i].used) continue;
-		if (dma >= g_obj[i].dma_addr && dma < g_obj[i].dma_addr + g_obj[i].size)
+		base = norm_dma(g_obj[i].dma_addr);
+		if (t >= base && t < base + g_obj[i].size)
 			return &g_obj[i];
 	}
 	return NULL;
@@ -227,7 +255,7 @@ static void on_mem_create(struct rknpu_mem_create *a, long ret)
 		g_obj[i].used = 1;
 		g_obj[i].handle   = a->handle;
 		g_obj[i].obj_addr = a->obj_addr;
-		g_obj[i].dma_addr = a->dma_addr;
+		g_obj[i].dma_addr = norm_dma(a->dma_addr);
 		g_obj[i].size     = a->size;
 		g_obj[i].flags    = a->flags;
 		g_obj[i].cpu      = NULL;
@@ -367,7 +395,8 @@ static void on_submit(struct rknpu_submit *a, long ret)
 		uint32_t amt = t->regcfg_amount * 8 + g_slack;
 
 		if (rob && rob->cpu && amt) {
-			uint64_t off = t->regcmd_addr - rob->dma_addr;
+			uint64_t off = norm_dma(t->regcmd_addr)
+			             - norm_dma(rob->dma_addr);
 			if (off + amt <= rob->size) {
 				if (off + amt > rob->size) amt = rob->size - off;
 				snprintf(path, sizeof(path), "%s/regcmd_%03d_task%u.bin",

@@ -1,0 +1,9 @@
+# rknpu_capture 启动
+# pid=6245 dump_dir=/tmp/mb
+# sizeof(rknpu_task)=40 sizeof(rknpu_submit)=104 sizeof(rknpu_mem_create)=48
+# ioctl 编号: ACTION=0xc0086440 SUBMIT=0xc0686441 (低16位=0x6441)
+[ACTION] GET_HW_VERSION (flags=0) value=0x46495245 ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] POWER_ON (flags=20) value=0 ret=-1
+[ACTION] SET_PROC_NICE (flags=19) value=0xffffffed ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0

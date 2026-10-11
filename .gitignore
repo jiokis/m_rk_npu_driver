@@ -10,9 +10,10 @@
 build/
 out/
 
-# 大体积原始 dump（保留说明与解析脚本，原始二进制另存或压缩）
+# ── 注意：data/dumps/regcmd_*.bin 是**核心资产**，必须入库，不要忽略 ──
+# 它们只有几百字节/个，是逆向的全部依据
+# 只忽略真正的大体积派生文件
 data/dumps/*.raw
-data/dumps/*.bin
 data/traces/*.log.gz
 
 # 从板子拷回来的大文件

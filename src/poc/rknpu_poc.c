@@ -56,8 +56,10 @@ struct rknpu_submit      { uint32_t flags, timeout, task_start, task_number, tas
 #define ACT_GET_DRV_VERSION       1
 #define ACT_GET_FREQ              2
 #define ACT_ACT_RESET             6
+#define ACT_ACT_CLR_TOTAL_RW_AMOUNT 13
 #define ACT_GET_DT_WR_AMOUNT      14
 #define ACT_GET_DT_RD_AMOUNT      15
+#define ACT_GET_WT_RD_AMOUNT      16
 #define ACT_GET_TOTAL_RW_AMOUNT   17
 #define ACT_GET_IOMMU_EN          18
 #define ACT_POWER_ON              20
@@ -371,7 +373,7 @@ static int do_submit(int n_cmds, const uint32_t (*cmds)[3], const char *label)
 
 	long d = (long)(w1 - w0) + (long)(r1 - r0) + (long)(wt1 - wt0);
 	if (r == 0 && s.task_counter == s.task_number && d == 0)
-		printf("\n  ⚠️ **报成功但计数零增量 —— 这正是"假完成"的特征**（见 docs/07）\n");
+		printf("\n  ⚠️ **报成功但计数零增量 —— 这正是「假完成」的特征**（见 docs/07）\n");
 	else if (d > 0)
 		printf("\n  ✅ 有实际数据搬运，硬件真干活了\n");
 	else
@@ -389,7 +391,7 @@ static int do_submit(int n_cmds, const uint32_t (*cmds)[3], const char *label)
 static int stage_submit_safe(void)
 {
 	printf("═══ ③ 提交自制命令流（安全版：仅 OP_NONE）═══\n\n");
-	printf("  目的：验证"我们构造的命令流能被硬件接受并让 ioctl 返回"。\n");
+	printf("  目的：验证「我们构造的命令流能被硬件接受并让 ioctl 返回」。\n");
 	printf("  不做任何计算、不使能任何模块、不引用任何数据地址。\n\n");
 	static const uint32_t cmds[4][3] = {
 		{ 0x0000, 0x00000000, 0x0000 },   /* OP_NONE ×4 */
@@ -418,7 +420,7 @@ static int stage_submit_enable(void)
 	}
 	printf("═══ ③ 提交自制命令流（危险版：含 OP_ENABLE）═══\n\n");
 	printf("  ⚠️ 注意：本流**没有配置任何算子描述符**，仍然是不完整的实验。\n");
-	printf("     仅用于验证"使能位本身"的行为，不要指望它算出东西。\n\n");
+	printf("     仅用于验证「使能位本身」的行为，不要指望它算出东西。\n\n");
 	static const uint32_t cmds[4][3] = {
 		{ 0x0000, 0x00000000, 0x0041 },   /* OP_40 前置 */
 		{ 0x0000, 0x00000000, 0x0000 },   /* OP_NONE */

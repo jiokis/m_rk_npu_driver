@@ -8,6 +8,8 @@ rknpu.cli — RKNPU 模拟开发环境命令行
   python3 -m rknpu.cli state       # 跑完后转储寄存器状态
   python3 -m rknpu.cli regs        # 打印已知寄存器表
   python3 -m rknpu.cli rebuild     # 重新生成全部算子并逐字节比对（最强验证）
+  python3 -m rknpu.cli fields      # 打印已自证的字段语义表
+  python3 -m rknpu.cli retarget 0  # 模板生成：替换地址字段后重新生成并执行
 """
 from __future__ import annotations
 
@@ -172,6 +174,41 @@ def cmd_rebuild(dumps=None):
     return 0
 
 
+def cmd_fields():
+    from . import synth
+    synth.list_fields()
+    return 0
+
+
+def cmd_retarget(start, dumps=None):
+    """模板生成：拿真实算子当模板，替换地址字段后重新生成并执行"""
+    from . import synth
+    from .machine import Machine
+    mem, tasks, by_addr = (loader.load_corpus(dumps) if dumps
+                           else loader.load_corpus())
+    ov = {(0x0201, 0x1070): 0x30000000, (0x0201, 0x1110): 0x40000000}
+    print(f"═══ 模板生成：以 task{start} 所在算子为模板 ═══\n")
+    orig = synth.operator_segments(tasks, by_addr, start)
+    if not orig:
+        print("  找不到算子"); return 1
+    print(f"  源: {len(orig)} 段 · op{orig[0][1].op_idx} · "
+          f"{sum(t.amount for _, t in orig)} 条指令")
+    for k, v in ov.items():
+        print(f"  替换: {rc.block_name(k[0])} 0x{k[1]:04x} → {v:#x}")
+    smem, stasks, _ = synth.retarget_operator(mem, tasks, by_addr, start, ov)
+    m = Machine(smem)
+    segs = m.run_all(stasks)
+    found = {}
+    for s in segs:
+        for i in s.insns:
+            if (i.block, i.reg) in ov:
+                found[(i.block, i.reg)] = i.value
+    print(f"\n  生成: {len(stasks)} 段 · {m.stats['insns']} 条指令")
+    print(f"  链完整: {sum(1 for s in segs if s.chain is not None)}/{len(segs)}")
+    print(f"  地址替换: {'✅ 生效' if found == ov else '❌ 未生效'}")
+    return 0
+
+
 def cmd_regs():
     print(f"═══ 已知寄存器表（{len(rm.REGISTERS)} 个）═══\n")
     by = defaultdict(list)
@@ -198,6 +235,9 @@ def main(argv):
     if c == "state":  return cmd_state()
     if c == "regs":   return cmd_regs()
     if c == "rebuild":return cmd_rebuild()
+    if c == "fields": return cmd_fields()
+    if c == "retarget":
+        return cmd_retarget(_num(sys.argv[2]) if len(sys.argv) > 2 else 0)
     print(__doc__); return 1
 
 

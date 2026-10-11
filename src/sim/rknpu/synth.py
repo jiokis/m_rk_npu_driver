@@ -202,6 +202,107 @@ def reconstruct_operator(mem, tasks, by_addr, start_index, seq=0, verbose=True):
     return (bad == 0 and ok_body == len(segs)), (ok_body, ok_chain, len(segs))
 
 
+# ─────────────────────── 2c. 模板生成器（实用出口）───────────────────────
+@dataclass
+class FieldSpec:
+    """一个字段的语义与置信度"""
+    block: int
+    reg: int
+    name: str
+    confidence: str        # "确证" / "强" / "推测"
+    evidence: str
+
+
+# 我方能自证的字段语义（不依赖外部文档）
+FIELDS = [
+    FieldSpec(0x0201, 0x1070, "特征/输入张量地址", "确证",
+              "值精确落在 MEM_CREATE 的 dma_addr 缓冲区；NVDLA 对应 CDMA D_DAIN_ADDR_LOW"),
+    FieldSpec(0x0201, 0x1110, "权重张量地址", "确证",
+              "同上；NVDLA 无解压硬件，属 Rockchip 增量"),
+    FieldSpec(0x0201, 0x107c, "行跨距 (line stride)", "强",
+              "取值 1280/640/320/160/80 = 特征图宽的 2 倍，逐级减半"),
+    FieldSpec(0x0201, 0x1080, "行跨距 × (高−1)", "强",
+              "22 个算子上 0x1080/0x107c 恒为 639/79/39/19/9 = 高−1"),
+    FieldSpec(0x0801, 0x3014, "输出宽−1 (低16)", "确证",
+              "319/159/79/39/19 = 320/160/80/40/20 减 1，与 yolov5s 降采样序列完全一致"),
+    FieldSpec(0x0801, 0x3018, "输出通道−1", "确证",
+              "31/63/127/255/511 = 32/64/128/256/512 减 1，与 yolov5s 通道序列完全一致"),
+    FieldSpec(0x1001, 0x4030, "尺寸−1 (DPU)", "强", "319/159/79/39/19"),
+    FieldSpec(0x1001, 0x4058, "通道−1 (DPU)", "强", "511/255/127/63/31/15"),
+    FieldSpec(0x2001, 0x500c, "尺寸−1 (DPU_RDMA)", "强", "319/159/79/39/19"),
+    FieldSpec(0x2001, 0x5014, "通道−1 (DPU_RDMA)", "强", "511/255/127/63/31/15"),
+    FieldSpec(0x4001, 0x6014, "通道−1 (PPU)", "推测", "255/31"),
+    FieldSpec(0x8001, 0x7014, "通道−1 (PPU_RDMA)", "推测", "255/31"),
+]
+
+# 语义确证、**可以安全替换**的地址寄存器（模板生成器只动这些）
+SAFE_ADDR_REGS = sorted(rm.TENSOR_ADDR_REGS)
+
+
+def list_fields():
+    print(f"═══ 已自证的字段语义（{len(FIELDS)} 个）═══\n")
+    print(f"  {'block':<8} {'reg':>7}  {'置信':<6} {'名称':<22} 依据")
+    for f in FIELDS:
+        print(f"  {rc.block_name(f.block):<8} 0x{f.reg:04x}  {f.confidence:<6} "
+              f"{f.name:<22} {f.evidence}")
+
+
+def apply_overrides(body: List[rc.Insn], overrides: Dict[Tuple[int, int], int]
+                    ) -> List[rc.Insn]:
+    """把体里的指定寄存器替换成新值；未列出的原样保留。"""
+    out = []
+    for i in body:
+        v = overrides.get((i.block, i.reg), i.value)
+        out.append(rc.Insn(i.block, i.reg, v, index=i.index))
+    return out
+
+
+def retarget_operator(mem, tasks, by_addr, start_index,
+                      overrides: Dict[Tuple[int, int], int],
+                      base: int = 0x20000000, stride: int = 0x1000,
+                      flag_of=None):
+    """
+    **模板生成**：拿一个真实算子当模板，只替换已确证的地址字段，重新生成命令流。
+
+    为什么只换地址：地址字段的语义是**确证**的（值落在真实设备缓冲区），
+    形状/步长字段只到"强/推测"，贸然改动可能造出无效配置。
+    所以这是"能安全做的最小可用生成器"。
+
+    flag_of：可选 (task_index) -> 相位标志，默认沿用原值。
+    """
+    segs = operator_segments(tasks, by_addr, start_index)
+    if not segs:
+        return None
+    # 1) 先解码全部段
+    decoded = []
+    for i, t in segs:
+        ins = rc.decode(mem.read(t.addr, (t.amount + 2) * rc.INSN_SIZE),
+                        limit=t.amount + 2)
+        decoded.append((i, t, ins))
+    # 2) 分配新地址并重写
+    specs = []
+    for k, (i, t, ins) in enumerate(decoded):
+        body = apply_overrides(ins[:t.amount], overrides)
+        nxt = base + (k + 1) * stride if k + 1 < len(decoded) else 0
+        specs.append((body, nxt, t.index))
+
+    smem, stasks, sbyaddr = Memory(), [], {}
+    addrs = [base + k * stride for k in range(len(specs))]
+    for k, (body, nxt, orig_idx) in enumerate(specs):
+        next_amount = len(specs[k + 1][0]) if k + 1 < len(specs) else 0
+        flag = 0
+        if flag_of:
+            flag = flag_of(orig_idx)
+        spec = SegmentSpec(body=body, next_addr=nxt, next_amount=next_amount,
+                           flag=flag, op_idx=segs[k][1].op_idx)
+        data = spec.build()
+        smem.load(addrs[k], data)
+        tk = Task(seq=0, index=k, op_idx=spec.op_idx, addr=addrs[k],
+                  amount=spec.amount)
+        stasks.append((0, k, tk)); sbyaddr[addrs[k]] = tk
+    return smem, stasks, sbyaddr
+
+
 # ─────────────────────── 3. 自检 ───────────────────────
 def selftest(dumps: Optional[str] = None) -> int:
     """合成 → 执行 → 与真实结构对照。返回失败数。"""

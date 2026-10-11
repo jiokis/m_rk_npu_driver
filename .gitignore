@@ -10,9 +10,11 @@
 build/
 out/
 
-# ── 注意：data/dumps/regcmd_*.bin 是**核心资产**，必须入库，不要忽略 ──
-# 它们只有几百字节/个，是逆向的全部依据
-# 只忽略真正的大体积派生文件
+# ── 注意：上面的 *.bin 会把逆向样本一起挡掉，这里显式放行 ──
+# data/dumps/regcmd_*.bin 与 tasks_*.bin 是**核心资产**（每个仅几百字节），
+# 它们是整个逆向工作的全部依据，必须入库。
+!data/dumps/regcmd_*.bin
+!data/dumps/tasks_*.bin
 data/dumps/*.raw
 data/traces/*.log.gz
 

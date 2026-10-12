@@ -3,8 +3,11 @@
 布局与公式来自实测（docs/68 / docs/69），全部有交叉验证：
 
     布局： offset(ky, kx, oc, ic) = (ky*kw + kx) * TAP_STRIDE + oc * IC_ALIGN + ic
-           TAP_STRIDE = 256 = 16(oc 对齐) * 16(ic 对齐)
-           IC_ALIGN   = 16
+           ★ TAP_STRIDE = out_ch * IC_ALIGN      （**不是固定 256**）
+             实测：probe4 out_ch=16 ⇒ 9*16*16 = 2304 = WEIGHT_SIZE0 ✅
+                   probe5 out_ch= 2 ⇒ 9* 2*16 =  288 = WEIGHT_SIZE0 ✅
+                   probe5 的 Gemm (kw=kh=1, in=2048, out=2) ⇒ 1*1*2*2048 = 4096 ✅
+           IC_ALIGN   = 16  （align(in_ch, 16)）
            不存在的输入通道（ic >= in_ch）填 128
            真实零权重 → 0，且 **byte 0 是「精确零」标记，不适用反量化公式**
              （实测：oc1..15 的真值全为 0、字节全为 0；若套公式会得到
@@ -25,15 +28,20 @@ from __future__ import annotations
 
 import numpy as np
 
-TAP_STRIDE = 256      # 每个 kernel tap 的步长（实测）
+TAP_STRIDE_DEFAULT = 256   # out_ch=16 时的每 tap 步长（= 16 * IC_ALIGN）
 IC_ALIGN = 16         # 每个 oc 在一个 tap 内的步长 / ic 的对齐宽度
 ZERO_POINT = -128     # 权重与激活共用的零点（实测 + .cfg 一致）
 PAD_BYTE = 128        # 「不存在的输入通道」的填充码
 
 
-def weight_offset(ky: int, kx: int, oc: int, ic: int, kw: int) -> int:
+def tap_stride(out_ch: int) -> int:
+    """每个 kernel tap 的步长 = out_ch * align(in_ch, 16)。实测泛化（probe4/probe5）。"""
+    return out_ch * IC_ALIGN
+
+
+def weight_offset(ky: int, kx: int, oc: int, ic: int, kw: int, out_ch: int = 16) -> int:
     """权重张量里 (ky, kx, oc, ic) 在权重块内的字节偏移。"""
-    return (ky * kw + kx) * TAP_STRIDE + oc * IC_ALIGN + ic
+    return (ky * kw + kx) * tap_stride(out_ch) + oc * IC_ALIGN + ic
 
 
 def to_signed(b: np.ndarray) -> np.ndarray:
@@ -66,7 +74,7 @@ def load_weight_tensor(buf, in_ch: int, out_ch: int, kh: int, kw: int,
         for ky in range(kh):
             for kx in range(kw):
                 for ic in range(in_ch):
-                    off = base + weight_offset(ky, kx, oc, ic, kw)
+                    off = base + weight_offset(ky, kx, oc, ic, kw, out_ch)
                     q = to_signed(np.asarray([buf[off]]))[0]
                     # ★ byte 0 = 精确零（实测特判）
                     w[oc, ic, ky, kx] = 0.0 if q == 0 else (q - zero_point) * scale
@@ -75,4 +83,4 @@ def load_weight_tensor(buf, in_ch: int, out_ch: int, kh: int, kw: int,
 
 def expected_size(in_ch: int, out_ch: int, kh: int, kw: int) -> int:
     """该权重张量在 DRAM 里应占的字节数（= 寄存器 WEIGHT_SIZE0）。"""
-    return kh * kw * TAP_STRIDE
+    return kh * kw * tap_stride(out_ch)

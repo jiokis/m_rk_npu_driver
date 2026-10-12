@@ -1,0 +1,187 @@
+RK3588 NPU 寄存器覆盖率（可复现，由 src/analysis/reg_coverage.py 生成）
+================================================================================================
+来源 A（上游权威命名）：/home/dunaandone/rocket-upstream/kernel/rocket_registers.h
+来源 B（我们的观测）：  data/dumps2  （615 个 segment/tile）
+
+  上游头文件 #define REG_* 条数 : 199
+  我们观测到的不同寄存器偏移数 : 152
+  ├─ 交集（上游有名 + 我们观测到）: 150
+  ├─ 我们观测到、上游头文件没名字 : 2
+  └─ 上游有、我们从未观测到       : 49
+
+  ⇒ 我们观测到的寄存器里，98.7% 上游有名字；剩下 2 个上游也**在写**（见下）。
+  ⇒ 上游覆盖率 = 100.0%（按「上游是否知道这个偏移」计）
+
+── 我们观测到、但上游头文件未命名的 ──
+  0x003030  观测   402 次   mesa/rkt_regcmd.c: emit_raw(regs, CORE | 0x1, 0x3030, 0)
+  0x0040c4  观测   489 次   mesa/rkt_regcmd.c: emit_raw(regs, DPU | 0x1, 0x40c4, 0) —— DPU_SURFACE_ADD(0x40c0) 的高 32 位（低字 mask 0xfffffff0）
+
+── 上游有、我们从未观测到的（= 未探索的硬件路径）──
+  [PC]  8 个
+      VERSION_NUM@0x000004, INTERRUPT_MASK@0x000020, INTERRUPT_CLEAR@0x000024, INTERRUPT_STATUS@0x000028, INTERRUPT_RAW_STATUS@0x00002c, TASK_CON@0x000030, TASK_DMA_BASE_ADDR@0x000034, TASK_STATUS@0x00003c
+  [CNA]  4 个
+      S_STATUS@0x001000, S_POINTER@0x001004, OPERATION_ENABLE@0x001008, CLK_GATE@0x001090
+  [CORE]  4 个
+      S_STATUS@0x003000, S_POINTER@0x003004, OPERATION_ENABLE@0x003008, MAC_GATING@0x00300c
+  [DPU]  4 个
+      S_STATUS@0x004000, OPERATION_ENABLE@0x004008, RDMA_RDMA_S_STATUS@0x005000, RDMA_RDMA_OPERATION_ENABLE@0x005008
+  [PPU]  4 个
+      S_STATUS@0x006000, OPERATION_ENABLE@0x006008, RDMA_RDMA_S_STATUS@0x007000, RDMA_RDMA_OPERATION_ENABLE@0x007008
+  [DDMA]  12 个
+      CFG_OUTSTANDING@0x008000, RD_WEIGHT_0@0x008004, WR_WEIGHT_0@0x008008, CFG_ID_ERROR@0x00800c, RD_WEIGHT_1@0x008010, CFG_DMA_FIFO_CLR@0x008014, CFG_DMA_ARB@0x008018, CFG_DMA_RD_QOS@0x008020, CFG_DMA_RD_CFG@0x008024, CFG_DMA_WR_CFG@0x008028, CFG_DMA_WSTRB@0x00802c, CFG_STATUS@0x008030
+  [SDMA]  12 个
+      CFG_OUTSTANDING@0x009000, RD_WEIGHT_0@0x009004, WR_WEIGHT_0@0x009008, CFG_ID_ERROR@0x00900c, RD_WEIGHT_1@0x009010, CFG_DMA_FIFO_CLR@0x009014, CFG_DMA_ARB@0x009018, CFG_DMA_RD_QOS@0x009020, CFG_DMA_RD_CFG@0x009024, CFG_DMA_WR_CFG@0x009028, CFG_DMA_WSTRB@0x00902c, CFG_STATUS@0x009030
+  [GLOBAL]  1 个
+      OPERATION_ENABLE@0x00f008
+
+── 交集明细（偏移 | 上游名 | 观测次数）──
+  0x000000  PC        VERSION                                 4
+  0x000008  PC        OPERATION_ENABLE                      615
+  0x000010  PC        BASE_ADDRESS                          611
+  0x000014  PC        REGISTER_AMOUNTS                      615
+  0x00100c  CNA       CONV_CON1                             606
+  0x001010  CNA       CONV_CON2                             424
+  0x001014  CNA       CONV_CON3                             419
+  0x001020  CNA       DATA_SIZE0                            440
+  0x001024  CNA       DATA_SIZE1                            419
+  0x001028  CNA       DATA_SIZE2                            419
+  0x00102c  CNA       DATA_SIZE3                            439
+  0x001030  CNA       WEIGHT_SIZE0                          419
+  0x001034  CNA       WEIGHT_SIZE1                          419
+  0x001038  CNA       WEIGHT_SIZE2                          419
+  0x001040  CNA       CBUF_CON0                             655
+  0x001044  CNA       CBUF_CON1                             419
+  0x00104c  CNA       CVT_CON0                              419
+  0x001050  CNA       CVT_CON1                              419
+  0x001054  CNA       CVT_CON2                              419
+  0x001058  CNA       CVT_CON3                              419
+  0x00105c  CNA       CVT_CON4                              419
+  0x001060  CNA       FC_CON0                               419
+  0x001064  CNA       FC_CON1                               419
+  0x001068  CNA       PAD_CON0                              425
+  0x001070  CNA       FEATURE_DATA_ADDR                     468
+  0x001074  CNA       FC_CON2                               419
+  0x001078  CNA       DMA_CON0                              419
+  0x00107c  CNA       DMA_CON1                              419
+  0x001080  CNA       DMA_CON2                              419
+  0x001084  CNA       FC_DATA_SIZE0                         468
+  0x001088  CNA       FC_DATA_SIZE1                         468
+  0x001100  CNA       DCOMP_CTRL                            606
+  0x001104  CNA       DCOMP_REGNUM                          606
+  0x001110  CNA       DCOMP_ADDR0                           468
+  0x001140  CNA       DCOMP_AMOUNT0                         419
+  0x001144  CNA       DCOMP_AMOUNT1                         419
+  0x001148  CNA       DCOMP_AMOUNT2                         419
+  0x00114c  CNA       DCOMP_AMOUNT3                         419
+  0x001150  CNA       DCOMP_AMOUNT4                         419
+  0x001154  CNA       DCOMP_AMOUNT5                         419
+  0x001158  CNA       DCOMP_AMOUNT6                         419
+  0x00115c  CNA       DCOMP_AMOUNT7                         419
+  0x001160  CNA       DCOMP_AMOUNT8                         419
+  0x001164  CNA       DCOMP_AMOUNT9                         419
+  0x001168  CNA       DCOMP_AMOUNT10                        419
+  0x00116c  CNA       DCOMP_AMOUNT11                        419
+  0x001170  CNA       DCOMP_AMOUNT12                        419
+  0x001174  CNA       DCOMP_AMOUNT13                        419
+  0x001178  CNA       DCOMP_AMOUNT14                        419
+  0x00117c  CNA       DCOMP_AMOUNT15                        419
+  0x001180  CNA       CVT_CON5                              419
+  0x001184  CNA       PAD_CON1                              419
+  0x003010  CORE      MISC_CFG                              402
+  0x003014  CORE      DATAOUT_SIZE_0                        423
+  0x003018  CORE      DATAOUT_SIZE_1                        402
+  0x00301c  CORE      CLIP_TRUNCATE                         402
+  0x004004  DPU       S_POINTER                             557
+  0x00400c  DPU       FEATURE_MODE_CFG                      489
+  0x004010  DPU       DATA_FORMAT                           489
+  0x004014  DPU       OFFSET_PEND                           489
+  0x004020  DPU       DST_BASE_ADDR                         557
+  0x004024  DPU       DST_SURF_STRIDE                       489
+  0x004030  DPU       DATA_CUBE_WIDTH                       489
+  0x004034  DPU       DATA_CUBE_HEIGHT                      510
+  0x004038  DPU       DATA_CUBE_NOTCH_ADDR                  489
+  0x00403c  DPU       DATA_CUBE_CHANNEL                     489
+  0x004040  DPU       BS_CFG                                489
+  0x004044  DPU       BS_ALU_CFG                            489
+  0x004048  DPU       BS_MUL_CFG                            489
+  0x00404c  DPU       BS_RELUX_CMP_VALUE                    489
+  0x004050  DPU       BS_OW_CFG                             489
+  0x004054  DPU       BS_OW_OP                              489
+  0x004058  DPU       WDMA_SIZE_0                           557
+  0x00405c  DPU       WDMA_SIZE_1                           557
+  0x004060  DPU       BN_CFG                                489
+  0x004064  DPU       BN_ALU_CFG                            489
+  0x004068  DPU       BN_MUL_CFG                            489
+  0x00406c  DPU       BN_RELUX_CMP_VALUE                    489
+  0x004070  DPU       EW_CFG                                489
+  0x004074  DPU       EW_CVT_OFFSET_VALUE                   489
+  0x004078  DPU       EW_CVT_SCALE_VALUE                    489
+  0x00407c  DPU       EW_RELUX_CMP_VALUE                    489
+  0x004080  DPU       OUT_CVT_OFFSET                        489
+  0x004084  DPU       OUT_CVT_SCALE                         489
+  0x004088  DPU       OUT_CVT_SHIFT                         489
+  0x004090  DPU       EW_OP_VALUE_0                         489
+  0x004094  DPU       EW_OP_VALUE_1                         489
+  0x004098  DPU       EW_OP_VALUE_2                         489
+  0x00409c  DPU       EW_OP_VALUE_3                         489
+  0x0040a0  DPU       EW_OP_VALUE_4                         489
+  0x0040a4  DPU       EW_OP_VALUE_5                         489
+  0x0040a8  DPU       EW_OP_VALUE_6                         489
+  0x0040ac  DPU       EW_OP_VALUE_7                         489
+  0x0040c0  DPU       SURFACE_ADD                           489
+  0x004100  DPU       LUT_ACCESS_CFG                        513
+  0x004104  DPU       LUT_ACCESS_DATA                     12801
+  0x004108  DPU       LUT_CFG                               489
+  0x00410c  DPU       LUT_INFO                              489
+  0x004110  DPU       LUT_LE_START                          489
+  0x004114  DPU       LUT_LE_END                            489
+  0x004118  DPU       LUT_LO_START                          489
+  0x00411c  DPU       LUT_LO_END                            489
+  0x004120  DPU       LUT_LE_SLOPE_SCALE                    489
+  0x004124  DPU       LUT_LE_SLOPE_SHIFT                    489
+  0x004128  DPU       LUT_LO_SLOPE_SCALE                    489
+  0x00412c  DPU       LUT_LO_SLOPE_SHIFT                    489
+  0x005004  DPU       RDMA_RDMA_S_POINTER                   557
+  0x00500c  DPU       RDMA_RDMA_DATA_CUBE_WIDTH             489
+  0x005010  DPU       RDMA_RDMA_DATA_CUBE_HEIGHT            510
+  0x005014  DPU       RDMA_RDMA_DATA_CUBE_CHANNEL           489
+  0x005018  DPU       RDMA_RDMA_SRC_BASE_ADDR               557
+  0x00501c  DPU       RDMA_RDMA_BRDMA_CFG                   489
+  0x005020  DPU       RDMA_RDMA_BS_BASE_ADDR                557
+  0x005028  DPU       RDMA_RDMA_NRDMA_CFG                   489
+  0x00502c  DPU       RDMA_RDMA_BN_BASE_ADDR                557
+  0x005034  DPU       RDMA_RDMA_ERDMA_CFG                   489
+  0x005038  DPU       RDMA_RDMA_EW_BASE_ADDR                557
+  0x005040  DPU       RDMA_RDMA_EW_SURF_STRIDE              489
+  0x005044  DPU       RDMA_RDMA_FEATURE_MODE_CFG            489
+  0x005048  DPU       RDMA_RDMA_SRC_DMA_CFG                 489
+  0x00504c  DPU       RDMA_RDMA_SURF_NOTCH                  490
+  0x005064  DPU       RDMA_RDMA_PAD_CFG                     489
+  0x005068  DPU       RDMA_RDMA_WEIGHT                      489
+  0x00506c  DPU       RDMA_RDMA_EW_SURF_NOTCH               490
+  0x006004  PPU       S_POINTER                              58
+  0x00600c  PPU       DATA_CUBE_IN_WIDTH                     58
+  0x006010  PPU       DATA_CUBE_IN_HEIGHT                    58
+  0x006014  PPU       DATA_CUBE_IN_CHANNEL                   58
+  0x006018  PPU       DATA_CUBE_OUT_WIDTH                    58
+  0x00601c  PPU       DATA_CUBE_OUT_HEIGHT                   58
+  0x006020  PPU       DATA_CUBE_OUT_CHANNEL                  58
+  0x006024  PPU       OPERATION_MODE_CFG                     58
+  0x006034  PPU       POOLING_KERNEL_CFG                     58
+  0x006038  PPU       RECIP_KERNEL_WIDTH                     58
+  0x00603c  PPU       RECIP_KERNEL_HEIGHT                    58
+  0x006040  PPU       POOLING_PADDING_CFG                    58
+  0x006044  PPU       PADDING_VALUE_1_CFG                    58
+  0x006048  PPU       PADDING_VALUE_2_CFG                    58
+  0x006070  PPU       DST_BASE_ADDR                          58
+  0x00607c  PPU       DST_SURF_STRIDE                        58
+  0x006084  PPU       DATA_FORMAT                            58
+  0x0060dc  PPU       MISC_CTRL                              58
+  0x007004  PPU       RDMA_RDMA_S_POINTER                    58
+  0x00700c  PPU       RDMA_RDMA_CUBE_IN_WIDTH                58
+  0x007010  PPU       RDMA_RDMA_CUBE_IN_HEIGHT               58
+  0x007014  PPU       RDMA_RDMA_CUBE_IN_CHANNEL              58
+  0x00701c  PPU       RDMA_RDMA_SRC_BASE_ADDR                58
+  0x007024  PPU       RDMA_RDMA_SRC_LINE_STRIDE              58
+  0x007028  PPU       RDMA_RDMA_SRC_SURF_STRIDE              58
+  0x007030  PPU       RDMA_RDMA_DATA_FORMAT                  58

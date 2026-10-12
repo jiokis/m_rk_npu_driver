@@ -1,0 +1,72 @@
+  mangled 名 = N4onnc10CustomPassIN4rknn14RKNNTilingPassENS_10ModulePassEvEE
+★ RKNNTilingPass
+  RTTI 名 @vaddr 0x1a8d720
+  typeinfo @vaddr 0x1e09078
+  typeinfo 指针位于 @vaddr 0x1e090a0
+      ★ CODE @vaddr 0x1e090d0 = 0x391450
+      ★ CODE @vaddr 0x1e090d8 = 0x3914d0
+      ★ CODE @vaddr 0x1e090e0 = 0x3913f0
+      ★ CODE @vaddr 0x1e090e8 = 0x391420
+      ★ CODE @vaddr 0x1e090f0 = 0x284720
+      ★ CODE @vaddr 0x1e090f8 = 0x284730
+      ★ CODE @vaddr 0x1e09100 = 0x284740
+      ★ CODE @vaddr 0x1e09108 = 0x2bed20
+      ★ CODE @vaddr 0x1e09110 = 0x284750
+      ★ CODE @vaddr 0x1e09118 = 0x3854b0
+  ⇒ 10 个虚函数地址（gdb 断点用这些，需加加载基址）
+
+  mangled 名 = N4onnc10CustomPassIN4rknn19RKNNLayoutMatchPassENS_10ModulePassEvEE
+★ RKNNLayoutMatchPass
+  RTTI 名 @vaddr 0x1a8b7a0
+  typeinfo @vaddr 0x1e085e0
+  typeinfo 指针位于 @vaddr 0x1e08608
+      （向前 16 项内没有 .text 地址）
+
+  mangled 名 = N4onnc10CustomPassIN4rknn23RKNNWeightTransposePassENS_10ModulePassEvEE
+★ RKNNWeightTransposePass
+  RTTI 名 @vaddr 0x1a89980
+  typeinfo @vaddr 0x1e07f68
+  typeinfo 指针位于 @vaddr 0x1e07f90
+      ★ CODE @vaddr 0x1e07fa8 = 0x3170d0
+      ★ CODE @vaddr 0x1e07fb0 = 0x3170e0
+      ★ CODE @vaddr 0x1e07fb8 = 0x317080
+      ★ CODE @vaddr 0x1e07fc0 = 0x3170a0
+      ★ CODE @vaddr 0x1e07fc8 = 0x284720
+      ★ CODE @vaddr 0x1e07fd0 = 0x284730
+      ★ CODE @vaddr 0x1e07fd8 = 0x284740
+      ★ CODE @vaddr 0x1e07fe0 = 0x2bed20
+      ★ CODE @vaddr 0x1e07fe8 = 0x307e30
+      ★ CODE @vaddr 0x1e07ff0 = 0x311440
+      ★ CODE @vaddr 0x1e07ff8 = 0x317090
+  ⇒ 11 个虚函数地址（gdb 断点用这些，需加加载基址）
+
+  mangled 名 = N4onnc10CustomPassIN4rknn18RKNNPerChannelPrepENS_10ModulePassEvEE
+★ RKNNPerChannelPrep
+  RTTI 名 @vaddr 0x1a8c3a0
+  typeinfo @vaddr 0x1e08ce8
+  typeinfo 指针位于 @vaddr 0x1e08d10
+      ★ CODE @vaddr 0x1e08d28 = 0x3735d0
+      ★ CODE @vaddr 0x1e08d30 = 0x3735e0
+      ★ CODE @vaddr 0x1e08d38 = 0x373410
+      ★ CODE @vaddr 0x1e08d40 = 0x3735a0
+      ★ CODE @vaddr 0x1e08d48 = 0x284720
+      ★ CODE @vaddr 0x1e08d50 = 0x284730
+      ★ CODE @vaddr 0x1e08d58 = 0x284740
+      ★ CODE @vaddr 0x1e08d60 = 0x2bed20
+      ★ CODE @vaddr 0x1e08d68 = 0x284750
+      ★ CODE @vaddr 0x1e08d70 = 0x373420
+      ★ CODE @vaddr 0x1e08d78 = 0x3720c0
+  ⇒ 11 个虚函数地址（gdb 断点用这些，需加加载基址）
+
+  mangled 名 = N4onnc10CustomPassIN4rknn21RKNNFuseOptimizerPassENS_10ModulePassEvEE
+★ RKNNFuseOptimizerPass
+  RTTI 名 @vaddr 0x1a89380
+  typeinfo @vaddr 0x1e07d60
+  typeinfo 指针位于 @vaddr 0x1e07d88
+      ★ CODE @vaddr 0x1e07de0 = 0x303840
+      ★ CODE @vaddr 0x1e07de8 = 0x303850
+      ★ CODE @vaddr 0x1e07df0 = 0x303680
+      ★ CODE @vaddr 0x1e07df8 = 0x303810
+      ★ CODE @vaddr 0x1e07e00 = 0x284720
+  ⇒ 5 个虚函数地址（gdb 断点用这些，需加加载基址）
+

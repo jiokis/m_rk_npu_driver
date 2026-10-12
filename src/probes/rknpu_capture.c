@@ -165,6 +165,9 @@ static struct { int used; uint64_t offset; uint32_t handle; } g_map[MAX_MAP];
 
 static char g_dir[512];
 static int  g_dump_seq = 0;
+static int  g_dump_bufs = 0;          /* RKNPU_DUMP_BUFS: 0=关 1=仅首个提交 2=每次提交 */
+static size_t g_bufs_max = 32u << 20; /* RKNPU_DUMP_BUFS_MAX: 单缓冲区上限 */
+static int  g_buf_dumped_first = 0;
 static int  g_verbose = 0;
 static uint32_t g_slack = 0;
 static FILE *g_log;
@@ -189,6 +192,9 @@ static void cap_init(void)
 	g_log = fopen(path, "w");
 	g_verbose = getenv("RKNPU_CAPTURE_VERBOSE") != NULL;
 	{ const char *s = getenv("RKNPU_DUMP_SLACK"); if (s) g_slack = (uint32_t)strtoul(s, NULL, 0); }
+	{ const char *s = getenv("RKNPU_DUMP_BUFS"); if (s) g_dump_bufs = atoi(s); }
+	{ const char *s = getenv("RKNPU_DUMP_BUFS_MAX"); if (s) g_bufs_max = (size_t)strtoull(s, NULL, 0); }
+	logf_("# 缓冲区镜像 dump: mode=%d 单缓冲区上限=%zu\n", g_dump_bufs, g_bufs_max);
 
 	logf_("# rknpu_capture 启动\n");
 	logf_("# pid=%d dump_dir=%s\n", getpid(), g_dir);
@@ -339,6 +345,30 @@ static void on_submit(struct rknpu_submit *a, long ret)
 		      (unsigned long long)a->task_obj_addr);
 		pthread_mutex_unlock(&g_lock);
 		return;
+	}
+
+	/* ★ 缓冲区镜像：把 NPU 将要读/写的真实 DRAM 内容落盘。
+	 *   这是「全仿真」的前置 —— 没有精确的量化权重与布局，执行器无法验证。
+	 *   obj_addr 就是内核对象地址，用户态可直接解引用（见本文件顶部注释）。 */
+	if (g_dump_bufs && (g_dump_bufs == 2 || !g_buf_dumped_first)) {
+		size_t total = 0;
+		int nb = 0;
+		for (int i = 0; i < MAX_OBJ; i++) {
+			if (!g_obj[i].used || !g_obj[i].size) continue;
+			if (g_obj[i].size > g_bufs_max) continue;
+			/* cpu 只在进程 mmap 过该缓冲区时才有；否则用 obj_addr
+			 * （内核对象地址，本文件顶部注释说明用户态可直接解引用） */
+			void *ptr = g_obj[i].cpu ? g_obj[i].cpu : (void *)g_obj[i].obj_addr;
+			if (!ptr) continue;
+			char path[512];
+			snprintf(path, sizeof(path), "%s/buf_%03d_dma%llx.bin", g_dir,
+			         g_dump_seq, (unsigned long long)g_obj[i].dma_addr);
+			hexdump_file(path, ptr, (size_t)g_obj[i].size);
+			total += g_obj[i].size; nb++;
+		}
+		g_buf_dumped_first = 1;
+		logf_("           [BUFS] 落盘 %d 个缓冲区，共 %zu 字节（seq=%d）\n",
+		      nb, total, g_dump_seq);
 	}
 
 	logf_("           task 数组: cpu=%p size=%llu\n", tobj->cpu,

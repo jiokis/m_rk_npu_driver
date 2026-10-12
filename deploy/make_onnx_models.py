@@ -458,6 +458,46 @@ def build_ab_deep24(size):
 def build_ab_deep48(size):
     return _ab_deep(Builder("ab_deep48", size), size, 48)
 
+
+# ─────────── 受控：真 BatchNormalization（可折叠） vs 假 BN（Mul+Add+Relu）───────────
+def bn_real(self, x, ch):
+    """真 BN：量化时会被折进 Conv，不产生独立的逐元素算子"""
+    sc = self._init([ch], kind="scale", name=self._name("bnsc"))
+    bi = self._init([ch], kind="const", name=self._name("bnbi"))
+    mn = self._init([ch], kind="const", name=self._name("bnmn"))
+    vr = self._init([ch], kind="scale", name=self._name("bnvr"))
+    y = self._name("bn")
+    self.nodes.append(helper.make_node(
+        "BatchNormalization", [x, sc, bi, mn, vr], [y], epsilon=1e-5, name=y))
+    r = self._name("relu")
+    self.nodes.append(helper.make_node("Relu", [y], [r], name=r))
+    return r
+
+
+def _ab_bn(b, size, n, real_bn):
+    x = b.conv("input", 32, 3, 2, in_ch=3)
+    x = bn_real(b, x, 32) if real_bn else b.bn_relu(x, 32)
+    ch = 32
+    for i in range(n):
+        out_ch = 32 if (i % 3) else 64
+        x = b.conv(x, out_ch, 3, 1, in_ch=ch)
+        x = bn_real(b, x, out_ch) if real_bn else b.bn_relu(x, out_ch)
+        ch = out_ch
+        if i % 6 == 5:
+            x = b.maxpool(x)
+    x = b.global_avgpool(x)
+    x = b.flatten(x)
+    x = b.gemm(x, 10, ch)
+    return b.finish(x, [1, 10])
+
+
+def build_ab_bn24(size):
+    return _ab_bn(Builder("ab_bn24", size), size, 24, True)
+
+
+def build_ab_fakebn24(size):
+    return _ab_bn(Builder("ab_fakebn24", size), size, 24, False)
+
 BUILDERS = {
     "tiny_cnn": build_tiny_cnn,
     "dwsep": build_dwsep,
@@ -475,6 +515,8 @@ BUILDERS = {
     "ab_deep12": build_ab_deep12,
     "ab_deep24": build_ab_deep24,
     "ab_deep48": build_ab_deep48,
+    "ab_bn24": build_ab_bn24,
+    "ab_fakebn24": build_ab_fakebn24,
 }
 
 

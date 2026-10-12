@@ -52,12 +52,25 @@ fi
 
 # ── 3) SSH 开机自启 ────────────────────────────────────────
 echo "▶ SSH"
-if systemctl list-unit-files | grep -q '^ssh\.service'; then
-  systemctl enable ssh >/dev/null 2>&1 || true
-  systemctl start  ssh >/dev/null 2>&1 || true
-  echo "  ssh.service: $(systemctl is-enabled ssh 2>/dev/null) / $(systemctl is-active ssh 2>/dev/null)"
+# 这里也踩过坑：原来用 `systemctl list-unit-files | grep -q '^ssh\.service'` 判断，
+# 但板子上 ssh.service 明明是 loaded/active/running，grep 却没命中（列表输出格式
+# 在不同 systemd 版本/终端宽度下不一致）。改成直接问 systemctl，别去解析列表文本。
+SSH_UNIT=""
+for u in ssh.service sshd.service ssh.socket; do
+  if systemctl list-unit-files --no-legend "$u" 2>/dev/null | grep -q .; then SSH_UNIT="$u"; break; fi
+done
+if [ -z "$SSH_UNIT" ]; then
+  # 最后兜底：只要 22 端口有人在听，就认为远程访问是通的，不做改动
+  if ss -ltn 2>/dev/null | grep -q ':22 '; then
+    echo "  ⚠ 没找到 ssh 相关 unit，但 22 端口在监听 —— 远程访问本身没问题，跳过"
+  else
+    echo "  ✗ 既没有 ssh unit，22 端口也没人听 —— 远程访问有风险"
+  fi
 else
-  echo "  ⚠ 没找到 ssh.service"
+  systemctl enable "$SSH_UNIT" >/dev/null 2>&1 || true
+  systemctl start  "$SSH_UNIT" >/dev/null 2>&1 || true
+  echo "  $SSH_UNIT: enabled=$(systemctl is-enabled "$SSH_UNIT" 2>/dev/null) active=$(systemctl is-active "$SSH_UNIT" 2>/dev/null)"
+  echo "  22 端口: $(ss -ltn 2>/dev/null | grep -c ':22 ') 个监听"
 fi
 
 # ── 4) 顺手清掉 sources 里那个死掉的 Docker 代理 ───────────

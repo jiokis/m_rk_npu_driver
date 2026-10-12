@@ -1,0 +1,34 @@
+DynamicCMD_StackcalcBranchAddrDe_clearChannelPad_AfterProcUnpack
+Failed to config layer: '%s', illegal tiling method %d
+Meet invalid dst tensor for unpack!
+Meet invalid src tensor layout for UnpackWeight, src tensor layout: %s, dimension size: %d!
+Meet invalid src tensor layout for unpack NHWC, src tensor layout: %s, dimension size: %d!
+Meet invalid src tensor layout for unpack RT: src tensor layout = %d, dimension size = %d!
+Meet invalid src tensor layout for unpack, src tensor layout: %s, dimension size: %d!
+Meet invalid src tensor shape for unpack NHWC, orign dimension size: %d!
+Meet invalid src tensor shape for unpack RT: src tensor origin dimention size = %d !
+Meet invalid src tensor shape for unpack, orign dimension size: %d!
+Meet unsupported unpack dst dtype: %s
+N4onnc10CustomPassIN4rknn14RKNNTilingPassENS_10ModulePassEvEE
+N4rknn14RKNNTilingPassE
+N4rknn2f212DeconvTilingE
+N4rknn7runtime2f212DeconvTilingE
+St23_Sp_counted_ptr_inplaceIN4rknn22RKNNOperatorTilingInfoESaIS1_ELN9__gnu_cxx12_Lock_policyE2EE
+Tiling failed
+UnpackTile
+UnpackTileCopy
+Unpack_T: equiv_channels(%d) > limitations(%d)
+Unpack_T: not support width*height % 8 !=0
+Unsupported unpack nhwc quant!
+_UnpackBH
+_UnpackBL
+_unpack_H
+emitUnpack unsupport!
+emitUnpackRegtasks: align_surf(%d) > notch_limit(%d)
+emitUnpackRegtasks: equiv_channels(%d) > limitations(%d)
+unpack
+unpack_A
+unpack_AH
+unpack_B
+unpack_BH
+unpack_out

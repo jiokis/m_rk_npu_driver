@@ -1,40 +1,5 @@
-# ── 逆向工程项目的忽略规则 ──
-
-# 编译产物 / Python 缓存
+# 转换产物 / 标定集：体积大且可复现（make_onnx_models.py + convert_rknn.py 能重建）
+deploy/calib/
+deploy/rknn/
 __pycache__/
 *.pyc
-*.o
-*.a
-*.so
-*.so.*
-*.elf
-*.bin
-build/
-out/
-
-# ── 注意：上面的 *.bin 会把逆向样本一起挡掉，这里显式放行 ──
-# data/dumps/regcmd_*.bin 与 tasks_*.bin 是**核心资产**（每个仅几百字节），
-# 它们是整个逆向工作的全部依据，必须入库。
-!data/dumps/regcmd_*.bin
-!data/dumps/tasks_*.bin
-data/dumps/*.raw
-data/traces/*.log.gz
-
-# 从板子拷回来的大文件
-*.rknn
-*.rkllm
-*.gguf
-
-# 编辑器 / 系统
-.vscode/
-.idea/
-*.swp
-.DS_Store
-
-# 临时
-*.tmp
-*.bak
-/tmp/
-
-# 别把运维探针误入库
-.autopush_probe

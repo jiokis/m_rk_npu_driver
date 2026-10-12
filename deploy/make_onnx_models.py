@@ -154,6 +154,11 @@ class Builder:
         self.nodes.append(helper.make_node("Reshape", [x, sh], [y], name=y))
         return y
 
+    def mul_broadcast(self, a, b):
+        y = self._name("se_mul")
+        self.nodes.append(helper.make_node("Mul", [a, b], [y], name=y))
+        return y
+
     def sigmoid(self, x):
         y = self._name("sg")
         self.nodes.append(helper.make_node("Sigmoid", [x], [y], name=y))
@@ -317,6 +322,38 @@ def build_wide1x1(size):
     return b.finish(x, [1, 10])
 
 
+
+# ─────────────── 受控 A/B：SE 块（全局池化 + 广播乘）是不是提交切分的驱动 ───────────────
+def _ab_common(b, size, se):
+    """同一骨干，唯一变量是 se=True/False"""
+    x = b.conv("input", 32, 3, 2, in_ch=3)
+    x = b.bn_relu(x, 32)
+    ch = 32
+    for i, out_ch in enumerate((64, 128, 256, 256, 256, 256)):
+        x = b.conv(x, out_ch, 3, 1, in_ch=ch)
+        x = b.bn_relu(x, out_ch)
+        ch = out_ch
+        if se:
+            # SE：全局平均池化 -> Sigmoid -> 与特征图逐通道相乘
+            g = b.global_avgpool(x)              # [1,ch,1,1]
+            g = b.conv(g, ch, 1, 1, in_ch=ch)    # 用 1x1 conv 代替 FC（同语义，便于导出）
+            g = b.sigmoid(g)
+            x = b.mul_broadcast(x, g)            # Mul
+        if i in (1, 3, 5):
+            x = b.maxpool(x)
+    x = b.global_avgpool(x)
+    x = b.flatten(x)
+    x = b.gemm(x, 10, ch)
+    return b.finish(x, [1, 10])
+
+
+def build_ab_se(size):
+    return _ab_common(Builder("ab_se", size), size, True)
+
+
+def build_ab_nose(size):
+    return _ab_common(Builder("ab_nose", size), size, False)
+
 BUILDERS = {
     "tiny_cnn": build_tiny_cnn,
     "dwsep": build_dwsep,
@@ -324,6 +361,8 @@ BUILDERS = {
     "multiscale": build_multiscale,
     "bottleneck": build_bottleneck,
     "wide1x1": build_wide1x1,
+    "ab_se": build_ab_se,
+    "ab_nose": build_ab_nose,
 }
 
 

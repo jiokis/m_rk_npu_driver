@@ -140,6 +140,70 @@ def analyze2(bin_path):
     return d
 
 
+def make_probe3(out_path, size=32, oc=16, ic=3, k=3):
+    """斜坡权重：W 的每个元素 = 它在逻辑张量里的线性序号（归一化到 [0,1]）。
+    ⇒ 量化后的字节随序号单调 ⇒ 从 (字节范围, 浮点范围) 反解 scale 与 zero_point。"""
+    import onnx
+    from onnx import TensorProto, helper, numpy_helper
+    nodes, inits = [], []
+    n = oc * ic * k * k
+    ramp = (np.arange(n, dtype=np.float32) / max(n - 1, 1)).reshape(oc, ic, k, k)
+    inits.append(numpy_helper.from_array(ramp, "W"))
+    nodes.append(helper.make_node("Conv", ["input", "W"], ["c"], kernel_shape=[k, k],
+                                  strides=[1, 1], pads=[1, 1, 1, 1], name="conv"))
+    nodes.append(helper.make_node("Relu", ["c"], ["r"], name="relu"))
+    nodes.append(helper.make_node("GlobalAveragePool", ["r"], ["g"], name="gap"))
+    nodes.append(helper.make_node("Flatten", ["g"], ["f"], axis=1, name="flat"))
+    Wf = np.zeros((2, oc), dtype=np.float32); Wf[0, 0] = 1.0; Wf[1, 1] = 1.0
+    inits.append(numpy_helper.from_array(Wf, "Wf"))
+    inits.append(numpy_helper.from_array(np.zeros(2, dtype=np.float32), "Bf"))
+    nodes.append(helper.make_node("Gemm", ["f", "Wf", "Bf"], ["output"], transB=1, name="fc"))
+    g = helper.make_graph(nodes, "probe3", [
+        helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, ic, size, size])
+    ], [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, 2])], inits)
+    m = helper.make_model(g, opset_imports=[helper.make_opsetid("", 13)]); m.ir_version = 8
+    onnx.checker.check_model(m); onnx.save(m, out_path)
+    print(f"已生成 {out_path}：斜坡权重 {n} 个，浮点范围 [0.0, 1.0]（步长 {1/max(n-1,1):.6f}）")
+    return out_path
+
+
+def analyze3(bin_path, off, size, oc=16, ic=3, k=3):
+    """从字节反解 scale / zero_point：斜坡的字节应随序号单调"""
+    import numpy as np
+    d = np.frombuffer(open(bin_path, "rb").read(), dtype=np.uint8)
+    W = d[off:off + size]
+    al = 16   # align(in_ch,16)
+    n = oc * ic * k * k
+    ramp = (np.arange(n, dtype=np.float32) / max(n - 1, 1))
+    # 按布局取回逻辑顺序：idx = ((oc*kh+ky)*kw+kx)*al + ic
+    q = np.zeros(n, dtype=np.int16); f = np.zeros(n, dtype=np.float32)
+    i = 0
+    for o in range(oc):
+        for ky in range(k):
+            for kx in range(k):
+                for c in range(ic):
+                    q[i] = W[((o * k + ky) * k + kx) * al + c]
+                    i += 1
+    order = np.argsort(ramp)
+    print(f"按布局取回 {n} 个权重字节；与浮点斜坡的相关性：")
+    print(f"  浮点最小 {ramp.min():.6f} → 字节 {q[order[0]]}")
+    print(f"  浮点最大 {ramp.max():.6f} → 字节 {q[order[-1]]}")
+    # 线性拟合 q ≈ zp + f/scale
+    A = np.vstack([np.ones(n), ramp]).T
+    coef, res, *_ = np.linalg.lstsq(A, q.astype(float), rcond=None)
+    zp_est, inv_scale = coef
+    scale = 1.0 / inv_scale if inv_scale else float('nan')
+    print(f"  线性拟合: q ≈ {zp_est:.3f} + f × {inv_scale:.3f}")
+    print(f"  ⇒ zero_point ≈ {zp_est:.1f}   scale ≈ {scale:.8f}（= 1/{inv_scale:.3f}）")
+    pred = np.round(zp_est + ramp * inv_scale)
+    err = np.abs(pred - q)
+    print(f"  拟合残差: 最大 {err.max():.1f}，中位 {np.median(err):.1f}（±1 内占比 "
+          f"{100*np.mean(err<=1):.1f}%）")
+    print(f"  前 12 个（逻辑序）: 浮点 {np.round(ramp[:12],4).tolist()}")
+    print(f"                     字节 {q[:12].tolist()}")
+    return q, ramp
+
+
 def analyze(bin_path, w1_oc=16, w1_ic=3, k=3, w2_oc=8, w2_ic=16):
     d = np.frombuffer(open(bin_path, "rb").read(), dtype=np.uint8)
     print(f"文件 {bin_path}：{len(d)} 字节")
@@ -164,6 +228,10 @@ def main():
     ap.add_argument("--make", action="store_true")
     ap.add_argument("--make2", action="store_true")
     ap.add_argument("--analyze2", default=None)
+    ap.add_argument("--make3", action="store_true")
+    ap.add_argument("--analyze3", default=None)
+    ap.add_argument("--off", type=int, default=0)
+    ap.add_argument("--size", type=int, default=2304)
     ap.add_argument("--analyze", default=None)
     ap.add_argument("--out", default=os.path.join(HERE, "onnx", "probe_layout.onnx"))
     a = ap.parse_args()
@@ -177,6 +245,11 @@ def main():
         make_probe2(a.out)
     if a.analyze2:
         analyze2(a.analyze2)
+    if a.make3:
+        os.makedirs(os.path.dirname(a.out), exist_ok=True)
+        make_probe3(a.out)
+    if a.analyze3:
+        analyze3(a.analyze3, a.off, a.size)
     if not a.make and not a.analyze:
         print(__doc__)
     return 0

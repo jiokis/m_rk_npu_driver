@@ -24,6 +24,9 @@ import os
 import sys
 
 FLOOR_DEFAULT = 67.4
+# 多核（core_mask=7/3）实测达到过的最大提交 = 20~21 tile（docs/90）。
+# ⚠️ 这是**同类条件下**的实测值；1 核能到 588，但那个锚点对多核不适用（docs/90 教训）。
+TILE_PER_SUBMIT_TARGET = 20
 
 
 def analyze(dump_dir, floor_us=FLOOR_DEFAULT, cores=3, timer_log=None):
@@ -74,6 +77,10 @@ def analyze(dump_dir, floor_us=FLOOR_DEFAULT, cores=3, timer_log=None):
         "save_copy_rounds_ms": only60 * floor_us / 1000.0,      # ★ 只按轮算（docs/86）
         "deletable_copies": deletable,
         "merge_curve_ms": {p: n * p * floor_us / 1000.0 for p in (0.25, 0.50, 0.75)},
+        # ★ 有实测依据的靶子：多核自己达到过的最大提交 = 20~21 tile（docs/90）
+        "merge_target_submits": max(1, math.ceil(n_tiles / TILE_PER_SUBMIT_TARGET)),
+        "merge_target_save_ms": max(0, n - max(1, math.ceil(n_tiles / TILE_PER_SUBMIT_TARGET)))
+                                * floor_us / 1000.0,
         "floor_us": floor_us, "cores": cores,
     }
 
@@ -91,7 +98,10 @@ def report(dump_dir, floor_us=FLOOR_DEFAULT, cores=3):
     print(f"     可删的重复写搬运 {r['deletable_copies']} 个   [前置条件已验证，docs/86]")
     print(f"  ── 合并提交（docs/87，参数化）")
     for p, v in r["merge_curve_ms"].items():
-        print(f"     提交数减 {int(p*100)}% ⇒ 省 {v:.2f} ms")
+        print(f"     提交数减 {int(p*100)}% ⇒ 省 {v:.2f} ms   [无依据的假设，docs/87]")
+    print(f"     ★ 按多核实测靶子（{TILE_PER_SUBMIT_TARGET} tile/提交，docs/90）："
+          f"提交 {r['n_submit']} → {r['merge_target_submits']}，省 {r['merge_target_save_ms']:.2f} ms"
+          f"   [有实测依据]")
     return r
 
 

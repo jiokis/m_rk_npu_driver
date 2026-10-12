@@ -23,6 +23,8 @@ set -euo pipefail
 
 [ "$(id -u)" = "0" ] || { echo "请用 root 运行（sudo）" >&2; exit 1; }
 
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 SVC=/etc/systemd/system/rknpu-perf.service
 MODE=install
 BENCH=0
@@ -82,36 +84,23 @@ pin "$NPU" "NPU"
 pin "$DMC" "DDR/DMC"
 
 # ── 可选的 A/B 实测 ────────────────────────────────────────
+# ★ 这里原本内嵌了一个"先 performance 再 echo ondemand 对照"的 A/B，**已删除**。
+#   它测出来是 performance 30.11 ms vs ondemand 27.89 ms —— 也就是"钉频反而更慢"。
+#   结论是错的，错在方法：
+#     · `echo ondemand > governor` 不保证频率真降回 534；前一步刚把 min/max 顶到 2400，
+#       切回 ondemand 后未必会掉下来 —— 所谓"对照组"可能还在 2400 上跑（**组间无差异**）
+#     · 顺序测量把温度/后台负载漂移混进了组间差异
+#   换成 scripts/board/bench-ddr-ab.sh：靠 min_freq=max_freq 硬钉频率、每步读回确认、
+#   A/B 交错多轮。同一台机器上它测出的是干净且不重叠的 46.00 vs 28.91 ms = **1.59×**。
+#   教训：**测性能差异时，"对照组"必须被显式确认过，不能靠 governor 的名字去假设状态。**
 if [ "$BENCH" = 1 ]; then
   echo
-  echo "▶ A/B 实测（跑 yolov5s，先 performance 再换回 dmc_ondemand 对照）"
-  MODEL=/opt/rknn-models/yolov5s-640-640.rknn
-  PY=""
-  for c in "$HOME/rknn-gateway/venv/bin/python3" /usr/bin/python3; do
-    [ -x "$c" ] && "$c" -c "import rknnlite" 2>/dev/null && { PY="$c"; break; }
-  done
-  if [ -z "$PY" ] || [ ! -e "$MODEL" ]; then
-    echo "  ⚠ 缺少 rknnlite 或 $MODEL，跳过实测"
+  if [ -x "$HERE/bench-ddr-ab.sh" ]; then
+    echo "▶ 严谨 A/B（硬钉频率 + 交错多轮）→ bench-ddr-ab.sh"
+    "$HERE/bench-ddr-ab.sh"
   else
-    run() { "$PY" - "$MODEL" <<'PY'
-import sys, time, numpy as np
-from rknnlite.api import RKNNLite
-r = RKNNLite(); r.load_rknn(sys.argv[1]); r.init_runtime(core_mask=RKNNLite.NPU_CORE_0_1_2)
-x = np.zeros((1,640,640,3), dtype=np.uint8)
-for _ in range(5): r.inference(inputs=[x])
-ts=[]
-for _ in range(30):
-    t=time.perf_counter(); r.inference(inputs=[x]); ts.append((time.perf_counter()-t)*1000)
-ts.sort(); print(f"{ts[len(ts)//2]:.2f}")
-r.release()
-PY
-    }
-    echo "  performance(DDR 2400) 中位: $(run) ms"
-    echo ondemand > "$DMC/governor" 2>/dev/null || true
-    sleep 2
-    echo "  dmc_ondemand(默认 534) 中位: $(run) ms"
-    echo performance > "$DMC/governor" 2>/dev/null || true
-    echo "  （已恢复 performance）"
+    echo "▶ A/B 实测：找不到 $HERE/bench-ddr-ab.sh，跳过"
+    echo "  （不要用旧的 governor 切换法，它测出过反向的错误结论）"
   fi
 fi
 

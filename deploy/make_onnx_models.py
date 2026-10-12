@@ -427,6 +427,37 @@ def build_ab_cat(size):
 def build_ab_nocat(size):
     return _ab3_common(Builder("ab_nocat", size), size, False)
 
+
+# ─────────── 受控：纯卷积链的融合深度上限（12 / 24 / 48 层）───────────
+def _ab_deep(b, size, n):
+    """纯卷积链（无 SE / 无 Concat / 无分组），只改深度"""
+    x = b.conv("input", 32, 3, 2, in_ch=3)
+    x = b.bn_relu(x, 32)
+    ch = 32
+    for i in range(n):
+        out_ch = 32 if (i % 3) else 64
+        x = b.conv(x, out_ch, 3, 1, in_ch=ch)
+        x = b.bn_relu(x, out_ch)
+        ch = out_ch
+        if i % 6 == 5:
+            x = b.maxpool(x)
+    x = b.global_avgpool(x)
+    x = b.flatten(x)
+    x = b.gemm(x, 10, ch)
+    return b.finish(x, [1, 10])
+
+
+def build_ab_deep12(size):
+    return _ab_deep(Builder("ab_deep12", size), size, 12)
+
+
+def build_ab_deep24(size):
+    return _ab_deep(Builder("ab_deep24", size), size, 24)
+
+
+def build_ab_deep48(size):
+    return _ab_deep(Builder("ab_deep48", size), size, 48)
+
 BUILDERS = {
     "tiny_cnn": build_tiny_cnn,
     "dwsep": build_dwsep,
@@ -441,6 +472,9 @@ BUILDERS = {
     "ab_add": build_ab_add,
     "ab_cat": build_ab_cat,
     "ab_nocat": build_ab_nocat,
+    "ab_deep12": build_ab_deep12,
+    "ab_deep24": build_ab_deep24,
+    "ab_deep48": build_ab_deep48,
 }
 
 

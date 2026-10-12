@@ -388,6 +388,45 @@ def build_ab_nogroup(size):
 def build_ab_add(size):
     return _ab2_common(Builder("ab_add", size), size, group=1, add=True)
 
+
+# ─────────── 受控 A/B 第三轮：Concat 是不是提交切分的驱动 ───────────
+def _ab3_common(b, size, use_concat):
+    """同一骨干，唯一变量：两分支合并处用 Concat 还是 Add。
+
+    两种情形合并后都接一个 1×1 conv 把通道收回 c，
+    所以「合并算子」是唯一的结构差异。
+    """
+    x = b.conv("input", 32, 3, 2, in_ch=3)
+    x = b.bn_relu(x, 32)
+    ch = 32
+    for i, c in enumerate((64, 64, 128, 128, 128, 128)):
+        a = b.conv(x, c, 3, 1, in_ch=ch)
+        a = b.bn_relu(a, c)
+        bb = b.conv(x, c, 3, 1, in_ch=ch)
+        bb = b.bn_relu(bb, c)
+        if use_concat:
+            m = b.concat([a, bb], axis=1)        # 2c
+            m = b.conv(m, c, 1, 1, in_ch=2 * c)  # 收回 c
+        else:
+            m = b.add(a, bb)                     # c
+            m = b.conv(m, c, 1, 1, in_ch=c)      # 收回 c（保持与上面同构）
+        x = b.bn_relu(m, c)
+        ch = c
+        if i in (1, 3, 5):
+            x = b.maxpool(x)
+    x = b.global_avgpool(x)
+    x = b.flatten(x)
+    x = b.gemm(x, 10, ch)
+    return b.finish(x, [1, 10])
+
+
+def build_ab_cat(size):
+    return _ab3_common(Builder("ab_cat", size), size, True)
+
+
+def build_ab_nocat(size):
+    return _ab3_common(Builder("ab_nocat", size), size, False)
+
 BUILDERS = {
     "tiny_cnn": build_tiny_cnn,
     "dwsep": build_dwsep,
@@ -400,6 +439,8 @@ BUILDERS = {
     "ab_group": build_ab_group,
     "ab_nogroup": build_ab_nogroup,
     "ab_add": build_ab_add,
+    "ab_cat": build_ab_cat,
+    "ab_nocat": build_ab_nocat,
 }
 
 

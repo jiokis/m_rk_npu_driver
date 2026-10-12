@@ -1,0 +1,579 @@
+##### fuse_rules（融合规则）共 355 条 #####
+absorb_gather_into_attention_conv          Conv
+align_lstm_batch                           LSTM
+bypass_norm                                Reshape→exNorm
+bypass_two_reshape                         Reshape
+bypass_two_transpose                       Transpose
+convert_expand_to_gather_before_rs         Expand→Reshape
+cross_matmul_fuse_const_mul_into_conv      MatMul
+eliminate_add_redundancy_const_dim         Add
+eliminate_div_redundancy_const_dim         Div
+eliminate_greater_redundancy_const_dim     Greater
+eliminate_less_redundancy_const_dim        Less
+eliminate_mul_redundancy_const_dim         Mul
+eliminate_sub_redundancy_const_dim         Sub
+fuse_add_into_bn                           BatchNormalization→Add   q_equal=False
+fuse_add_into_conv                         Conv→Add   q_equal=False
+fuse_add_into_gemm                         Gemm→Add   q_equal=False
+fuse_align_conv_backward                   Conv
+fuse_align_conv_forward                    Conv
+fuse_bn_into_conv                          Conv→BatchNormalization   q_equal=False
+fuse_bn_into_deconv                        ConvTranspose→BatchNormalization   q_equal=False
+fuse_bool_op_to_exsoftmaxmask              exSoftmaxMask
+fuse_branch_add_into_conv                  Add
+fuse_cast_into_equal                       Cast→Equal
+fuse_channel_shuffle_split_concat_to_gather Split→Concat
+fuse_conv_add_to_where_for_exsoftmax13     Add→exSoftmax13
+fuse_conv_add_to_where_for_softmax         Add→Softmax
+fuse_conv_add_to_where_for_transpose_exsoftmax13 Add→Transpose→exSoftmax13
+fuse_conv_add_to_where_for_transpose_softmax Add→Transpose→Softmax
+fuse_conv_gather                           Conv→Gather
+fuse_exmatmul_add                          exMatMul→Add   q_equal=False
+fuse_exmatmul_add_mul_exsoftmax13_exmatmul_to_sdpa exMatMul   q_equal=False
+fuse_exmatmul_const_scale_mul              exMatMul
+fuse_exmatmul_gather                       exMatMul→Gather
+fuse_exmatmul_mul                          exMatMul→Mul   q_equal=False
+fuse_exmatmul_transpose                    exMatMul
+fuse_exnorm_add                            exNorm→Add
+fuse_exnorm_mul                            exNorm→Mul
+fuse_fcclip_nonzero                        Cast→ReduceSum→Equal→Reshape→NonZero→Reshape→Transpose→Reshape→ScatterND→Reshape   q_equal=False
+fuse_focus_slice                           Slice→Slice→Slice→Slice→Concat
+fuse_focus_slice2                          Slice→Slice→Slice→Slice→Slice→Slice→Concat
+fuse_forward_backward_bilstm               ReverseSequence→LSTM→Reshape→ReverseSequence→LSTM→Reshape→Concat   q_equal=False
+fuse_gather_add_scatternd                  Gather→Add→ScatterND
+fuse_gather_gather_reshape                 Gather→Gather→Reshape
+fuse_greater_where_to_clip                 Greater→Where
+fuse_hardsigmoid_mul_to_hardswish          HardSigmoid→Mul   q_equal=False
+fuse_less_where_to_clip                    Less→Where
+fuse_lstm_union                            LSTM   q_equal=False
+fuse_matmul_softmax_matmul_to_sdpa         MatMul   q_equal=False
+fuse_mul_exmatmul                          Mul→exMatMul   q_equal=False
+fuse_mul_into_bn                           BatchNormalization→Mul   q_equal=False
+fuse_mul_into_conv                         Conv→Mul   q_equal=False
+fuse_mul_into_conv2                        Mul→Conv   q_equal=False
+fuse_mul_into_gemm                         Mul→Gemm   q_equal=False
+fuse_mul_into_matmul                       MatMul→Mul   q_equal=False
+fuse_mul_into_sdpa                         Mul
+fuse_mul_mul_add_to_mul                    Mul→Add
+fuse_multihead_attention_reshape_to_gather_split Split   q_equal=False
+fuse_pad_gather_rs_conv_to_conv:           Pad→Gather→Reshape→Conv
+fuse_pad_into_avgpool                      Pad→AveragePool
+fuse_pad_into_conv                         Pad→Conv
+fuse_pad_into_maxpool                      Pad→MaxPool
+fuse_pre_bn_into_conv                      BatchNormalization→Conv   q_equal=False
+fuse_pre_bn_into_deconv                    BatchNormalization→ConvTranspose   q_equal=False
+fuse_reducel1_div_to_lpnormalization       ReduceL1→Clip→Expand→Div
+fuse_reducel1_div_to_lpnormalization2      ReduceL1→Div
+fuse_reducel2_div_to_lpnormalization       ReduceL2→Clip→Expand→Div
+fuse_reducel2_div_to_lpnormalization2      ReduceL2→Div
+fuse_relu_into_clip                        Clip→Relu
+fuse_reshape_conv_reshape                  Reshape→Conv→Reshape
+fuse_reshape_exsoftmaxmask_transpose       Reshape→exSoftmaxMask→Transpose
+fuse_reshape_into_conv                     Reshape→Conv
+fuse_reshape_tp_reshape_to_exWindow        Reshape→Transpose→Reshape
+fuse_reshape_transpose                     Reshape→Transpose
+fuse_slice_into_conv                       Conv→Slice
+fuse_split_concat                          Split
+fuse_split_sigmoid_mul_to_glu              Split→Sigmoid→Mul
+fuse_split_split                           Split
+fuse_split_split_elements_op               Split
+fuse_transformer_FFN_reshape               Reshape→Add
+fuse_transpose_into_gemm                   Transpose→Reshape→Gemm
+fuse_transpose_matmul_transpose            MatMul→Transpose
+fuse_transpose_reshape                     Transpose→Reshape
+fuse_transpose_reshape_transpose           Transpose→Reshape→Transpose
+fuse_transpose_transpose_matmul_transpose  Transpose→MatMul→Transpose
+fuse_two_1x1_conv                          Conv→Conv
+fuse_two_add                               Add→Add   q_equal=False
+fuse_two_clip                              Clip→Clip
+fuse_two_concat                            Concat→Concat
+fuse_two_dataconvert                       exDataConvert→exDataConvert
+fuse_two_gather                            Gather→Gather
+fuse_two_mul                               Mul→Mul   q_equal=False
+fuse_two_relu                              Relu→Relu
+fuse_two_reshape                           Reshape→Reshape
+fuse_two_scatternd                         ScatterND→ScatterND
+fuse_two_scatternd2                        ScatterND→ScatterND
+fuse_two_slice                             Slice→Slice
+fuse_two_transpose                         Transpose→Transpose
+fuse_where_softmax13_to_exsoftmaxmask      Where→exSoftmax13
+fuse_where_softmax_to_exsoftmaxmask        Where→Softmax
+merge_conv_channel_inner_perm              Conv→Reshape→Transpose
+merge_exmatmul_inner_perm                  exMatMul→Reshape→Transpose
+merge_inner_math_op_between_split_concat   Split
+merge_parallel_op_after_split              Split
+merge_parallel_op_before_concat            Concat
+merge_parallel_slice_exnorm                Slice→exNorm
+opt_tp_batch_conv_tp                       Transpose→Conv
+reduce_reshape_op_around_concat            Concat
+reduce_reshape_op_around_split             Split
+reduce_tp_in_mesh_backward                 Transpose
+reduce_tp_in_mesh_forward                  Transpose
+reduce_transpose_op_around_split_sub_graph Split
+relocate_rs_split_axis                     Reshape→Split
+relocate_tp_rs_split_axis                  Transpose→Reshape→Split
+remove_concat_slice                        Concat→Slice
+remove_concat_split                        Concat→Split
+remove_dataconvert_for_q_op                exDataConvert
+remove_invalid_add                         Add
+remove_invalid_avgpool                     AveragePool
+remove_invalid_bn                          BatchNormalization
+remove_invalid_cast                        Cast
+remove_invalid_concat                      Concat
+remove_invalid_dataconvert                 exDataConvert
+remove_invalid_expand                      Expand
+remove_invalid_maxpool                     MaxPool
+remove_invalid_mul                         Mul
+remove_invalid_pad                         Pad
+remove_invalid_reducemax                   ReduceMax
+remove_invalid_reducemen                   ReduceMean
+remove_invalid_reducesum                   ReduceSum
+remove_invalid_relu                        Relu
+remove_invalid_reshape                     Reshape
+remove_invalid_resize                      Resize
+remove_invalid_scatternd                   ScatterND
+remove_invalid_slice                       Slice
+remove_invalid_split                       Split
+remove_invalid_sub                         Sub
+remove_invalid_transpose                   Transpose
+remove_invalid_where                       Where
+remove_mul_before_add                      Add
+remove_parallel_1x1_conv                   Conv
+remove_parallel_avgpool                    AveragePool
+remove_parallel_cast                       Cast
+remove_parallel_concat                     Concat
+remove_parallel_equal                      Equal
+remove_parallel_exdataconvert              exDataConvert
+remove_parallel_exnorm                     exNorm
+remove_parallel_expand                     Expand
+remove_parallel_exsoftmax13                exSoftmax13
+remove_parallel_floor                      Floor
+remove_parallel_gather                     Gather
+remove_parallel_leakyrelu                  LeakyRelu
+remove_parallel_maxpool                    MaxPool
+remove_parallel_mul                        Mul
+remove_parallel_relu                       Relu
+remove_parallel_reshape                    Reshape
+remove_parallel_scatternd                  ScatterND
+remove_parallel_slice                      Slice
+remove_parallel_softmax                    Softmax
+remove_parallel_split                      Split
+remove_parallel_sub                        Sub
+remove_parallel_swish                      exSwish
+remove_parallel_transpose                  Transpose
+remove_redundant_scatternd                 ScatterND→ScatterND
+remove_reshape_after_add                   Add
+remove_reshape_after_div                   Div
+remove_reshape_after_mul                   Mul
+remove_reshape_before_add                  Add
+remove_reshape_before_mul                  Mul
+remove_top_reshape                         Reshape
+replace_exp_add_log_by_softplus            Exp→Add→Log   q_equal=False
+replace_exswish                            Sigmoid→Mul   q_equal=False
+replace_exswish2                           Mul→Sigmoid→Mul   q_equal=False
+replace_exswish3                           Add→Sigmoid→Mul   q_equal=False
+replace_gemm_reshape_gather_to_gemm_reshape Gemm→Reshape→Gather   q_equal=False
+replace_inner_dim_shuffle_rs_tp_to_gather_rs Reshape→Transpose
+replace_inner_dim_shuffle_tp_rs_to_rs_gather Transpose→Reshape
+replace_lstm_union                         Squeeze→Concat→Gemm→Split→Sigmoid→Tanh→Mul→Add→Sigmoid→Mul→Add→Tanh→Sigmoid→Mul→Unsqueeze   q_equal=False
+replace_lstm_union2                        Squeeze→Concat→Gemm→Split→Sigmoid→Tanh→Mul→Add→Sigmoid→Mul→Add→Tanh→Sigmoid→Mul→Unsqueeze   q_equal=False
+replace_lstm_union3                        Squeeze→Concat→Gemm→Split→Sigmoid→Tanh→Mul→Add→Sigmoid→Mul→Add→Reshape→Tanh→Sigmoid→Mul→Reshape→Unsqueeze   q_equal=False
+replace_lstm_union6                        Squeeze→Gemm→Split→Sigmoid→Sigmoid→Mul→Tanh→Mul→Add→Tanh→Sigmoid→Mul→Unsqueeze→MatMul   q_equal=False
+replace_lstm_union7                        MatMul→Reshape→Squeeze→Gemm→Add→Split→Sigmoid→Sigmoid→Mul→Tanh→Mul→Add→Tanh→Sigmoid→Mul→Unsqueeze   q_equal=False
+replace_lstm_union8                        MatMul→Gemm→Add→Split→Sigmoid→Sigmoid→Tanh→Mul→Sigmoid→Reshape→Mul→Add→Tanh→Mul→Unsqueeze   q_equal=False
+replace_lstm_union9                        Gemm→Add→Split→Sigmoid→Sigmoid→Mul→Tanh→Mul→Add→Tanh→Sigmoid→Mul→Unsqueeze   q_equal=False
+replace_max_min_by_clip                    Max→Min
+replace_mean_variance_norm                 ReduceMean→Sub→Pow→ReduceMean→Add→Sqrt→Div→Mul→Add   q_equal=False
+replace_min_max_by_clip                    Min→Max
+replace_min_relu_by_clip                   Min→Relu
+replace_mxnet_softmax                      Exp→ReduceSum→Div   q_equal=False
+replace_parallel_slice_by_split            Slice
+replace_pixel_norm                         Pow→ReduceSum→Add→Sqrt→Div→Reshape→Mul   q_equal=False
+replace_pixel_norm2                        ReduceL2→Add→Div   q_equal=False
+replace_relu_min_by_clip                   Relu→Min
+replace_rms_norm                           Pow→ReduceMean→Add→Sqrt→Div→Mul→Mul   q_equal=False
+replace_rms_norm2                          Pow→ReduceMean→Add→Sqrt→Div→Mul→Cast→Mul   q_equal=False
+replace_rms_norm3                          Mul→ReduceMean→Add→Pow→Mul   q_equal=False
+replace_softplus_tanh_mul_by_exmish        Softplus→Tanh→Mul   q_equal=False
+replace_split_concat_by_reshape            Split→Concat   q_equal=False
+replace_step_pick_avgpool_to_gather        AveragePool
+replace_step_pick_maxpool_to_gather        MaxPool
+replace_tf_dilation_conv                   Pad→Transpose→SpaceToDepth→Transpose→Conv→Transpose→DepthToSpace→Transpose→Slice
+replace_tf_dilation_conv2                  Pad→Reshape→SpaceToDepth→Transpose→Conv→Transpose→DepthToSpace→Transpose→Slice
+replace_tf_dilation_conv_transpose         Pad→Transpose→SpaceToDepth→Transpose→Conv→Transpose→DepthToSpace→Transpose→Slice→Transpose
+replace_tf_mean_variance_norm              ReduceMean→Sub→Mul→ReduceMean→Add→Sqrt→Reciprocal→Mul→Mul→Mul→Sub→Add   q_equal=False
+replace_tf_mean_variance_norm2             ReduceMean→Sub→Mul→ReduceMean→Add→Sqrt→Reciprocal→Mul→Mul→Sub→Mul→Add   q_equal=False
+replace_tf_prelu                           Mul→Relu→Mul→Relu→Add   q_equal=False
+replace_torch_gelu                         Div→Erf→Add→Mul→Mul   q_equal=False
+replace_torch_gelu2                        Mul→Pow→Mul→Add→Mul→Tanh→Add→Mul   q_equal=False
+replace_torch_gelu3                        Mul→Div→Erf→Add→Mul   q_equal=False
+replace_torch_hardswish                    Add→Clip→Mul→Mul   q_equal=False
+replace_torch_hardswish2                   Add→Clip→Mul→Mul   q_equal=False
+replace_torch_layernorm                    ReduceMean→Sub→Pow→ReduceMean→Add→Sqrt→Div   q_equal=False
+replace_torch_layernorm2                   ReduceMean→Sub→Cast→Pow→ReduceMean→Add→Sqrt→Div   q_equal=False
+replace_torch_layernorm3                   ReduceMean→Sub→Mul→ReduceMean→Add→Sqrt→Div   q_equal=False
+replace_torch_lpnormalization              Abs→Pow→ReduceSum→Pow→Clip→Expand→Div
+replace_torch_softmax                      ReduceMax→Sub→Exp→ReduceSum→Div   q_equal=False
+replace_torch_tanh_gelu                    Mul→Mul→Mul→Add→Mul→Tanh→Add→Mul→Mul   q_equal=False
+replace_transpose_by_deconv                Reshape→Transpose→Reshape
+shrink_add_const                           Add
+shrink_mul_const                           Mul
+swap_add_gather                            Add→Gather
+swap_add_reshape                           Add→Reshape
+swap_add_transpose                         Add→Transpose
+swap_bn_reshape                            BatchNormalization→Reshape
+swap_bn_transpose                          BatchNormalization→Transpose
+swap_cast_expand                           Cast→Expand
+swap_cast_reshape                          Cast→Reshape
+swap_cast_transpose                        Cast→Transpose
+swap_clip_reshape                          Clip→Reshape
+swap_clip_transpose                        Clip→Transpose
+swap_concat_transpose                      Concat→Transpose
+swap_conv_reshape                          Conv→Reshape
+swap_conv_reshape_transpose                Conv→Reshape→Transpose   q_equal=False
+swap_conv_transpose                        Conv→Transpose
+swap_div_gather                            Div→Gather
+swap_div_reshape                           Div→Reshape
+swap_div_transpose                         Div→Transpose
+swap_elu_reshape                           Elu→Reshape
+swap_elu_transpose                         Elu→Transpose
+swap_exdataconvert_reshape                 exDataConvert→Reshape
+swap_exdataconvert_transpose               exDataConvert→Transpose
+swap_exgelu_reshape                        exGelu→Reshape
+swap_exgelu_transpose                      exGelu→Transpose
+swap_exglu_transpose                       exGlu→Transpose
+swap_exmatmul_transpose                    exMatMul→Transpose
+swap_exmatmul_transpose_reshape            exMatMul→Transpose→Reshape
+swap_exp_reshape                           Exp→Reshape
+swap_exp_transpose                         Exp→Transpose
+swap_expand_cast                           Expand→Cast
+swap_expand_transpose                      Expand→Transpose
+swap_exsoftmax13_reshape                   exSoftmax13→Reshape
+swap_exsoftmax13_transpose                 exSoftmax13→Transpose
+swap_gather_add                            Gather→Add
+swap_gather_div                            Gather→Div
+swap_gather_mul                            Gather→Mul
+swap_gather_reshape                        Gather→Reshape
+swap_gather_sub                            Gather→Sub
+swap_gather_transpose                      Gather→Transpose
+swap_glu_reshape                           exGlu→Reshape
+swap_leakyrelu_reshape                     LeakyRelu→Reshape
+swap_leakyrelu_transpose                   LeakyRelu→Transpose
+swap_log_reshape                           Log→Reshape
+swap_log_transpose                         Log→Transpose
+swap_logsoftmax_reshape                    LogSoftmax→Reshape
+swap_logsoftmax_transpose                  LogSoftmax→Transpose
+swap_lpnorm_reshape                        LpNormalization→Reshape
+swap_lpnorm_transpose                      LpNormalization→Transpose
+swap_mish_reshape                          exMish→Reshape
+swap_mish_transpose                        exMish→Transpose
+swap_mul_gather                            Mul→Gather
+swap_mul_reshape                           Mul→Reshape
+swap_mul_transpose                         Mul→Transpose
+swap_norm_reshape                          exNorm→Reshape
+swap_norm_transpose                        exNorm→Transpose
+swap_pad_reshape                           Pad→Reshape
+swap_pad_transpose                         Pad→Transpose
+swap_prelu_reshape                         PRelu→Reshape
+swap_prelu_transpose                       PRelu→Transpose
+swap_relu_reshape                          Relu→Reshape
+swap_relu_transpose                        Relu→Transpose
+swap_reshape_add                           Reshape→Add
+swap_reshape_bn                            Reshape→BatchNormalization
+swap_reshape_cast                          Reshape→Cast
+swap_reshape_clip                          Reshape→Clip
+swap_reshape_conv                          Reshape→Conv
+swap_reshape_div                           Reshape→Div
+swap_reshape_elu                           Reshape→Elu
+swap_reshape_exdataconvert                 Reshape→exDataConvert
+swap_reshape_exgelu                        Reshape→exGelu
+swap_reshape_exp                           Reshape→Exp
+swap_reshape_exsoftmax13                   Reshape→exSoftmax13
+swap_reshape_gather                        Reshape→Gather
+swap_reshape_glu                           Reshape→exGlu
+swap_reshape_leakyrelu                     Reshape→LeakyRelu
+swap_reshape_log                           Reshape→Log
+swap_reshape_logsoftmax                    Reshape→LogSoftmax
+swap_reshape_lpnorm                        Reshape→LpNormalization
+swap_reshape_mish                          Reshape→exMish
+swap_reshape_mul                           Reshape→Mul
+swap_reshape_norm                          Reshape→exNorm
+swap_reshape_pad                           Reshape→Pad
+swap_reshape_prelu                         Reshape→PRelu
+swap_reshape_relu                          Reshape→Relu
+swap_reshape_scatternd                     Reshape→ScatterND
+swap_reshape_sigmoid                       Reshape→Sigmoid
+swap_reshape_slice                         Reshape→Slice
+swap_reshape_softmax                       Reshape→Softmax
+swap_reshape_sub                           Reshape→Sub
+swap_reshape_swish                         Reshape→exSwish
+swap_reshape_tanh                          Reshape→Tanh
+swap_reshape_transpose_v2                  Reshape→Transpose
+swap_sigmoid_reshape                       Sigmoid→Reshape
+swap_sigmoid_transpose                     Sigmoid→Transpose
+swap_slice_reshape                         Slice→Reshape
+swap_slice_transpose                       Slice→Transpose
+swap_softmax_reshape                       Softmax→Reshape
+swap_softmax_transpose                     Softmax→Transpose
+swap_sub_gather                            Sub→Gather
+swap_sub_reshape                           Sub→Reshape
+swap_sub_transpose                         Sub→Transpose
+swap_swish_reshape                         exSwish→Reshape
+swap_swish_transpose                       exSwish→Transpose
+swap_tanh_reshape                          Tanh→Reshape
+swap_tanh_transpose                        Tanh→Transpose
+swap_transpose_add                         Transpose→Add
+swap_transpose_bn                          Transpose→BatchNormalization
+swap_transpose_cast                        Transpose→Cast
+swap_transpose_clip                        Transpose→Clip
+swap_transpose_concat                      Transpose→Concat
+swap_transpose_conv                        Transpose→Conv
+swap_transpose_div                         Transpose→Div
+swap_transpose_elu                         Transpose→Elu
+swap_transpose_exdataconvert               Transpose→exDataConvert
+swap_transpose_exgelu                      Transpose→exGelu
+swap_transpose_exglu                       Transpose→exGlu
+swap_transpose_exmatmul                    Transpose→exMatMul
+swap_transpose_exp                         Transpose→Exp
+swap_transpose_exsoftmax13                 Transpose→exSoftmax13
+swap_transpose_gather                      Transpose→Gather
+swap_transpose_leakyrelu                   Transpose→LeakyRelu
+swap_transpose_log                         Transpose→Log
+swap_transpose_logsoftmax                  Transpose→LogSoftmax
+swap_transpose_lpnorm                      Transpose→LpNormalization
+swap_transpose_mish                        Transpose→exMish
+swap_transpose_mul                         Transpose→Mul
+swap_transpose_norm                        Transpose→exNorm
+swap_transpose_pad                         Transpose→Pad
+swap_transpose_prelu                       Transpose→PRelu
+swap_transpose_relu                        Transpose→Relu
+swap_transpose_reshape                     Transpose→Reshape
+swap_transpose_sigmoid                     Transpose→Sigmoid
+swap_transpose_slice                       Transpose→Slice
+swap_transpose_softmax                     Transpose→Softmax
+swap_transpose_sub                         Transpose→Sub
+swap_transpose_swish                       Transpose→exSwish
+swap_transpose_tanh                        Transpose→Tanh
+
+##### convert_rules（转换规则）共 206 条 #####
+bypass_rs_exnorm_rs                        Reshape→exNorm→Reshape
+convert_1in_einsum                         Einsum
+convert_2in_einsum_to_exmatmul             Einsum
+convert_3d_avgpool_to_3d_conv              AveragePool
+convert_3d_global_avgpool_to_2d_global_avgpool GlobalAveragePool
+convert_3dconv_to_2dconv                   Conv
+convert_3dconvtranspose_to_2dconvtranspose ConvTranspose
+convert_Nin_einsum                         Einsum
+convert_abs_to_leakyrelu                   Abs
+convert_avgpool_to_conv                    AveragePool
+convert_avgpool_to_global                  AveragePool
+convert_cumsum_to_einsum                   CumSum
+convert_deconv_to_exconvtransposepad_conv  ConvTranspose
+convert_depth2space_to_deconv2d            DepthToSpace
+convert_div_to_expand_div                  Div
+convert_div_to_mul                         Div
+convert_dropout_to_reshape                 Dropout
+convert_dynamic_weight_conv_to_static_weight Conv
+convert_exmatmul_to_mul                    exMatMul
+convert_exnorm_to_exnorm_mul_add           exNorm
+convert_expand_to_reshape                  Expand
+convert_flatten_to_reshape                 Flatten
+convert_gather_to_reshape                  Gather
+convert_gather_to_slice_reshape            Gather
+convert_gemm_by_exmatmul                   Gemm
+convert_global_avgpool_to_conv             GlobalAveragePool   q_equal=False
+convert_group_conv2d_to_conv2d             Conv
+convert_identity_to_reshape                Identity
+convert_in_to_exnorm                       InstanceNormalization
+convert_keepdims_to_1_argmax               ArgMax
+convert_keepdims_to_1_argmin               ArgMin
+convert_keepdims_to_1_reducemax            ReduceMax
+convert_keepdims_to_1_reducemean           ReduceMean
+convert_keepdims_to_1_reducemin            ReduceMin
+convert_keepdims_to_1_reducesum            ReduceSum
+convert_large_dilation_conv_to_normal_conv Conv
+convert_large_stride_conv_to_two_conv      Conv
+convert_layernorm_to_exnorm                LayerNormalization
+convert_lpnorm_to_exnorm                   LpNormalization
+convert_matmul_to_exmatmul                 MatMul
+convert_matmul_to_matmul_reshape           MatMul
+convert_maxpool_to_global_maxpool          MaxPool
+convert_maxpool_to_maxpool_conv            MaxPool
+convert_maxpool_to_maxpool_tile            MaxPool
+convert_neg_to_mul                         Neg
+convert_pad_to_conv                        Pad
+convert_reciprocal_to_div                  Reciprocal
+convert_reduce_L2_to_pow_sum_pow           ReduceL2
+convert_reduce_sum_to_conv                 ReduceSum
+convert_reducemean_to_einsum               ReduceMean
+convert_reshape_to_transpose               Reshape
+convert_reverse_by_conv                    ReverseSequence
+convert_rs_add_rs_to_rs_gather_elements    Reshape→Add→Reshape
+convert_rs_div_rs_to_rs_gather_elements    Reshape→Div→Reshape
+convert_rs_mul_rs_to_rs_gather_elements    Reshape→Mul→Reshape
+convert_rs_sub_rs_to_rs_gather_elements    Reshape→Sub→Reshape
+convert_softmax_to_exsoftmax13             Softmax
+convert_squeeze_to_reshape                 Squeeze
+convert_sub_to_add                         Sub
+convert_sub_to_conv_sub                    Sub
+convert_sub_to_expand_sub                  Sub
+convert_sum_to_add                         Sum
+convert_tile_to_expand                     Tile
+convert_unaligned_channel_slice_2_conv     Slice   q_equal=False
+convert_unsqueeze_to_reshape               Unsqueeze
+exmatmul_bcast_batch2width                 exMatMul
+fuse_gru_transpose_reshape                 GRU
+fuse_lstm_transpose_reshape                LSTM
+gatherelements_to_conv                     GatherElements
+input_align_4D_add                         Add
+input_align_4D_div                         Div
+input_align_4D_mul                         Mul
+input_align_4D_sub                         Sub
+input_output_align_nd_expand               Expand
+keepdims_gather                            Gather
+merge_dims_and_convert_ND_to_4D_concat     Concat
+merge_dims_and_convert_ND_to_4D_split      Split
+minimize_conv_stride                       Conv
+replace_mul_add_by_bn                      Mul→Add   q_equal=False
+seperate_large_kernel_conv                 Conv
+squeeze_1_in_nd_transpose                  Transpose
+squeeze_nd_add                             Add
+squeeze_nd_bn                              BatchNormalization
+squeeze_nd_div                             Div
+squeeze_nd_expand                          Expand
+squeeze_nd_exsoftmax13                     exSoftmax13
+squeeze_nd_matmul                          MatMul
+squeeze_nd_mul                             Mul
+squeeze_nd_reducesum                       ReduceSum
+squeeze_nd_sub                             Sub
+squeeze_nd_topk                            TopK
+squeeze_nd_transpose                       Transpose
+squeeze_to_4d_add                          Add
+squeeze_to_4d_and                          And
+squeeze_to_4d_bitwiseand                   BitwiseAnd
+squeeze_to_4d_bitwisenot                   BitwiseNot
+squeeze_to_4d_bitwiseor                    BitwiseOr
+squeeze_to_4d_bitwisexor                   BitwiseXor
+squeeze_to_4d_cast                         Cast
+squeeze_to_4d_clip                         Clip
+squeeze_to_4d_concat                       Concat
+squeeze_to_4d_dataconvert                  exDataConvert
+squeeze_to_4d_div                          Div
+squeeze_to_4d_elu                          Elu
+squeeze_to_4d_equal                        Equal
+squeeze_to_4d_exsoftmax13                  exSoftmax13
+squeeze_to_4d_greater                      Greater
+squeeze_to_4d_greater_equal                GreaterOrEqual
+squeeze_to_4d_leakyrelu                    LeakyRelu
+squeeze_to_4d_less                         Less
+squeeze_to_4d_less_equal                   LessOrEqual
+squeeze_to_4d_logsoftmax                   LogSoftmax
+squeeze_to_4d_matmul                       MatMul
+squeeze_to_4d_max                          Max
+squeeze_to_4d_min                          Min
+squeeze_to_4d_mul                          Mul
+squeeze_to_4d_not                          Not
+squeeze_to_4d_or                           Or
+squeeze_to_4d_pad                          Pad
+squeeze_to_4d_pow                          Pow
+squeeze_to_4d_reducel2                     ReduceL2
+squeeze_to_4d_reducemax                    ReduceMax
+squeeze_to_4d_reducemean                   ReduceMean
+squeeze_to_4d_reducemin                    ReduceMin
+squeeze_to_4d_reducesum                    ReduceSum
+squeeze_to_4d_relu                         Relu
+squeeze_to_4d_resize                       Resize
+squeeze_to_4d_scatternd                    ScatterND
+squeeze_to_4d_sigmoid                      Sigmoid
+squeeze_to_4d_slice                        Slice
+squeeze_to_4d_softmax                      Softmax
+squeeze_to_4d_split                        Split
+squeeze_to_4d_sub                          Sub
+squeeze_to_4d_topk                         TopK
+squeeze_to_4d_where                        Where
+squeeze_to_4d_xor                          Xor
+standardize_4d_glu                         exGlu
+swap_reshape_branch_elements               Add
+unsqueeze_to_4d_add                        Add
+unsqueeze_to_4d_and                        And
+unsqueeze_to_4d_argmax                     ArgMax
+unsqueeze_to_4d_argmin                     ArgMin
+unsqueeze_to_4d_atan                       Atan
+unsqueeze_to_4d_avgpool                    AveragePool
+unsqueeze_to_4d_bn                         BatchNormalization
+unsqueeze_to_4d_cast                       Cast
+unsqueeze_to_4d_clip                       Clip
+unsqueeze_to_4d_concat                     Concat
+unsqueeze_to_4d_conv                       Conv
+unsqueeze_to_4d_cos                        Cos
+unsqueeze_to_4d_deconv                     ConvTranspose
+unsqueeze_to_4d_div                        Div
+unsqueeze_to_4d_elu                        Elu
+unsqueeze_to_4d_equal                      Equal
+unsqueeze_to_4d_erf                        Erf
+unsqueeze_to_4d_exMeanvarnorm              exMeanVarianceNormalization
+unsqueeze_to_4d_exdataconvert              exDataConvert
+unsqueeze_to_4d_exgelu                     exGelu
+unsqueeze_to_4d_exlayernorm                exLayerNorm
+unsqueeze_to_4d_exp                        Exp
+unsqueeze_to_4d_expand                     Expand
+unsqueeze_to_4d_exsoftmax13                exSoftmax13
+unsqueeze_to_4d_floor                      Floor
+unsqueeze_to_4d_gather                     Gather
+unsqueeze_to_4d_gatherelements             GatherElements
+unsqueeze_to_4d_global_avgpool             GlobalAveragePool
+unsqueeze_to_4d_global_maxpool             GlobalMaxPool
+unsqueeze_to_4d_greater                    Greater
+unsqueeze_to_4d_greater_equal              GreaterOrEqual
+unsqueeze_to_4d_in                         InstanceNormalization
+unsqueeze_to_4d_leakyrelu                  LeakyRelu
+unsqueeze_to_4d_less                       Less
+unsqueeze_to_4d_less_equal                 LessOrEqual
+unsqueeze_to_4d_log                        Log
+unsqueeze_to_4d_logsoftmax                 LogSoftmax
+unsqueeze_to_4d_lpnormalization            LpNormalization
+unsqueeze_to_4d_matmul                     MatMul
+unsqueeze_to_4d_maxpool                    MaxPool
+unsqueeze_to_4d_mish                       exMish
+unsqueeze_to_4d_mul                        Mul
+unsqueeze_to_4d_not                        Not
+unsqueeze_to_4d_pad                        Pad
+unsqueeze_to_4d_pow                        Pow
+unsqueeze_to_4d_reciprocal                 Reciprocal
+unsqueeze_to_4d_reducel2                   ReduceL2
+unsqueeze_to_4d_reducemax                  ReduceMax
+unsqueeze_to_4d_reducemean                 ReduceMean
+unsqueeze_to_4d_reducemin                  ReduceMin
+unsqueeze_to_4d_reducesum                  ReduceSum
+unsqueeze_to_4d_relu                       Relu
+unsqueeze_to_4d_reshape_with_elementwise_op Reshape
+unsqueeze_to_4d_resize                     Resize
+unsqueeze_to_4d_scatternd                  ScatterND
+unsqueeze_to_4d_sigmoid                    Sigmoid
+unsqueeze_to_4d_sin                        Sin
+unsqueeze_to_4d_slice                      Slice
+unsqueeze_to_4d_softmax                    Softmax
+unsqueeze_to_4d_softplus                   Softplus
+unsqueeze_to_4d_split                      Split
+unsqueeze_to_4d_sqrt                       Sqrt
+unsqueeze_to_4d_sub                        Sub
+unsqueeze_to_4d_swish                      exSwish
+unsqueeze_to_4d_tanh                       Tanh
+unsqueeze_to_4d_topk                       TopK
+unsqueeze_to_4d_transpose                  Transpose
+unsqueeze_to_4d_where                      Where
+
+##### hardware_rules（tiling规则）共 12 条 #####
+convert_conv_to_pad_conv                   Conv
+convert_exmatmul_to_conv                   exMatMul
+convert_reducesum_to_einsum                ReduceSum
+fix_exsoftmax_axis                         exSoftmax13
+gather_to_conv                             Gather
+p_tiling_exmatmul_channel                  exMatMul
+tiling_conv_channelin                      Conv   q_equal=False
+tiling_deconv_channelin                    ConvTranspose   q_equal=False
+tiling_depthwise_conv                      Conv
+tiling_global_maxpool                      GlobalMaxPool
+tiling_group_conv_act                      Conv→exSwish→Conv
+tiling_maxpool                             MaxPool
+

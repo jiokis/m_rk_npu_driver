@@ -23,6 +23,7 @@ submit_budget.py — 「提交预算表」：给定命令流，给出耗时预�
   python3 src/analysis/submit_budget.py                       # 默认三份语料
   python3 src/analysis/submit_budget.py --dumps DIR [--timer T]
 """
+import collections
 import os
 import sys
 from collections import defaultdict
@@ -218,12 +219,111 @@ def cmd_predict():
         print(f"{label:<28} {n_sub:>9} {fl:>10.3f} {r['mac']:>12.4g} "
               f"{ar:>10.3f} {pred:>10.3f} {meas_ms:>10.3f} {err:>+7.1f}%")
     print()
+    print("  ⚠️ 本子命令的实测值取自**带 dump 的**那次运行（14.107 / 22.156 ms）；")
+    print("     `budget` 子命令用的是**干净的**低开销值（8.461 / 15.419 ms）。")
+    print("     两者不可混用 —— 数值结论以 `budget`（干净值）为准，见 docs/52 §2。")
     print("  读法：单核那一行**没有任何自由参数**，误差就是 MAC 模型 + 峰值常数的总误差。")
     print("        三核那一行按纯峰值预测会低 ~20% ⇒ 恰好是「三核效率只有 50~65%」")
     print("        这件事的另一种表述；把有效吞吐换成实测反解的 1.68 T-MAC/s 后误差 ~0.1%。")
 
 
+def cmd_budget():
+    """提交预算表：把一次推理的 hw 时间拆成「地板 / 算术 / 搬运 / 残差」四项，
+    并**点名残差的成因**（而不是把它藏进一个会低估 10% 的公式里）。
+
+    与 cmd_predict 的区别：predict 给一个数；budget 给**一张账**。
+    """
+    from tiling import load_segments
+    CNA_BIT = 0x01
+    BASE = os.path.expanduser("~/align2")
+    # (标签, 核数, dump 语料, **与该 dump 对齐**的 timer（算工作量用）,
+    #  低开销 timer（算时间用）—— 两者是不同次运行，seq 不能混用)
+    CASES2 = [
+        ("cm=7  3 核", 3, f"{BASE}/steady7", f"{BASE}/steady7_timer.log", f"{BASE}/hw7.log"),
+        ("cm=3  2 核", 2, f"{BASE}/align2/cm3", f"{BASE}/align2/cm3_timer.log", f"{BASE}/hw3.log"),
+        ("cm=1  1 核", 1, f"{BASE}/align2/cm1", f"{BASE}/align2/cm1_timer.log", f"{BASE}/hw1.log"),
+    ]
+    # 实测的「1 轮零工作量提交」地板（docs/46）：这是**最小**的地板
+    FLOOR_1R = {3: 52.8, 2: 137.4, 1: None}
+    FLOOR_LO2 = 67.4        # docs/43 实测中位（零算术量提交，低开销探针）
+
+    print("### 提交预算表：一次推理的 hw 时间拆成四账")
+    print(f"    PEAK = {PEAK_1CORE/1e12:.3f} T-MAC/s/核（阵列 32×32 × 1.0 GHz，docs/44）")
+    print(f"    FLOOR = 67.4 µs/提交（144 个零算术量提交的实测中位，docs/43）")
+    print()
+    print(f"    {'配置':<11} {'提交':>5} {'轮':>5} {'tile':>5} "
+          f"{'算术(ms)':>9} {'地板(ms)':>9} {'搬运KB':>8} {'实测(ms)':>9} "
+          f"{'残差(ms)':>9} {'残差占比':>8}   预测与误差")
+    print("    " + "─" * 118)
+    for label, cores, dumps, tpath, hwpath in CASES2:
+        if not (os.path.isdir(dumps) and os.path.exists(hwpath)):
+            print(f"    {label}: 语料缺失，跳过")
+            continue
+        segs = load_segments(dumps)
+        bt = collections.defaultdict(list)
+        for s, d in segs:
+            bt[(s.task.seq, s.task.index)].append(d)
+        # 工作量：用**与 dump 对齐**的 timer 取第一趟
+        def infs_of(path):
+            items = sorted(load_timer(path).items())
+            out, cur = [], []
+            for i, v in items:
+                if cur and v["task_start"] < cur[-1][1]["task_start"]:
+                    out.append(cur); cur = []
+                cur.append((i, v))
+            if cur:
+                out.append(cur)
+            return out
+        inf = infs_of(tpath)[0]
+        hw_inf = infs_of(hwpath)[-1]
+
+        mac = 0.0; move_b = 0; ntile = 0; nround = 0
+        for i, v in inf:
+            seq, lo, n = i - 1, v["task_start"], v["task_number"]
+            nround += (n + cores - 1) // cores
+            for tt in range(lo, lo + n):
+                for d in bt.get((seq, tt), []):
+                    mac += tile_work(d)["macs_real"]
+                    ntile += 1
+                    if not (d["out_w"] and d["out_h"]):
+                        # 搬运/逐元素：字节按 PPU 几何算（1×1×32 → 64 B）
+                        move_b += 64
+        hw = sum(v["hw_ns"] for _, v in hw_inf) / 1e6
+        ar = mac / (PEAK_1CORE * cores) * 1000.0
+        fl = len(hw_inf) * FLOOR_MID / 1000.0
+        fl67 = len(hw_inf) * FLOOR_LO2 / 1000.0
+        pred = ar + fl67
+        err = 100.0 * (pred - hw) / hw
+        resid = hw - ar - fl
+        print(f"    {label:<11} {len(hw_inf):>5} {nround:>5} {ntile:>5} {ar:>9.3f} "
+              f"{fl:>9.3f} {move_b/1024:>8.1f} {hw:>9.3f} {resid:>9.3f} "
+              f"{100*resid/hw:>7.1f}%  预测(FLOOR=67.4) {pred:>7.3f} ms  误差 {err:>+6.1f}%")
+
+    print()
+    print("### ★ 搬运通路要不要单独一项？—— **不要**（本轮把这个悬案结掉）")
+    print("    搬运总量只有 **7~12 KB/趟**（81 个 1×1×32 拷贝 = 64 B 一个）。")
+    print("    就算按 1 GB/s 算也只有 ~12 µs，占 8.461 ms 的 **0.14%**。")
+    print("    ⇒ **搬运通路的代价不是字节量，而是它触发的提交/轮开销** ——")
+    print("      而那个开销**已经在地板里**了（67.4 µs 正是在搬运提交上量出来的）。")
+    print("    ⇒ 所以模型**不需要**再加一个搬运带宽项；上一轮我把它列为待办是多余的。")
+    print()
+    print("### 残差的成因（点名，不藏起来）")
+    print("    真正的原因是：**地板随提交规模上升**。同配置实测：")
+    print("      · 零工作量且只有 1 轮的提交：**52.8 µs**（cm=7，n=108）")
+    print("      · 全部提交反解出的平均地板：**78.7 µs**（cm=7）")
+    print("      ⇒ 差 ~26 µs 来自「提交里有几轮」这件事本身。")
+    print()
+    print("### 所以本工具给的是**账**，不是**一个会低估 10% 的公式**")
+    print("    · 想只要一个数：用 `submit_budget.py predict`（单核 −1.4%，三核 0.0%）")
+    print("    · 想看钱花在哪：用本表 —— 四账分开列，残差点名")
+    print("    · 想把残差也吃掉：需要「同核数、不同轮数」的更多配置来定出")
+    print("      地板对轮数的依赖（docs/45/46 记录过：现有三个配置自由度不够）")
+
+
 def main(argv):
+    if len(argv) > 1 and argv[1] == "budget":
+        cmd_budget()
+        return 0
     if len(argv) > 1 and argv[1] == "predict":
         cmd_predict()
         return 0

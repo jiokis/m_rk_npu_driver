@@ -59,6 +59,11 @@ ROLE = {
     0x701c: ("PPU_RDMA", "写/读"),
 }
 IS_WRITE = {0x4020, 0x5020, 0x6070, 0x701c}
+# 明确的读/写角色（用于 producer→consumer 配对）。
+# 依据：0x5018 在实测中"读 63.53MB / 写 0"，是 DPU_RDMA 把 DPU 的结果读回来喂 PPU；
+#       0x5038 同理。0x5020 不是逐 tile 的数据地址（每算子一个固定值=参数表基址）。
+READ_REGS = {0x1070, 0x1110, 0x5018, 0x5038}
+WRITE_REGS = {0x4020, 0x5020, 0x6070, 0x701c}
 
 
 def load_buffers(dumps):
@@ -108,21 +113,31 @@ def addr_values(op):
     return {k: [d.get(k) for d in per_seg] for k in keys}
 
 
-def span_in_buffer(vals):
+def span_in_buffer(vals, cap=None):
     """
     同一寄存器、同一缓冲区内的地址列表 → (字节数, 说明, 可靠性)
-    注意：调用方保证 vals 已过滤到同一缓冲区。
+    调用方保证 vals 已过滤到同一缓冲区。
+
+    ★ 第二版加的硬校验（第一版在这里严重虚增过）：
+      实测 0x5018 只有 39 个不同地址，却算出"读了 63.53 MB" —— 平均每 tile 1.63 MB，
+      而整个缓冲区才 7.78 MB，39 个 1.63MB 的 tile 根本装不下。
+      根因：**地址稀疏时"中位数步长 × tile 数"会把地址之间的空洞也算成数据。**
+      所以必须用 cap（缓冲区容量）做物理校验：n_tiles × tile > cap 是不可能的，
+      这种结果直接判为不可信并剔出总量，绝不静默累加。
     """
     u = sorted(set(vals))
     if len(u) == 1:
         return 0, "单地址（定不出尺寸）", False
     deltas = [u[i + 1] - u[i] for i in range(len(u) - 1)]
     dmin, dmax = min(deltas), max(deltas)
+    tile = dmin
     if dmin == dmax:
-        return len(u) * dmin, f"{len(u)}×{dmin}B 等距", True
-    # 步长不等距：可能是 1) tile 尺寸不一 2) 夹杂了别的缓冲区的地址
-    # 保守取最小步长 × tile 数，并标记不可靠让调用方单独列出
-    return len(u) * dmin, f"{len(u)}×{dmin}B（步长 {dmin}..{dmax} 不等，保守）", False
+        total, why = len(u) * tile, f"{len(u)}×{tile}B 等距"
+    else:
+        total, why = len(u) * tile, f"{len(u)}×{tile}B（步长 {tile}..{dmax} 不等，保守）"
+    if cap is not None and total > cap:
+        return 0, f"剔除：{len(u)}×{tile}B={total}B 超过缓冲容量 {cap}B（地址稀疏，跨度法失效）", False
+    return total, why, (dmin == dmax)
 
 
 def analyse(ops, bufs):
@@ -145,8 +160,10 @@ def analyse(ops, bufs):
                     continue
                 buckets[bi].append(v)
             for bi, bvals in buckets.items():
-                n_bytes, why, ok = span_in_buffer(bvals)
+                n_bytes, why, ok = span_in_buffer(bvals, bufs[bi][1])
                 if n_bytes == 0:
+                    if not ok:
+                        unreliable.append((blk, reg, bi, 0, why, "剔除"))
                     continue
                 who = "写" if reg in IS_WRITE else "读"
                 if who == "写":
@@ -208,6 +225,134 @@ def cmd_ops(ops, bufs, top=25):
     print("  这些就是融合优化的目标：把它们的中间结果留在片上，省掉「写回 DRAM + 再读回」")
 
 
+def collect_occurrences(ops, bufs):
+    """
+    展开成 (算子序 k, 寄存器, 地址, 该地址的 tile 字节数) 的四元组流。
+    tile 字节数来自"同缓冲区内相邻地址步长"，与 summary 用的是同一套算法。
+    """
+    occ = []
+    for k, op in enumerate(ops):
+        for (blk, reg), vals in addr_values(op).items():
+            if reg not in ROLE:
+                continue
+            buckets = defaultdict(list)
+            for v in vals:
+                if not v:
+                    continue
+                bi = which_buffer(bufs, v)
+                if bi is not None:
+                    buckets[bi].append(v)
+            for bi, bvals in buckets.items():
+                n_bytes, why, ok = span_in_buffer(bvals, bufs[bi][1])
+                if n_bytes == 0:
+                    continue
+                # span_in_buffer 返回"总数"；单 tile 大小 = 总数 / 不同地址数
+                uniq = len(set(bvals))
+                tile = n_bytes // uniq if uniq else 0
+                if tile <= 0:
+                    continue
+                for v in set(bvals):
+                    occ.append((k, reg, v, tile))
+    return occ
+
+
+def cmd_shapes(ops, bufs):
+    """
+    只用「确证」级字段算张量字节数 —— 用来交叉验证跨度法。
+
+    依据：CORE 0x3014 低16 = 输出宽−1（确证）、CORE 0x3018 = 输出通道−1（确证）。
+          yolov5s 的 H 与 W 相等（特征图都是方的），所以 bytes = W×W×C。
+    一个算子的输出被切成多个 tile，但总和仍是 W×H×C，不用乘 tile 数。
+    """
+    rows = []
+    for k, op in enumerate(ops):
+        r = {}
+        for sl in op:
+            for i in sl.insns:
+                r[i.reg] = i.value
+        w = (r.get(0x3014, -1) & 0xFFFF) + 1 if 0x3014 in r else 0
+        c = r.get(0x3018, -1) + 1 if 0x3018 in r else 0
+        rows.append({"k": k, "op": op[0].task.op_idx, "tiles": len(op),
+                     "w": w, "c": c, "out": w * w * c})
+    # 链式：本算子的输入 = 上一个算子的输出；首个算子是 640×640×3
+    prev = 640 * 640 * 3
+    tot_in = tot_out = 0
+    for x in rows:
+        x["in"] = prev
+        tot_in += prev
+        tot_out += x["out"]
+        if x["out"]:
+            prev = x["out"]
+    INPUT = 640 * 640 * 3
+    print("═══ 用「确证」字段算张量字节（交叉验证）═══\n")
+    print(f"  {'#':>3} {'op':>4} {'tile':>5} {'W':>5} {'C':>5} {'输出 MB':>9} {'输入 MB':>9}")
+    for x in rows:
+        if x["out"] == 0 and x["k"] > 6:
+            continue
+        print(f"  {x['k']:>3} {x['op']:>4} {x['tiles']:>5} {x['w']:>5} {x['c']:>5} "
+              f"{x['out']/1048576:>9.3f} {x['in']/1048576:>9.3f}")
+    print(f"\n  输入图像        {INPUT:>14,} B = {INPUT/1048576:7.2f} MB")
+    print(f"  中间+最终输出   {tot_out:>14,} B = {tot_out/1048576:7.2f} MB")
+    print(f"  各算子输入合计  {tot_in:>14,} B = {tot_in/1048576:7.2f} MB")
+    print(f"  特征总量(读+写) {(tot_in+tot_out):>14,} B = {(tot_in+tot_out)/1048576:7.2f} MB")
+    print()
+    print("  这是**结构性下限**：每个中间张量被「写一次 + 读一次」计入。")
+    print("  对照 yolov5s 公开的中间张量（320²×32=3.28MB, 160²×64=1.64MB, 80²×128=0.82MB,")
+    print("  40²×256=0.41MB, 20²×512=0.20MB）—— 表里应能看到同样的序列。")
+
+
+def cmd_fusion(ops, bufs):
+    """
+    把"写出去又被读回来"的往返流量逐地址算出来 —— 这是融合优化的**可省上限**。
+
+    判据很硬：同一个地址，先被某个写寄存器写、后被某个读寄存器读。
+    省掉这一趟 = 省掉一次写 + 一次读 = 该地址字节数的 2 倍。
+    """
+    occ = collect_occurrences(ops, bufs)
+    reads = defaultdict(list)
+    for (k, reg, addr, tile) in occ:
+        if reg in READ_REGS:
+            reads[addr].append((k, tile))
+
+    sav_write = 0
+    pairs = defaultdict(lambda: [0, 0])   # (wreg,rreg) -> [次数, 字节]
+    matched_addr = set()
+    for (k, reg, addr, tile) in occ:
+        if reg not in WRITE_REGS:
+            continue
+        later = [(rk, rt) for (rk, rt) in reads.get(addr, []) if rk > k]
+        if not later:
+            continue
+        rreg = None
+        for (rk, rt) in later:
+            for (k2, r2, a2, t2) in occ:
+                if k2 == rk and a2 == addr and r2 in READ_REGS:
+                    rreg = r2
+                    break
+            if rreg:
+                break
+        use = min([tile] + [t for _, t in later])
+        sav_write += use
+        matched_addr.add(addr)
+        pairs[(reg, rreg or 0)][0] += 1
+        pairs[(reg, rreg or 0)][1] += use
+
+    total_occ = sum(t for (_, reg, _, t) in occ if reg in WRITE_REGS)
+    grand = 143_864_320          # summary 算出的总流量（下限），仅用于算占比
+    print("═══ 融合可省流量：逐地址配对「写出去 → 又被读回来」 ═══\n")
+    print(f"  参与配对的写地址数      {len(matched_addr)}")
+    print(f"  被读过一次的写字节数    {sav_write:>14,} B = {sav_write/1048576:7.2f} MB")
+    print(f"  对应往返流量（写+读）   {2*sav_write:>14,} B = {2*sav_write/1048576:7.2f} MB")
+    print()
+    print(f"  占总流量（{grand/1048576:.2f} MB）的  {2*sav_write/grand*100:.1f}%")
+    print("  ↑ 这就是「把这些中间结果留在片上」能省掉的 DRAM 流量上限")
+    print()
+    print("── 按流水级对的明细 ──")
+    print(f"  {'写寄存器':>10} {'读寄存器':>10} {'配对数':>8} {'字节 MB':>10}")
+    for (w, r), (n, b) in sorted(pairs.items(), key=lambda kv: -kv[1][1]):
+        print(f"  0x{w:04x}     0x{r:04x} {n:>8} {b/1048576:>10.2f}")
+
+
 def cmd_tensor(ops, bufs):
     use = defaultdict(lambda: {"r": 0, "w": 0, "ops": set(), "n": 0})
     for k, op in enumerate(ops):
@@ -222,7 +367,7 @@ def cmd_tensor(ops, bufs):
                 if bi is not None:
                     buckets[bi].append(v)
             for bi, bvals in buckets.items():
-                n_bytes, why, ok = span_in_buffer(bvals)
+                n_bytes, why, ok = span_in_buffer(bvals, bufs[bi][1])
                 if n_bytes == 0:
                     continue
                 key = (ROLE[reg][0], reg, bi)
@@ -251,6 +396,10 @@ def main():
         if "--top" in sys.argv:
             top = int(sys.argv[sys.argv.index("--top") + 1])
         cmd_ops(ops, bufs, top)
+    elif cmd == "shapes":
+        cmd_shapes(ops, bufs)
+    elif cmd == "fusion":
+        cmd_fusion(ops, bufs)
     elif cmd == "tensor":
         cmd_tensor(ops, bufs)
     else:

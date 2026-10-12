@@ -1,0 +1,9 @@
+obj-m += rknpu.o
+rknpu-y := rknpu_drv.o rknpu_reset.o rknpu_job.o rknpu_debugger.o rknpu_iommu.o
+rknpu-$(CONFIG_PM_DEVFREQ) += rknpu_devfreq.o
+rknpu-$(CONFIG_ROCKCHIP_RKNPU_SRAM) += rknpu_mm.o
+rknpu-$(CONFIG_ROCKCHIP_RKNPU_FENCE) += rknpu_fence.o
+rknpu-$(CONFIG_ROCKCHIP_RKNPU_DRM_GEM) += rknpu_gem.o
+rknpu-$(CONFIG_ROCKCHIP_RKNPU_DMA_HEAP) += rknpu_mem.o
+ccflags-y += -I$(src)/include
+ccflags-y += -Werror

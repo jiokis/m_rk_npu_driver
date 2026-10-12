@@ -33,11 +33,38 @@ log() { logger -t net-watchdog -- "$*"; echo "[$(date +%H:%M:%S)] $*"; }
 gateway() { ip route show default 2>/dev/null | awk '/default/{print $3; exit}'; }
 iface()   { ip route show default 2>/dev/null | awk '/default/{print $5; exit}'; }
 
-# 探测：网关能通就算健康
+# 探测：什么叫"网络健康"
+#
+# ★ 这里踩过一次真实的设计错误，必须记下来：
+#   最初我只探测「板子 → 默认网关」。2026-10-12 那次假死里，这个探测**一直返回成功**
+#   （板子还能 ping 通路由器），于是守护认为网络好得很，永不升级、更不会重启 ——
+#   但实际情况是「板子 ←→ 开发机」这条路径断了，板子照样够不着。
+#   教训：**"能到网关"不等于"能被访问"**。网关探测只覆盖链路层，覆盖不了端到端。
+#
+# 现在改成两个条件，任一不满足就算不健康：
+#   1) 默认网关可达            —— 覆盖"WiFi 掉线/没路由"这类链路问题
+#   2) PEER 可达（若配置了）    —— 覆盖"关联着但到不了开发机"这种端到端问题
+# PEER 在 /etc/net-watchdog.conf 里配（默认是开发机的 IP）。
+# ⚠ 别把 PEER 设成经常关机的机器，否则会误判；设成 0 或留空即关闭这项检查。
 probe() {
   local gw; gw="$(gateway)"
   [ -n "$gw" ] || return 1          # 连默认路由都没了 → 不健康
-  ping -c 2 -W 2 -I "$(iface)" "$gw" >/dev/null 2>&1
+  ping -c 2 -W 2 -I "$(iface)" "$gw" >/dev/null 2>&1 || return 1
+  if [ -n "${PEER:-}" ] && [ "$PEER" != "0" ]; then
+    ping -c 2 -W 2 -I "$(iface)" "$PEER" >/dev/null 2>&1 || return 1
+  fi
+  return 0
+}
+
+# 分开探测，只为了日志能说清是"到网关不通"还是"到开发机不通"
+probe_detail() {
+  local gw; gw="$(gateway)"
+  if [ -z "$gw" ]; then echo "没有默认路由"; return; fi
+  if ! ping -c 2 -W 2 -I "$(iface)" "$gw" >/dev/null 2>&1; then echo "网关 $gw 不通"; return; fi
+  if [ -n "${PEER:-}" ] && [ "$PEER" != "0" ]; then
+    if ! ping -c 2 -W 2 -I "$(iface)" "$PEER" >/dev/null 2>&1; then echo "网关通但 PEER $PEER 不通"; return; fi
+  fi
+  echo "正常"
 }
 
 recover() { # recover <级别序号> <描述> <命令...>
@@ -68,7 +95,7 @@ while :; do
 
   fails=$((fails + 1))
   [ "$down_since" = 0 ] && down_since=$(date +%s)
-  log "⚠ 探测失败 $fails/$FAIL_THRESHOLD（网关 $(gateway || echo 无)，网卡 $(iface || echo 无)）"
+  log "⚠ 探测失败 $fails/$FAIL_THRESHOLD（原因: $(probe_detail)；网卡 $(iface || echo 无)）"
 
   if [ "$fails" -lt "$FAIL_THRESHOLD" ]; then
     sleep "$PROBE_INTERVAL"; continue

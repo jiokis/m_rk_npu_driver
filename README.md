@@ -104,11 +104,12 @@ rk3588-npu-re/
 │   └── 39-结构级耗时模型-66%是提交固定开销.md ★★★ **结构级耗时模型**：`t_hw ≈ work + 90µs × submit数`；cm=7 的 10.51ms 里 6.9ms（66%）是每次提交的固定开销 ⇒ 减少 submit 次数是第一优先级的可落地优化（合并到 10 次可让 NPU 侧快约 2.3×）
 │   └── 40-提交地板直接实测与docs39修正.md ★★★ **直接测到每次提交的地板 60~115 µs**（yolov5s 与 RKLLM 两个独立负载交叉）；cm=3 与 cm=7 几乎相同（自洽性检验）；**RKLLM 解码 ≈ 504 次提交/token、地板就是全部耗时**；并修正 docs/39 的「66%」为「31~54%（取决于并行度假设）」（含：试图用 librkllmrt 1.3.0 对比提交粒度但因模型版本绑定未做成，需 1.3.0 格式模型）
 │   └── 41-结构级模型成立-分块被撞实与提交地板实测.md ★★★ **目标 ③ 落地**：上游 `mesa/rkt_task.c` 的分块模型被逐字段撞实（**15 项预测 13 项 100%**）；`DATA_SIZE0[0..10]` 确证为 **tile 输入行带高**、`DATA_SIZE3 = out_w×out_h` ⇒ **输出高度白拿**；**修正 docs/36**——上游未定义的寄存器是 **2 个不是 39 个**（拿错了参照物）；**提交地板在零算术量提交上直接量到 74.4/75.0/88.7 µs**；**核 0 比核 1/2 慢 27%**（1352×3 交错样本）；交付 `submit_budget.py`（给定命令流算耗时，并给出物理夹逼区间）
+│   └── 42-流水重叠与片上缓冲复用-WEIGHT_REUSE语义确证与LLM零复用.md ★★★ **目标 ② 推进**：`WEIGHT_REUSE` 语义被**强对照**确证（**算子首个 tile 上必须为 0，两份独立语料各 63/63**）；`DATA_REUSE` 与 `FC_DATA_BANK` 厂商**从未使用**（结案）；`DATA_BANK+WEIGHT_BANK ≡ 12` 第三次 100%；bank 划分 **CNN(11+1) 与 LLM(1+11) 正好相反**；★★ **LLM GEMM 路径 `WEIGHT_REUSE` 恒为 0**（13382 个后续 tile 无一例外）⇒ 算术强度只有 **4.00 MAC/字节**⇒ 结构上不可能算力受限（跑满峰值需要 256 GB/s，实测可达 23.84 GB/s）
 │
 ├── src/sim/                  ★★ CPU 侧 RKNPU 模拟开发环境（纯 Python，无依赖）
 │   ├── README.md
 │   ├── rknpu/                regcmd / regmap / machine / loader / cli
-│   └── （分析）             tiling.py 分块对撞 / cost_model.py 耗时回归 / submit_budget.py 提交预算表 / reg_coverage.py 寄存器覆盖率
+│   └── （分析）             tiling.py 分块对撞 / cost_model.py 耗时回归 / submit_budget.py 提交预算表 / cbuf_reuse.py 片上缓冲复用 / reg_coverage.py 寄存器覆盖率
 │   └── tests/test_sim.py     冒烟测试（11 项全通过）
 ├── scripts/build/            私有化驱动构建
 │   ├── host-tools-env.sh     ★ 免 root 补齐 flex/bison/m4/mkimage/dtc（含两个环境变量坑）
@@ -189,6 +190,7 @@ rk3588-npu-re/
 | **★★★ 结构级耗时模型（目标 ③ 已落地）** | ✅ **见 docs/41：`t_total ≈ n_submit × FLOOR + MAC_total / THROUGHPUT`。`FLOOR` 在**零算术量的提交**上直接量到 **74.4/75.0/88.7 µs**；`MAC_total` 由上游分块模型逐 tile 读出（两份独立抓取上 **15 项字段预测 13 项 100%**，单个 1×1 算子核到 **0.4%**）。**两个锚点互相夹逼**：① 单核 + 一个 588-tile 大提交 ⇒ 可读部分已占**物理天花板的 98.1%** ⇒ **单核算术效率 ≥98.1%**（未读 tile 最多只能承载 1.9%，被物理夹住）；② 三核 + 77 次细碎提交 ⇒ **效率 50~65%**。⇒ **同一批乘法器效率差 1.5~2 倍，唯一变的是提交粒度** ⇒ 合并提交在 NPU 侧约 **1.8×**。**新增可操作结论**：核 0 比核 1/2 慢 **27%**（77.3 vs 61.0/60.7 µs，1352×3 交错样本）⇒ 调度优先避开核 0；`OP_ENABLE` 新观测到 **0x0d = CNA\|CORE\|DPU**（LLM GEMM 路径**裁掉 DPU_RDMA**）。**预测检验**：常数全部来自别的实验、不拟合 ⇒ 单核 588-tile 预测 13.914 ms vs 实测 14.107 ms（**−1.4%，无自由参数**）；三核按有效吞吐 1.68 T-MAC/s 预测 22.156 ms = 实测（**0.0%**）⇒ 目标 ③ 达成。工具 `src/analysis/submit_budget.py`** |
 | **★★★ 提交地板（直接实测）** | ✅ **见 docs/40：每次提交的固定地板 **60~115 µs**，在 yolov5s 与 RKLLM 两个独立工作负载上一致；cm=1/2/4 结果一致（只取决于核数）；cm=3 与 cm=7 差 6%（同为 77 次提交）。**RKLLM 解码 ≈ 504 次提交/token × 70 µs ≈ 全部耗时** ⇒ 提交粒度是 LLM 推理的头号瓶颈** |
 | **★★★ 最大化 NPU 利用率（已落地）** | ✅ **见 docs/34：4~6 路并发推理 ⇒ 吞吐 2.44~2.57×，NPU 利用率 36% → 90.7%（三重独立验证），零代码改动。方法：`scripts/board/bench-concurrency.sh`** |
+| **★★★ 流水重叠机制** | ✅ **见 docs/42：三个正向证据 + 一个负向证据。①`OP_ENABLE` 一次开火同时使能 CNA+CORE+DPU（四级并行）；②`WEIGHT_REUSE` 让权重跨 tile 驻留 CBUF（强对照 63/63×2 语料确证语义）；③段间 PC 链边跑边下配置；④**权重 DRAM 流量对每次提交耗时 R²=0.0004、斜率近 0** ⇒ 搬运被藏在计算后面，重叠**实际发生**。⛔ `DATA_REUSE`/`FC_DATA_BANK` 厂商从未使用 ⇒ 特征图不做跨 tile 保留。**缺口**：stage 级重叠度需要硬件计数器，本机不可得** |
 | **★★★ 微架构：片上缓冲** | ✅ **见 docs/36：CNA 有 384KB 片上 CBUF（12×32KB bank），命令流用 `CBUF_CON0@0x1040` 直接分区；厂商实测 `DATA_BANK+WEIGHT_BANK ≡ 12`。`WEIGHT_REUSE` 仅 40% 置位、`DATA_REUSE` 从未使用** |
 | **★★★ 与上游对撞** | ✅ **见 docs/36 + docs/41：regcmd 编码被 Mesa `emit_raw` 逐位确证；七个块映射全对；op_en 位图语义被 TRM 注释确认。⚠️ **「111 of 154 / 39 个上游未定义」已修正**——那是拿 Mesa `registers.xml`（154 条子集）当参照物；用内核头文件（199 条）重算：我们观测 148 个，**仅 2 个上游没给名字**（`0x3030`/`0x40c4`，而 Mesa 正是以裸偏移写入它们）⇒ **上游覆盖 100%**。完整对照表 `data/analysis/register_crossref.txt`；**可复现的覆盖率报告 `data/analysis/register_coverage.txt`（由 `src/analysis/reg_coverage.py` 生成）** |
 | **★★ 字段级对撞（边界）** | ⚠️ **见 docs/37：寄存器偏移与上游完全吻合（CNA 43 个厂商写了 39 个），但字段语义没完全对上 —— `DATAIN_WIDTH`/`DATAOUT_WIDTH`/`WEIGHT_KERNELS` 解对，`DATAIN_HEIGHT`/`DATAIN_CHANNEL_REAL` 解不对（且「高度」值恰等于 `FEATURE_GRAINS`）。⇒ 自建命令流：编码层可照抄，配置层必须重新逆向** |

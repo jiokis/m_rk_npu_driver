@@ -130,6 +130,29 @@ def main():
               f"{100*zh/tot:>6.1f}%")
 
     print()
+    print("### 计数规则：那条拷贝在每个 op 上发几次")
+    print(f"    {'配置':<12} {'不同 op_idx':>11} {'总数':>5} {'每个 op 的次数分布':>24}")
+    print("    " + "─" * 60)
+    for label, dumps, tpath, keep, cores in CFGS:
+        if not os.path.isdir(dumps):
+            continue
+        segs = load_segments(dumps)
+        ops = collections.Counter()
+        for s, d in segs:
+            if s.task.seq >= keep:
+                continue
+            reg = {i.reg: i.value for i in s.insns}
+            if reg.get(0x6070) == 0xFFF09D80 and reg.get(0x701c) == 0xFFF0A180:
+                ops[s.task.op_idx] += 1
+        dist = collections.Counter(ops.values())
+        print(f"    {label:<12} {len(ops):>11} {sum(ops.values()):>5} "
+              f"{str(dict(sorted(dist.items()))):>24}")
+    print("    ⇒ **多核下就是「每个 op、每核一份」**（3 核 ×3 = 81、2 核 ×2 = 54）；")
+    print("      27 个 op 的**集合在三份语料里完全相同**；")
+    print("      单核是 46（19 个 op ×2 + 8 个 op ×1），不是 27 —— 单核那条路另有一套规则。")
+    print("    ⇒ 机制推测（**是推测**）：这是**每个核的 prologue**（同样的 src/dst 刷同一个暂存位），")
+    print("      所以天然幂等；运行时按核逐个发出，**没有做去重**。")
+    print()
     print("### 结论")
     print("    1. ★ **整个模型里只有 7 种搬运，其中一种是同一种 1×1×32 拷贝**：")
     print("       `src=0xfff0a180 → dst=0xfff09d80`，在三份语料里分别被执行")

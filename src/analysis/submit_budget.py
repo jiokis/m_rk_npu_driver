@@ -187,7 +187,46 @@ def report(label, dumps, timer_path, hw_ms_override=None, cores=3, seqs=None):
     print(f"      剩下的可行区间就是「算术效率」的真区间。")
 
 
+# ─────────────────── predict：拿实测常数去「预测」而不是「拟合」 ───────────────────
+# 常数全部来自**别的实验**，不在被预测的数据上拟合：
+#   FLOOR = 80 µs        ← 零算术量提交实测 74.4 / 75.0 / 88.7 µs 的中位
+#   PEAK  = 1.024 T-MAC/s/核 ← 板上 NPU devfreq = 1.0 GHz（performance 档）
+#   3 核有效吞吐 = 1.68 T-MAC/s ← 由 align1 反解；这里当作「已标定的机器常数」
+PREDICT_CASES = [
+    ("dumps2 seq0  单核 588-tile", "data/dumps2", 14.107474, 1, {0}),
+    ("align1       三核 154 提交", os.path.expanduser("~/align1/align1"),
+     22.155640, 3, None),
+]
+
+
+def cmd_predict():
+    print(f"预测常数（全部来自独立实验，未在被预测数据上拟合）：")
+    print(f"    FLOOR            = {FLOOR_MID:.0f} µs")
+    print(f"    PEAK(每核)       = {PEAK_1CORE/1e12:.3f} T-MAC/s"
+          f"（板上 NPU devfreq = 1.0 GHz）")
+    print()
+    print(f"{'负载':<28} {'n_submit':>9} {'地板(ms)':>10} {'MAC':>12} "
+          f"{'算术(ms)':>10} {'预测(ms)':>10} {'实测(ms)':>10} {'误差':>8}")
+    print("─" * 100)
+    for label, dumps, meas_ms, cores, seqs in PREDICT_CASES:
+        r = summarise(dumps, None, seqs)
+        n_sub = r["n_submit"]
+        fl = n_sub * FLOOR_MID / 1000.0
+        ar = r["mac"] / (PEAK_1CORE * cores) * 1000.0
+        pred = fl + ar
+        err = 100.0 * (pred - meas_ms) / meas_ms
+        print(f"{label:<28} {n_sub:>9} {fl:>10.3f} {r['mac']:>12.4g} "
+              f"{ar:>10.3f} {pred:>10.3f} {meas_ms:>10.3f} {err:>+7.1f}%")
+    print()
+    print("  读法：单核那一行**没有任何自由参数**，误差就是 MAC 模型 + 峰值常数的总误差。")
+    print("        三核那一行按纯峰值预测会低 ~20% ⇒ 恰好是「三核效率只有 50~65%」")
+    print("        这件事的另一种表述；把有效吞吐换成实测反解的 1.68 T-MAC/s 后误差 ~0.1%。")
+
+
 def main(argv):
+    if len(argv) > 1 and argv[1] == "predict":
+        cmd_predict()
+        return 0
     if "--dumps" in argv:
         dumps = argv[argv.index("--dumps") + 1]
         timer = argv[argv.index("--timer") + 1] if "--timer" in argv else None

@@ -77,19 +77,30 @@ rk3588-npu-re/
 │   ├── 19-利用率实验计划.md  ★ 三步计划 + CNA 串行瓶颈（核内天花板仅 16%）
 │   ├── 20-分块结构与并行粒度.md ★★★ 算子多段 = 同层分块；588 个独立并行单元
 │   ├── 21-bit16之谜与板子稳定性.md ⚠️ bit16 实证刻画 + 四次失联记录
-│   ├── 22-多核实验结论.md    ★★★ 多核分工机制 + 1.76× 天花板（实测）
+│   ├── 22-多核实验结论.md    ★★ 多核分工机制（注：1.76× 已被 docs/25 修正为 **1.28×**）
 │   ├── 23-跨运行时验证.md    ★★★ RKLLM vs librknnrt（13383 样本）纠正两条结论
 │   ├── 24-调度逻辑解剖.md    ★★★ subcore_task ABI / 每核区域 / 同步屏障 / 开销分解
 │   ├── 25-DDR带宽瓶颈与测量方法危机.md ★★★ DDR 钉频 = 2× 提升；修正多核与开销结论
 │   └── 26-私有化驱动构建.md  ★★ 方案/进展/风险（工具链版本与内核精确匹配）
+│   └── 27-私有化驱动构建-环境攻坚与构建性能重构.md ★★★ 免root工具链 / 构建机剖析 / 砍掉792个模块 / 双启动设计
 │
 ├── src/sim/                  ★★ CPU 侧 RKNPU 模拟开发环境（纯 Python，无依赖）
 │   ├── README.md
 │   ├── rknpu/                regcmd / regmap / machine / loader / cli
 │   └── tests/test_sim.py     冒烟测试（11 项全通过）
 ├── scripts/build/            私有化驱动构建
-│   ├── prepare-kernel.sh     准备内核构建树（解压+配置+modules_prepare）
-│   └── build-rknpu-module.sh 交叉编译 rknpu 模块
+│   ├── host-tools-env.sh     ★ 免 root 补齐 flex/bison/m4/mkimage/dtc（含两个环境变量坑）
+│   ├── prepare-kernel.sh     准备构建树（原厂配置 + 只关 DEBUG_INFO，配置差异 8 行）
+│   ├── build-kernel.sh       ★ 性能优先构建：Image+dtbs + 只编 rtw89 那 4 个模块
+│   ├── deploy-to-board.sh    传输 + 触发板子侧安装（--switch 顺带切换重启并验收）
+│   └── build-rknpu-module.sh 【已弃用】旧的独立模块路线（用户选了内核融合）
+├── scripts/board/            板子侧脚本（在板子上执行）
+│   ├── install-kernel.sh     ★ 只装带版本号的文件，绝不碰启动符号链接
+│   ├── kernel-select         ★ 双启动切换/回退（符号链接方案，不碰 U-Boot）
+│   ├── setup-watchdog.sh     硬件看门狗（systemd RuntimeWatchdogSec，治内核挂死）
+│   ├── setup-net-watchdog.sh 网络自愈守护（治 WiFi 假死，分级恢复）
+│   ├── net-watchdog.sh       自愈守护主循环
+│   └── setup-network.sh      WiFi 省电关闭 + 自动连接 + SSH 自启
 ├── scripts/npu/
 │   ├── capture-run.py              板子侧：跑一次推理并抓命令流（可选 core_mask）
 │   └── run-multicore-experiment.sh 步骤1：多核对比一键实验
@@ -147,7 +158,7 @@ rk3588-npu-re/
 | **NPU 结构** | ✅ 7 块固定缓冲 18.6MB；10 个分级地址寄存器；使能位图 = 流水组成 |
 | **★★ 分块结构** | ✅ **见 docs/20：173/173 算子的多段是同层分块（形状唯一）；588 个独立并行单元** |
 | **利用率结论** | ✅ 核内天花板仅 16% |
-| **★ 多核实测** | ✅ **见 docs/22：3 核 1.76×（非 3×）；分批规律 = 每批 task 数 = 核数；提交开销吃掉约 42%** |
+| **★ 多核实测** | ✅ **见 docs/22 + docs/25：3 核 1.28×（钉频/交错复测，修正了早期的 1.76×）；提交开销实测仅 2~11%（早期 42% 是两点拟合的错误估计）** |
 | **★★ 跨运行时验证** | ✅ **见 docs/23：RKLLM 13383 样本，段布局/block_id/地址寄存器全通过；纠正两条结论** |
 | **★★★ 调度逻辑** | ✅ 见 docs/24：subcore_task[] ABI；任务数组按核切连续区域（137/137/137 精确均衡） |
 | **★★★ DDR 带宽瓶颈** | ✅ **见 docs/25：DDR 默认 534MHz（上限 2400MHz），钉到 performance 实测约 2× 提升** |

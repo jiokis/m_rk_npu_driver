@@ -49,11 +49,23 @@ def rewrite(path, out_path):
                 axes = list(np.atleast_1d(consts[node.input[1]]))
             keep = attrs["keepdims"].i if "keepdims" in attrs else 1
             # 空间维在 NCHW 下是 2,3；也接受负索引
-            if axes is not None and keep == 1 and set(
-                    int(a) % 4 for a in axes) == {2, 3}:
+            if axes is not None and set(int(a) % 4 for a in axes) == {2, 3}:
+                # 语义：对空间维求均值。
+                #  · keepdims=1 ⇒ 输出 rank 4 ⇒ GlobalAveragePool 直接替换
+                #  · keepdims=0 ⇒ 输出 rank 2 ⇒ GAP 之后再 Flatten(axis=1) 把 rank 拉回来
+                #    （实测 torch 导出的是 keepdims=0，而 RKNN 内部 ORT 会话却按 rank 4 处理它）
+                mid = node.output[0] + "_gap4d"
                 new_nodes.append(helper.make_node(
-                    "GlobalAveragePool", [node.input[0]], [node.output[0]],
+                    "GlobalAveragePool", [node.input[0]], [mid],
                     name=node.name + "_gap"))
+                if keep == 1:
+                    new_nodes.append(helper.make_node(
+                        "Identity", [mid], [node.output[0]],
+                        name=node.name + "_id"))
+                else:
+                    new_nodes.append(helper.make_node(
+                        "Flatten", [mid], [node.output[0]], axis=1,
+                        name=node.name + "_flat"))
                 n_repl += 1
                 continue
         new_nodes.append(node)

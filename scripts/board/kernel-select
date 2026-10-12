@@ -1,0 +1,108 @@
+#!/bin/bash
+# 内核切换：改 /boot 里的三个符号链接，决定 U-Boot 下次启动哪个内核
+#
+# 为什么用符号链接切换，而不是改 boot.scr 做启动菜单：
+#   /boot/boot.scr（由 boot.cmd 编译）里写死了加载 `Image`、`dtb/${fdtfile}`、`uInitrd`
+#   这三个**固定名字**。U-Boot 环境一点不用动，只要把符号链接指过去就行。
+#   好处：① 不碰 U-Boot，零刷砖风险 ② 旧内核文件原封不动，随时切回
+#         ③ 不需要串口/显示器，SSH 里一条命令就能切
+#   （代价：如果新内核在用户态之前就 panic，就只能靠 U-Boot 串口或重新刷 boot 分区回退。
+#     本次新内核与原厂配置逐项一致、驱动源码逐字节一致，这个风险极低。）
+#
+# 用法：
+#   kernel-select            # 看当前指向和可用内核
+#   kernel-select orig       # 切回原厂内核
+#   kernel-select <release>  # 切到指定 release，如 6.1.99-rockchip-rk3588-priv1
+set -euo pipefail
+
+[ "$(id -u)" = "0" ] || { echo "请用 root 运行（sudo）" >&2; exit 1; }
+
+BOOT=/boot
+SAVE="$BOOT/.kernel-orig.targets"
+
+# ── 首次运行时，把原厂符号链接指向记下来，供回退 ───────────
+save_orig() {
+  [ -e "$SAVE" ] && return 0
+  {
+    for l in Image dtb uInitrd; do
+      printf '%s=%s\n' "$l" "$(readlink -f "$BOOT/$l" 2>/dev/null || echo MISSING)"
+    done
+  } > "$SAVE"
+  echo "▶ 已记录原厂启动指向 → $SAVE"
+  cat "$SAVE" | sed 's/^/    /'
+}
+
+show() {
+  echo "── 当前 /boot 启动指向 ──"
+  for l in Image dtb uInitrd; do
+    printf '  %-8s → %s\n' "$l" "$(readlink -f "$BOOT/$l" 2>/dev/null || echo '<缺失>')"
+  done
+  echo
+  echo "── 可用内核 ──"
+  local f r
+  for f in "$BOOT"/vmlinuz-*; do
+    [ -e "$f" ] || continue
+    r="${f##*/vmlinuz-}"
+    printf '  %-40s Image=%s dtb=%s uInitrd=%s\n' "$r" \
+      "$([ -e "$BOOT/vmlinuz-$r" ] && echo ✅ || echo ✗)" \
+      "$([ -e "$BOOT/dtb-$r" ] && echo ✅ || echo ✗)" \
+      "$([ -e "$BOOT/uInitrd-$r" ] && echo ✅ || echo ✗)"
+  done
+  echo
+  [ -e "$SAVE" ] && { echo "── 原厂指向（回退用）──"; sed 's/^/  /' "$SAVE"; } || \
+    echo "  （还没记录原厂指向；执行 kernel-select orig 前请先跑一次本脚本无参数）"
+}
+
+relink() { # relink <链接名> <目标绝对路径> <描述>
+  local l="$1" tgt="$2" desc="$3"
+  [ -e "$tgt" ] || { echo "  ✗ $l: 目标不存在 $tgt" >&2; return 1; }
+  ln -sfn "$tgt" "$BOOT/$l"
+  printf '  ✅ %-8s → %s   (%s)\n' "$l" "$tgt" "$desc"
+}
+
+case "${1:-show}" in
+  show|"")
+    save_orig; echo; show
+    ;;
+
+  orig)
+    save_orig
+    echo "═══ 切回原厂内核 ═══"
+    while IFS='=' read -r l tgt; do
+      [ "$tgt" = "MISSING" ] && { echo "  ⚠ 没记录到 $l 的原值，跳过"; continue; }
+      relink "$l" "$tgt" "原厂"
+    done < "$SAVE"
+    echo; show
+    echo "⚠ 重启后生效：reboot"
+    ;;
+
+  *)
+    R="$1"
+    [ -e "$BOOT/vmlinuz-$R" ] || { echo "✗ 找不到内核 $BOOT/vmlinuz-$R" >&2; exit 1; }
+    save_orig
+    echo "═══ 切换到内核 $R ═══"
+    FAIL=0
+    # dtb：可能是目录，也可能是指向目录的符号链接
+    DTBSRC=""
+    for c in "$BOOT/dtb-$R" "$BOOT/dtb-$R/rockchip"; do
+      [ -e "$c" ] && { DTBSRC="$c"; break; }
+    done
+    [ -n "$DTBSRC" ] || { echo "  ✗ 找不到设备树目录 $BOOT/dtb-$R" >&2; FAIL=1; }
+
+    [ "$FAIL" = 0 ] && relink Image   "$BOOT/vmlinuz-$R"  "内核镜像" || true
+    [ "$FAIL" = 0 ] && relink dtb     "$DTBSRC"           "设备树"   || true
+    [ "$FAIL" = 0 ] && relink uInitrd "$BOOT/uInitrd-$R"  "initramfs" || true
+
+    if [ "$FAIL" = 1 ]; then
+      echo "  ✗ 产物不齐，已回滚"
+      "$0" orig >/dev/null
+      exit 1
+    fi
+
+    # 注意：这里不要再去 cp 一份 Image。
+    # Image 本身已经被 relink 成指向 vmlinuz-$R 的符号链接，再 cp 等于拷到自己身上。
+    echo; show
+    echo "✅ 切换完成，重启生效：reboot"
+    echo "   起不来就断电重启前先想好回退路径（见脚本头部注释）"
+    ;;
+esac

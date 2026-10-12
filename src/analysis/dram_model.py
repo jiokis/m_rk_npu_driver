@@ -284,6 +284,63 @@ def _covered(iv, merged):
     return total
 
 
+def cmd_weights(ops, bufs):
+    """
+    权重流量（0x1110）—— 之前一直没算，因为每个算子只有一个权重地址，定不出尺寸。
+
+    但权重区是**紧密排布**的：把所有算子的权重地址排序，相邻差值就是各权重张量的字节数。
+    有了尺寸就能算流量：**每个 tile 都要重读一遍权重**（分块是空间切分，权重不切）。
+    如果这个数很大，那它就是一块此前被忽略的可观流量。
+    """
+    occ = collect_occurrences(ops, bufs)   # 0x1110 单地址 → tile=0，采集不到
+    addrs = []   # (算子序k, 地址, 该算子的 tile 数)
+    for k, op in enumerate(ops):
+        a = set()
+        for sl in op:
+            for i in sl.insns:
+                if i.reg == 0x1110 and i.value:
+                    a.add(i.value)
+        for v in a:
+            addrs.append((k, v, len(op)))
+    addrs.sort(key=lambda x: x[1])
+    per_buf = defaultdict(list)
+    for k, v, nt in addrs:
+        bi = which_buffer(bufs, v)
+        if bi is not None:
+            per_buf[bi].append((v, k, nt))
+
+    print("═══ 权重流量（0x1110）═══\n")
+    total_fp = 0
+    total_traffic = 0
+    print(f"  {'缓冲':>4} {'容量MB':>8} {'权重地址数':>10} {'权重占用MB':>11} {'权重流量MB':>11}")
+    for bi, items in sorted(per_buf.items()):
+        vs = sorted({v for v, _, _ in items})
+        if len(vs) < 2:
+            print(f"  {bi:>4} {bufs[bi][1]/1048576:>8.2f} {len(vs):>10} {'—':>11} {'—':>11}")
+            continue
+        deltas = [vs[i + 1] - vs[i] for i in range(len(vs) - 1)]
+        # 权重紧密排布：占用 = 首尾跨度 + 最后一块（用中位步长估）
+        step = sorted(deltas)[len(deltas) // 2]
+        fp = vs[-1] - vs[0] + step
+        # 流量：每个地址的权重块大小 × 该算子的 tile 数（每 tile 重读一遍）
+        # 块大小用"到下一个地址的距离"，最后一个用中位步长
+        traffic = 0
+        for i, v in enumerate(vs):
+            size = (vs[i + 1] - v) if i + 1 < len(vs) else step
+            nts = [nt for vv, _, nt in items if vv == v]
+            nt = max(nts) if nts else 1
+            traffic += size * nt
+        total_fp += fp
+        total_traffic += traffic
+        print(f"  {bi:>4} {bufs[bi][1]/1048576:>8.2f} {len(vs):>10} {fp/1048576:>11.2f} {traffic/1048576:>11.2f}")
+    print(f"\n  权重占用合计   {total_fp/1048576:.2f} MB")
+    print(f"  权重流量合计   {total_traffic/1048576:.2f} MB  ← 每 tile 重读一遍的代价")
+    print()
+    print(f"  对照 yolov5s 的 int8 权重约 7.2 MB —— 占用 {total_fp/1048576:.2f} MB 与之对照即可自检。")
+    if total_fp > 0:
+        print(f"  放大倍数（流量/占用）= {total_traffic/total_fp:.1f}× —— 这个倍数就是分块带来的权重重读开销。")
+
+
 def cmd_overlap(ops, bufs):
     """
     ★ 关键判据：消费者的读，落不落在**某个生产者写过的区间**里？
@@ -475,6 +532,8 @@ def main():
         if "--top" in sys.argv:
             top = int(sys.argv[sys.argv.index("--top") + 1])
         cmd_ops(ops, bufs, top)
+    elif cmd == "weights":
+        cmd_weights(ops, bufs)
     elif cmd == "overlap":
         cmd_overlap(ops, bufs)
     elif cmd == "shapes":

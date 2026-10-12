@@ -1,5 +1,7 @@
 # 转换产物 / 标定集：体积大且可复现（make_onnx_models.py + convert_rknn.py 能重建）
 deploy/calib/
 deploy/rknn/
+deploy/rknn_tv/
+deploy/onnx_tv/
 __pycache__/
 *.pyc

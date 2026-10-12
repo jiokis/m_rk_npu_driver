@@ -80,12 +80,16 @@ rk3588-npu-re/
 │   ├── 22-多核实验结论.md    ★★★ 多核分工机制 + 1.76× 天花板（实测）
 │   ├── 23-跨运行时验证.md    ★★★ RKLLM vs librknnrt（13383 样本）纠正两条结论
 │   ├── 24-调度逻辑解剖.md    ★★★ subcore_task ABI / 每核区域 / 同步屏障 / 开销分解
-│   └── 25-DDR带宽瓶颈与测量方法危机.md ★★★ DDR 钉频 = 2× 提升；修正多核与开销结论
+│   ├── 25-DDR带宽瓶颈与测量方法危机.md ★★★ DDR 钉频 = 2× 提升；修正多核与开销结论
+│   └── 26-私有化驱动构建.md  ★★ 方案/进展/风险（工具链版本与内核精确匹配）
 │
 ├── src/sim/                  ★★ CPU 侧 RKNPU 模拟开发环境（纯 Python，无依赖）
 │   ├── README.md
 │   ├── rknpu/                regcmd / regmap / machine / loader / cli
 │   └── tests/test_sim.py     冒烟测试（11 项全通过）
+├── scripts/build/            私有化驱动构建
+│   ├── prepare-kernel.sh     准备内核构建树（解压+配置+modules_prepare）
+│   └── build-rknpu-module.sh 交叉编译 rknpu 模块
 ├── scripts/npu/
 │   ├── capture-run.py              板子侧：跑一次推理并抓命令流（可选 core_mask）
 │   └── run-multicore-experiment.sh 步骤1：多核对比一键实验

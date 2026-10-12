@@ -354,6 +354,40 @@ def build_ab_se(size):
 def build_ab_nose(size):
     return _ab_common(Builder("ab_nose", size), size, False)
 
+
+# ─────────── 受控 A/B 第二轮：分组卷积 / 残差 Add 是不是提交切分的驱动 ───────────
+def _ab2_common(b, size, group=1, add=False):
+    """同一骨干，变量：group（分组卷积）与 add（残差 Add）。
+
+    通道序列取 (64,64,64,128,128,128)，保证 add 的成对通道一致。
+    """
+    x = b.conv("input", 32, 3, 2, in_ch=3)          # 首层 group 固定为 1（输入只有 3 通道）
+    x = b.bn_relu(x, 32)
+    ch = 32
+    for i, out_ch in enumerate((64, 64, 64, 128, 128, 128)):
+        y = b.conv(x, out_ch, 3, 1, in_ch=ch, g=group)
+        y = b.bn_relu(y, out_ch)
+        x = b.add(x, y) if (add and out_ch == ch) else y
+        ch = out_ch
+        if i in (1, 3, 5):
+            x = b.maxpool(x)
+    x = b.global_avgpool(x)
+    x = b.flatten(x)
+    x = b.gemm(x, 10, ch)
+    return b.finish(x, [1, 10])
+
+
+def build_ab_group(size):
+    return _ab2_common(Builder("ab_group", size), size, group=8, add=False)
+
+
+def build_ab_nogroup(size):
+    return _ab2_common(Builder("ab_nogroup", size), size, group=1, add=False)
+
+
+def build_ab_add(size):
+    return _ab2_common(Builder("ab_add", size), size, group=1, add=True)
+
 BUILDERS = {
     "tiny_cnn": build_tiny_cnn,
     "dwsep": build_dwsep,
@@ -363,6 +397,9 @@ BUILDERS = {
     "wide1x1": build_wide1x1,
     "ab_se": build_ab_se,
     "ab_nose": build_ab_nose,
+    "ab_group": build_ab_group,
+    "ab_nogroup": build_ab_nogroup,
+    "ab_add": build_ab_add,
 }
 
 

@@ -95,6 +95,51 @@ def make_probe(out_path, size=32):
     return out_path
 
 
+def make_probe2(out_path, size=32, oc=16, ic=3, k=3):
+    """每通道一个常数值：W[oc] = oc+1。全部非零 ⇒ 与 padding(zero_point) 天然分开。"""
+    import onnx
+    from onnx import TensorProto, helper, numpy_helper
+    nodes, inits = [], []
+    W = np.zeros((oc, ic, k, k), dtype=np.float32)
+    for o in range(oc):
+        W[o] = float(o + 1)          # 每个输出通道一个可区分的常数值
+    inits.append(numpy_helper.from_array(W, "W"))
+    nodes.append(helper.make_node("Conv", ["input", "W"], ["c"], kernel_shape=[k, k],
+                                  strides=[1, 1], pads=[1, 1, 1, 1], name="conv"))
+    nodes.append(helper.make_node("Relu", ["c"], ["r"], name="relu"))
+    nodes.append(helper.make_node("GlobalAveragePool", ["r"], ["g"], name="gap"))
+    nodes.append(helper.make_node("Flatten", ["g"], ["f"], axis=1, name="flat"))
+    Wf = np.zeros((2, oc), dtype=np.float32); Wf[0, 0] = 1.0; Wf[1, 1] = 1.0
+    inits.append(numpy_helper.from_array(Wf, "Wf"))
+    inits.append(numpy_helper.from_array(np.zeros(2, dtype=np.float32), "Bf"))
+    nodes.append(helper.make_node("Gemm", ["f", "Wf", "Bf"], ["output"], transB=1, name="fc"))
+    g = helper.make_graph(nodes, "probe_layout2", [
+        helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, ic, size, size])
+    ], [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, 2])], inits)
+    m = helper.make_model(g, opset_imports=[helper.make_opsetid("", 13)]); m.ir_version = 8
+    onnx.checker.check_model(m); onnx.save(m, out_path)
+    print(f"已生成 {out_path}：conv {ic}->{oc} k{k}，W[oc]={1}..{oc}（每通道一个常数）")
+    return out_path
+
+
+def analyze2(bin_path):
+    """找出所有非 (0,128) 的取值，报它们的出现次数与位置 ⇒ 读出通道步长"""
+    import collections
+    d = np.frombuffer(open(bin_path, "rb").read(), dtype=np.uint8)
+    print(f"文件 {bin_path}：{len(d)} 字节")
+    vals, cnts = np.unique(d, return_counts=True)
+    print(f"取值种类 {len(vals)}：{list(zip(vals.tolist(), cnts.tolist()))[:20]}")
+    for v in vals:
+        if v in (0, 128):
+            continue
+        pos = np.nonzero(d == v)[0]
+        gaps = np.diff(pos) if len(pos) > 1 else np.array([0])
+        gc = collections.Counter(gaps.tolist())
+        print(f"  值 {v:>3}: 出现 {len(pos):>4} 次  首 {pos[0]:>6}  末 {pos[-1]:>6}  "
+              f"间距 top3 {gc.most_common(3)}")
+    return d
+
+
 def analyze(bin_path, w1_oc=16, w1_ic=3, k=3, w2_oc=8, w2_ic=16):
     d = np.frombuffer(open(bin_path, "rb").read(), dtype=np.uint8)
     print(f"文件 {bin_path}：{len(d)} 字节")
@@ -117,6 +162,8 @@ def analyze(bin_path, w1_oc=16, w1_ic=3, k=3, w2_oc=8, w2_ic=16):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--make", action="store_true")
+    ap.add_argument("--make2", action="store_true")
+    ap.add_argument("--analyze2", default=None)
     ap.add_argument("--analyze", default=None)
     ap.add_argument("--out", default=os.path.join(HERE, "onnx", "probe_layout.onnx"))
     a = ap.parse_args()
@@ -125,6 +172,11 @@ def main():
         make_probe(a.out)
     if a.analyze:
         analyze(a.analyze)
+    if a.make2:
+        os.makedirs(os.path.dirname(a.out), exist_ok=True)
+        make_probe2(a.out)
+    if a.analyze2:
+        analyze2(a.analyze2)
     if not a.make and not a.analyze:
         print(__doc__)
     return 0

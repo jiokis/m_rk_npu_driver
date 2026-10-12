@@ -256,6 +256,85 @@ def collect_occurrences(ops, bufs):
     return occ
 
 
+def _merge(iv):
+    """合并区间，返回 (合并后区间列表, 总长度)"""
+    iv = sorted(x for x in iv if x[1] > x[0])
+    out = []
+    for a, b in iv:
+        if out and a <= out[-1][1]:
+            out[-1] = (out[-1][0], max(out[-1][1], b))
+        else:
+            out.append((a, b))
+    return out, sum(b - a for a, b in out)
+
+
+def _covered(iv, merged):
+    """iv 这些区间被 merged（已合并）覆盖的字节数"""
+    total = 0
+    j = 0
+    for a, b in sorted(iv):
+        while j < len(merged) and merged[j][1] <= a:
+            j += 1
+        k = j
+        while k < len(merged) and merged[k][0] < b:
+            lo = max(a, merged[k][0]); hi = min(b, merged[k][1])
+            if hi > lo:
+                total += hi - lo
+            k += 1
+    return total
+
+
+def cmd_overlap(ops, bufs):
+    """
+    ★ 关键判据：消费者的读，落不落在**某个生产者写过的区间**里？
+
+    docs/29/30 用的是"地址完全相等"，那个判据太严：
+    生产者和消费者的 tiling 粒度可以不同（例如 op0 的 DPU 输出 19 个 tile、
+    步长 0x15400；而 op1 的 CNA 输入只有 5 个 tile、步长 0x55000），
+    结果基址相同、地址集合却对不上，被误判成"没复用"。
+    正确判据是**区间重叠**，本命令就是它。
+    """
+    occ = collect_occurrences(ops, bufs)
+    w_by_buf = defaultdict(list)
+    r_by_buf = defaultdict(list)
+    for (k, reg, addr, tile) in occ:
+        bi = which_buffer(bufs, addr)
+        if bi is None:
+            continue
+        (w_by_buf if reg in WRITE_REGS else r_by_buf)[bi].append((addr, addr + tile))
+
+    cov = 0
+    # ★ 分母必须与分子同量纲：都用"按出现次数累加"。
+    #   第一次我拿"读区间的并集"当分母，而分子是按出现次数累加的，
+    #   于是算出 1250% 这种荒唐覆盖率。（同类错误在本项目里已出现多次：
+    #   把"占用"和"流量"混为一谈。）
+    r_occ = sum(b - a for ivs in r_by_buf.values() for a, b in ivs)
+    w_occ = sum(b - a for ivs in w_by_buf.values() for a, b in ivs)
+    print("═══ 读是否落在某个写过的区间内（区间重叠判据）═══\n")
+    print(f"  {'缓冲':>4} {'容量MB':>8} {'写占用MB':>9} {'读占用MB':>9} {'写流量MB':>9} {'读流量MB':>9} {'被覆盖MB':>9} {'覆盖':>6}")
+    for bi in sorted(set(w_by_buf) | set(r_by_buf)):
+        mw, lw = _merge(w_by_buf.get(bi, []))
+        mr, lr = _merge(r_by_buf.get(bi, []))
+        wv = w_by_buf.get(bi, []); rv = r_by_buf.get(bi, [])
+        c = _covered(rv, mw) if mw else 0
+        cov += c
+        wsum = sum(b - a for a, b in wv); rsum = sum(b - a for a, b in rv)
+        print(f"  {bi:>4} {bufs[bi][1]/1048576:>8.2f} {lw/1048576:>9.2f} {lr/1048576:>9.2f} "
+              f"{wsum/1048576:>9.2f} {rsum/1048576:>9.2f} {c/1048576:>9.2f} "
+              f"{(c/rsum*100 if rsum else 0):>5.1f}%")
+    print(f"\n  （占用 = 区间并集，反映「同时用掉多少内存」；流量 = 按出现次数累加，反映「搬了多少」）")
+    print(f"  写流量合计 {w_occ/1048576:.2f} MB / 读流量合计 {r_occ/1048576:.2f} MB")
+    print(f"  读被写覆盖 {cov/1048576:.2f} MB = **{cov/r_occ*100:.1f}%**（按读流量计）")
+    print()
+    if r_occ and cov / r_occ > 0.6:
+        print("  ⇒ 覆盖率很高：消费者读的就是生产者写过的地方。")
+        print("    那 91% 的『地址不相等』只是 tiling 粒度不同造成的假象，")
+        print("    **不存在额外的搬运/重排**。docs/30 的方向修正需要撤回。")
+    else:
+        print("  ⇒ 覆盖率低：确实有大量读落在从没被写过的区间里，")
+        print("    说明存在额外的搬运 / 双缓冲 / 重排。docs/30 的修正成立。")
+
+
 def cmd_shapes(ops, bufs):
     """
     只用「确证」级字段算张量字节数 —— 用来交叉验证跨度法。
@@ -396,6 +475,8 @@ def main():
         if "--top" in sys.argv:
             top = int(sys.argv[sys.argv.index("--top") + 1])
         cmd_ops(ops, bufs, top)
+    elif cmd == "overlap":
+        cmd_overlap(ops, bufs)
     elif cmd == "shapes":
         cmd_shapes(ops, bufs)
     elif cmd == "fusion":

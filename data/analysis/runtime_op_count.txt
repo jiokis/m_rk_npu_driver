@@ -1,0 +1,36 @@
+# 运行侧算子数 == IR 表里的 NPU 算子数（docs/137，9/9 精确）
+#
+# 手段（不需要 gdb）：
+#   ① 板子抓 tasks_*.bin：LD_PRELOAD=~/rknpu_capture.so RKNPU_DUMP_DIR=<d> \
+#        RKNPU_DUMP_BUFS_MAX=0 python3 -c "RKNNLite: load; init_runtime(core_mask=0x7); inference 一次"
+#   ② 运行侧算子数 = max(+0x04 op_idx)          （PYTHONPATH=src/sim python3 -m rknpu.taskdesc <dir>）
+#   ③ IR 表 NPU 行数 = RKNN(verbose=True) 打印的最终 IR 表里 Target=NPU 的行数
+#                                       （python3 src/compiler/ir_table.py <onnx>）
+#
+# model                运行侧算子数   IR NPU 行数   IR「像 Conv」   Σtask  submits  遍数
+resnet18                     23           23            22          74        5     3
+squeezenet1_0                39           39            28         191       22     3
+mnasnet0_5                   54           54            54         166        3     3
+mobilenet_v2                 54           54            54         169        3     3
+googlenet                    87           87            60         402       35     3
+efficientnet_b0             129          129           113         318       88     1   ← 遍数异常
+shufflenet_v2_x0_5          103          103            73         499       63     3
+regnet_x_400mf              497          497           431        3147      113     3
+densenet121                 246          246           122        2572      183     3
+# ⇒ 9/9 精确：运行侧执行的算子 = IR 表里 Target=NPU 的**每一个**算子
+#   （Concat / Split / BatchNormalization / Mul 都算，不只 Conv）
+#
+# ── ★★★ 段结构 = 模型的块结构（每段算子数 = task_number/3）──
+#   resnet18          : 2,[1],20,[1],2
+#   mnasnet0_5        : 53,[1],2
+#   mobilenet_v2      : 54,[1],2
+#   squeezenet1_0     : 4,[1],4,3,4,3,4,3,[1],4,3,4,3,4,3,4,3,[1],4,3,2,[1]     ← fire 模块反复
+#   googlenet         : 2,[1],7,2,[1],3,[1],7,5,[1],7,5,...                    ← Inception 模块反复
+#   shufflenet_v2_x0_5: 2,[1],6,4,2,[1],4,4,2,[1],4,4,...
+#   regnet_x_400mf    : 3,[1],3,3,2,4,[1],5,5,2,4,[1],5,5,...
+#   densenet121       : 2,[1],3,3,[1],3,4,[1],3,5,[1],3,6,[1],3,7,[1],3,8,[1],... ← 稠密块 k 递增
+#   （[k] = 单核提交，只覆盖 k 个算子）
+#   ⚠️ 这是**观察**：切段位置跟着结构走；「什么条件下必须切段」仍未解
+#
+# ── 抓取产物入库 ──
+#   data/captures/<model>/tasks_*.bin（板子 /tmp 是 tmpfs，不拷就没了）

@@ -25,6 +25,18 @@
 | +0x20 | f20 | 递增地址（相邻差 0x400） |
 | +0x24 | f24 | 恒 0 |
 
+## ★★★ 定律：运行侧算子数 == IR 表里的 NPU 算子数（9/9 精确，docs/137 §1）
+
+`op_idx` 的最大值就是运行侧算子数。对 9 个真实模型：
+
+    resnet18 23=23 / squeezenet1_0 39=39 / mnasnet0_5 54=54 / mobilenet_v2 54=54 /
+    googlenet 87=87 / efficientnet_b0 129=129 / shufflenet_v2_x0_5 103=103 /
+    regnet_x_400mf 497=497 / densenet121 246=246
+
+⇒ **运行侧执行的算子 = IR 表里 `Target=NPU` 的每一个算子**
+  （不只 Conv —— Concat / Split / BatchNormalization / Mul 都算）。
+⇒ 这个整数**不需要 gdb**：IR 表用 `RKNN(verbose=True)` 就有（见 src/compiler/ir_table.py）。
+
 ## ★ 两条**实测结论**（别搞混）
 
 1. **`op_idx` 从 1 重启 ⇒ task 列表里有 3 遍完整算子序列。**
@@ -92,6 +104,19 @@ def load_dir(d: str) -> list[TaskDesc]:
     for f in fs:
         out += parse_file(f, len(out) and out[-1].submit + 1 or 0)
     return out
+
+
+def op_count(tasks: list[TaskDesc]) -> int:
+    """★ 运行侧算子数 = `op_idx` 的最大值（docs/137 §1：与 IR 表 NPU 行数 9/9 精确相等）"""
+    return max((t.op_idx for t in tasks), default=0)
+
+
+def segments(tasks: list[TaskDesc]) -> list[tuple[int, int, int]]:
+    """按 submit 切段：返回 [(submit, task 数, 该段首个算子), ...]"""
+    out: dict[int, list[TaskDesc]] = {}
+    for t in tasks:
+        out.setdefault(t.submit, []).append(t)
+    return [(s, len(ts), ts[0].op_idx) for s, ts in sorted(out.items())]
 
 
 def op_runs(tasks: list[TaskDesc]) -> list[tuple[int, int, int]]:

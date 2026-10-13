@@ -197,6 +197,50 @@ REPETITION_SEGMENTS: dict[str, list[int]] = {
 }
 
 
+# ------------------------------------------------- 与 IR 表的对齐（docs/137）
+
+#: ★★★★★ 运行侧算子数 == IR 表 NPU 行数（docs/137 §1，**9/9 精确**）
+#: (模型, 运行侧算子数 = max(op_idx), IR 表里 Target=NPU 的行数)
+#: ⇒ 运行侧执行的算子 = IR 表里 Target=NPU 的**每一个**算子
+#:   （不只 Conv —— Concat / Split / BatchNormalization / Mul 都算）
+RUNTIME_OP_COUNT_CHECK: list[tuple[str, int, int]] = [
+    ("resnet18",            23,  23),
+    ("squeezenet1_0",       39,  39),
+    ("mnasnet0_5",          54,  54),
+    ("mobilenet_v2",        54,  54),
+    ("googlenet",           87,  87),
+    ("efficientnet_b0",    129, 129),
+    ("shufflenet_v2_x0_5", 103, 103),
+    ("regnet_x_400mf",     497, 497),
+    ("densenet121",        246, 246),
+]
+
+#: ★★★ 段结构 = 模型的块结构（docs/137 §2）——实测的「每段算子数」序列（= task_number/3）
+#:   squeezenet 的 [4][3] 反复 = fire 模块
+#:   googlenet 的 [7][5] 反复  = Inception 模块
+#:   densenet121 的 [3][k] 里 k 递增 = 稠密块（逐层拼接，工作量变宽）
+#:   mobilenet_v2 / mnasnet0_5 = 整段 [53/54][1][2]（主干无结构变化）
+#:   ⚠️ 这是**观察**：切段位置跟着结构走，但「什么条件下必须切段」仍未解（docs/137 §4）
+SEGMENT_SHAPES: dict[str, list[int]] = {
+    "resnet18":           [2, 1, 20, 1, 2],
+    "mnasnet0_5":         [53, 1, 2],
+    "mobilenet_v2":       [54, 1, 2],
+    "squeezenet1_0":      [4, 1, 4, 3, 4, 3, 4, 3, 1, 4, 3, 4, 3, 4, 3, 4, 3, 1, 4, 3, 2, 1],
+    "googlenet":          [2, 1, 7, 2, 1, 3, 1, 7, 5, 1, 7, 5, 1, 7, 5, 1, 7, 5, 1, 7, 5, 1, 7, 5],
+    "shufflenet_v2_x0_5": [2, 1, 6, 4, 2, 1, 4, 4, 2, 1, 4, 4, 2, 1, 4, 4, 7, 3, 2, 1, 4, 3, 2, 1],
+    "regnet_x_400mf":     [3, 1, 3, 3, 2, 4, 1, 5, 5, 2, 4, 1, 5, 5, 2, 3, 1, 11, 11, 2, 4, 1, 11, 11],
+    "densenet121":        [2, 1, 3, 3, 1, 3, 4, 1, 3, 5, 1, 3, 6, 1, 3, 7, 1, 3, 8, 1, 2, 1, 3, 3],
+}
+
+#: ★★ 「遍数」（op_idx 从 1 重启 + 1）——**不是常数**（docs/136/137 §3）
+#:   1 核 3 遍 / 2 核 2 遍 / 3 核 3 遍 / efficientnet_b0 在 3 核下只有 1 遍
+PASSES_MEASURED: dict[str, int] = {
+    "resnet18": 3, "squeezenet1_0": 3, "mnasnet0_5": 3, "mobilenet_v2": 3,
+    "googlenet": 3, "shufflenet_v2_x0_5": 3, "regnet_x_400mf": 3, "densenet121": 3,
+    "efficientnet_b0": 1,   # ← 异常，未解
+}
+
+
 # ------------------------------------------------------- 被证伪的假设（别复活）
 
 #: ★ 已被**反例**打掉的假设（docs/133 §3）——

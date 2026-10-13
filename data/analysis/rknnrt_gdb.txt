@@ -1,0 +1,32 @@
+# 板上 gdb 已装好，并首次在**运行库**里下断（docs/139 补充）
+#
+# ── 在板子上装 aarch64 gdb（不需要 root）──
+#   cd /tmp/gdbdl
+#   apt-get download gdb libbabeltrace1 libdebuginfod1 libsource-highlight4v5
+#   # libipt2 在 jammy 里没有（E: Unable to locate package）—— 缺它也能跑
+#   for f in *.deb; do dpkg-deb -x "$f" /tmp/gdbbin/; done
+#   export LD_LIBRARY_PATH=/tmp/gdbbin/usr/lib/aarch64-linux-gnu
+#   /tmp/gdbbin/usr/bin/gdb --version   ⇒ GNU gdb (Ubuntu 12.1-0ubuntu1~22.04.2) 12.1
+#   ⚠️ 缺 libbabeltrace.so.1 / libsource-highlight.so.4 会直接报「error while loading
+#      shared libraries」⇒ 这两个包必须一起解出来（踩过）
+#
+# ── 首次在 librknnrt 里下断 ──
+#   gdb 脚本要点（aarch64）：
+#     · `catch load librknnrt.so` 后再算基址（ASLR）
+#     · base = text_load − 0x0a8490        ← aarch64 库的 .text vaddr（**不是** 0x11b260）
+#     · 第一个参数寄存器是 **x0**（不是 rdi）
+#
+#   断点：RKNNSubGraph 的 7 个虚函数 0xe1698 0xe16a0 0xe5848 0xe3108 0xe8cf0 0xe16b8 0xe1718
+#   结果（resnet18，core_mask=0x7）：
+#     命中位置：0xe1718, 0xe3108, 0xe5848, 0xe16b8
+#     不同的 this 值：**2 个**（0x555614b100, 0x555614b780）
+#   ⇒ **resnet18 在运行期只有 2 个 RKNNSubGraph 实例**
+#   ⇒ 而它的提交数是 5、段数也是 5
+#   ⇒ **所以 `RKNNSubGraph` ≠ 「提交段」** —— 这两个概念不是一回事
+#   ⚠️ 命中都发生在对象**析构**附近（0xe5848/0xe3108 是析构路径，docs/139 §3）；
+#      构造走的是非虚路径，所以「2 个」是**实例数下界**，不是创建次数
+#
+# ── 下一步 ──
+#   · 在 `RKNNRegisterTask`（vtable 0x6c86b8）一族上下断 —— 它才是编 task 列表的地方
+#   · 在 `RKNNExecutor` / `RKNNJob` 上下断，看「切段」发生在哪
+#   · 用 `RKNNSubGraph` 的**构造函数**（非虚，需要先在 objdump 里找）来数创建次数

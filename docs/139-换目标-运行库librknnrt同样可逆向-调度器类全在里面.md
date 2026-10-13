@@ -85,12 +85,43 @@
 4. **板子的 `objdump` 原生支持 aarch64**；vtable 已提取
 5. `rtti_find.py` 已支持 aarch64（并且修了会把架构问题误报成「类型未使用」的坑）
 
+### ★★★ 补充：板上 gdb 已装好，并**首次在运行库里下断**
+
+```
+cd /tmp/gdbdl
+apt-get download gdb libbabeltrace1 libdebuginfod1 libsource-highlight4v5
+# libipt2 在 jammy 里没有（E: Unable to locate package）—— 缺它也能跑
+for f in *.deb; do dpkg-deb -x "$f" /tmp/gdbbin/; done
+export LD_LIBRARY_PATH=/tmp/gdbbin/usr/lib/aarch64-linux-gnu
+/tmp/gdbbin/usr/bin/gdb --version   ⇒ GNU gdb (Ubuntu 12.1-0ubuntu1~22.04.2) 12.1
+```
+
+**⚠️ 缺 `libbabeltrace.so.1` / `libsource-highlight.so.4` 会直接报
+   「error while loading shared libraries」⇒ 这两个包必须一起解出来（踩过）。**
+
+**aarch64 下的 gdb 脚本要点**：
+* `catch load librknnrt.so` 后再算基址（ASLR）
+* **`base = text_load − 0x0a8490`** —— aarch64 库的 `.text` vaddr（**不是** x86-64 的 `0x11b260`）
+* 第一个参数寄存器是 **`x0`**（不是 `rdi`）
+
+**首次下断结果**（resnet18，`core_mask=0x7`，断在 `RKNNSubGraph` 的 7 个虚函数上）：
+
+```
+命中：0xe1718, 0xe3108, 0xe5848, 0xe16b8
+不同的 this 值：**2 个**（0x555614b100, 0x555614b780）
+```
+
+**⇒ resnet18 在运行期只有 **2 个 `RKNNSubGraph` 实例**，而它有 5 个提交 / 5 段。**
+**⇒ 所以 `RKNNSubGraph` **不等于**「提交段」—— 这两个概念不是一回事。**
+
+⚠️ 命中的都发生在对象**析构**附近（`0xe5848`/`0xe3108` 是析构路径，见 §3）；
+**构造走的是非虚路径**，所以「2 个」是**实例数下界**，不是创建次数。
+
 **未做**：
 
-* **板上 gdb 还没有**（下一步要装；`apt-get download gdb` + `dpkg-deb -x` 不需要 root，
-  但板子是 aarch64 ⇒ 要拿 **arm64 的 deb**）
 * `RKNNSubGraph` 的**划分逻辑**还没读（只读了析构函数）
 * `RKNNRegisterTask` 的 task 生成逻辑还没读
+* `RKNNSubGraph` 与「提交段」的关系（已确认**不是**一回事，但还不知道各是什么）
 
 ---
 

@@ -1,0 +1,42 @@
+# 运行侧提交结构（docs/133）
+#
+# 数据：~/align2/tvcap/<model>_timer.log  +  ~/align2/tvcap/<model>/regcmd_<submit>_task<N>.bin
+# 解析：PYTHONPATH=src/sim python3 -m rknpu.submits --self-check
+#
+# ★ 定律 1：Σtask_number == regcmd 文件个数          （9/9 模型一致）
+# ★ 定律 2：core_mask=0x7（3 核）的提交，task_number 必为 3 的倍数
+#           （515 次提交、9 个模型，无一例外）
+#   含义：一次 3 核提交总是携带整数个「轮」，每轮给 3 个核各一个 task。
+#
+# model                submits  m0x7  定律1 定律2   轮数  串行task  Σtask
+densenet121              183   121     ✓    ✓     835      67    2572
+efficientnet_b0           88    22     ✓    ✓      45     183     318
+googlenet                 35    23     ✓    ✓     124      30     402
+mnasnet0_5                 3     2     ✓    ✓      55       1     166
+mobilenet_v2               3     2     ✓    ✓      56       1     169
+regnet_x_400mf           113    90     ✓    ✓     922     381    3147
+resnet18                   5     3     ✓    ✓      24       2      74
+shufflenet_v2_x0_5        63    48     ✓    ✓     156      31     499
+squeezenet1_0             22    18     ✓    ✓      62       5     191
+# 合计 9 个模型 / 515 次提交；定律违反 0 项
+#
+# ── 轮数 / IR 里像 Conv 的 NPU 算子数 ──
+#   resnet18 1.09 / mnasnet0_5 1.02 / mobilenet_v2 1.04   ← 流水顺畅时「一轮 ≈ 一个算子」
+#   squeezenet1_0 2.21 / googlenet 2.07 / shufflenet 2.14 / regnet 2.14
+#   densenet121 6.84（稠密块输入通道逐层变宽） / efficientnet_b0 0.40
+#
+# ── task 的 regcmd 指令条数（结构性签名，不是常数）──
+#   34 条(272B) 所有模型 | 77 条(616B) 5 个模型 | 130 条(1040B) 所有模型
+#   134 条(1072B) 每模型 1~2 个 | 1105 条(8840B) **只有 efficientnet_b0 有 65 个**
+#
+# ── 已被反例打掉的假设（不要复活）──
+#   ① 「串行提交数 == BatchNormalization 数」：densenet121 是 62=62，
+#      但 efficientnet_b0 的 BN=0 而串行提交=66 ⇒ 巧合
+#   ② 「每个 task 的 regcmd 都是 130 条指令」：resnet18 第一个文件是 1040B，
+#      全量看还有 34/77/134，efficientnet_b0 有 65 个 1105 条的 ⇒ 样本量为 1 的结论
+#
+# ── ★ 修正 docs/127 ──
+#   编译器侧 0x391510 处 +0x58 向量的元素数：resnet18 = 135（1 个算子 3、20 个各 6、1 个 12）
+#   运行侧 task 数：resnet18 = 74
+#   ⇒ 两者不等，且编译器侧高度均匀 ⇒ 那个向量**不是**运行侧 task 列表。
+#     docs/127 把它叫「tile 表」不准确，应改称「+0x58 向量的元素数」，语义未定。

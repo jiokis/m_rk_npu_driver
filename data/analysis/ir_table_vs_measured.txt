@@ -1,0 +1,47 @@
+# 用编译器 verbose 打印的最终 IR 表**直接数算子**（docs/132）
+#
+# 手段：RKNN(verbose=True) 会打印最终 IR 表，每行 = ID/OpType/Target/形状/Cycles(DDR/NPU/Total)/RW/FullName
+#       解析器：src/compiler/ir_table.py       完整数据：data/analysis/ir_tables.json
+#       （不需要 gdb、断点、扫内存、反汇编 —— 这是**直接观测**）
+#
+# ★ 规则：tiling-info 对象数 = IR 表里「像 Conv 的 NPU 算子数」
+#
+# model                IR 里像 Conv 的 NPU 算子   实测对象数   差
+resnet18                            22               22       0  ✓
+squeezenet1_0                       28               28       0  ✓
+mnasnet0_5                          54               54       0  ✓
+mobilenet_v2                        54               54       0  ✓
+densenet121                        122              122       0  ✓
+regnet_x_400mf                     431              431       0  ✓
+efficientnet_b0                    113              113       0  ✓
+googlenet                           60               61      +1   ← 残差（tiling 在中段，IR 是最终态）
+shufflenet_v2_x0_5                  73               77      +4   ← 残差
+# ⇒ 7/9 精确命中。残差从 docs/131 的 +19 缩到 +4。
+#
+# ── 不在 NPU 上「像 Conv」的算子（实测贡献 0）──
+#   densenet121: BatchNormalizationRelu 62 + Concat 58 + MaxPool 1 + AveragePool 3
+#                而实测仍是 122 = 只数 Conv ✓
+#   efficientnet_b0: Mul 16（而 113 = ConvExSwish49 + Conv39 + ConvSigmoid16 + ConvAdd9）
+#   shufflenet: MaxPool 1 + Concat 16 + Split 13
+#   regnet: Split 22 + Concat 22 + Relu 22
+#   googlenet: Split 1 + BatchNormalization 3 + Concat 10 + MaxPool 13
+#
+# ── ★ 顺带解释「+2」（docs/131）：GAP 和 Gemm 都以 Conv 形式出现在 IR 里 ──
+#   resnet18 IR:  22  Conv  /avgpool/GlobalAveragePool_2conv0
+#                 23  Conv  /fc/Gemm#2
+#
+# ── ★★★ 时间模型（IR 表的 Cycles 列 + 实测提交数）──
+#   wall_us = 0.796 × (ΣNPU周期 @1GHz, µs) + 80.62 × submits        R² = 0.9768
+#   model              submits   实测us   预测us   误差
+#   densenet121            183    17798    17951   +0.9%
+#   regnet_x_400mf         113     9422     9923   +5.3%
+#   mobilenet_v2             3     1151     1226   +6.5%
+#   squeezenet1_0           22     3416     3877  +13.5%
+#   efficientnet_b0         88     9929     8496  -14.4%
+#   mnasnet0_5               3      852      984  +15.4%
+#   googlenet               35     6235     5148  -17.4%
+#   shufflenet_v2_x0_5      63     4334     5352  +23.5%
+#   resnet18                 5     1919     2833  +47.6%
+#   ⇒ 拟合出的「每提交开销 80.62 µs」与**独立**测出的提交下限 49~71 µs（docs/59，板上计时）
+#     同量级 —— 两条完全不同的路径互相印证，这是本模型可信度的主要来源。
+#   ⚠️ 边界：submits 是**输入**，所以这不是「提交数预测模型」，只是「时间模型」。

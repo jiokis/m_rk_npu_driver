@@ -76,7 +76,10 @@ def main() -> int:
     if nch == 3:
         cfg["mean_values"] = [[0, 0, 0]]
         cfg["std_values"] = [[255, 255, 255]]
-    r = RKNN(verbose=False)
+    # BUILD_MIN_VERBOSE=1 时打开 verbose：会打印**最终 IR 表**（含 Cycles/RW/Target/FullName）
+    # —— 这是"直接数算子"的通道，不必用析构次数反推（docs/131 §5 #2）
+    verbose = bool(os.environ.get("BUILD_MIN_VERBOSE"))
+    r = RKNN(verbose=verbose)
     ret = r.config(**cfg)
     if ret != 0:
         print(f"[build_min] config ret={ret}", file=sys.stderr)

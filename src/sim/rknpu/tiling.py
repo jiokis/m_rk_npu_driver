@@ -61,10 +61,22 @@ OP_CONTRIBUTION: dict[str, int] = {
 #: GlobalAveragePool 的贡献**随输入尺寸变**（受控实测 4 个尺寸，docs/131 §1）
 GAP_CONTRIBUTION_BY_SIZE: dict[int, int] = {56: 3, 28: 2, 14: 2, 7: 2}
 
-#: ★ 但**真实模型反推出来的是 1**（resnet18 / mnasnet / mobilenet_v2 / regnet 都是
-#:  `Σ拆分 + GAP + Gemm` 才等于实测）。⇒ 受控实验与真实模型**对不上**，
-#:  所以这里只能给**区间** [1, 3]，不能给点值。**这个矛盾未解决（docs/131 §3）。**
+#: ★★ 矛盾已解决（docs/132 §4）：IR 表显示 GlobalAveragePool 会**变成 Conv**，
+#:   所以它的贡献 = **被拆成了几个 Conv**（56x56 时是 3 个，小尺寸时更少）。
+#:   「受控实验说 2~3 / 真实模型反推 1」的矛盾，本质是「拆出来的 Conv 个数随尺寸变」。
+#:   保留区间只是给「不知道尺寸」时的兜底。
 GAP_CONTRIBUTION_RANGE: tuple[int, int] = (1, 3)
+
+#: ★★★★ 首选手段：**别算，直接数**（docs/132）
+#: `RKNN(verbose=True)` 会把**最终 IR 表**打出来，里面每行有
+#: ID / OpType / Target / 形状 / Cycles(DDR/NPU/Total) / RW / FullName。
+#: **tiling-info 对象数 = 表里「像 Conv」的 NPU 算子数**（7/9 真实模型精确命中，差 0）。
+#:
+#: 用法（不需要 gdb）：
+#:     python3 src/compiler/ir_table.py <model.onnx> [--json out.json]
+#:
+#: 本模块下面的解析函数只用于「没有 IR 表时的估算」，**能用 IR 表就不要用它们**。
+IR_TABLE_IS_PREFERRED = True
 
 
 def gap_contribution(h: int) -> int | None:
@@ -118,6 +130,19 @@ def split_conv_count(convs) -> int:
     return n
 
 
+def tiling_info_count_from_ir(ir_rows) -> int:
+    """★ 首选：直接从 IR 表数「像 Conv 的 NPU 算子」（docs/132 §2）
+
+    ir_rows: `src/compiler/ir_table.parse_ir_table()` 的输出（每项含 op_type / target）
+
+    实测：resnet18 22、squeezenet1_0 28、mnasnet0_5 54、mobilenet_v2 54、
+          densenet121 122、regnet_x_400mf 431、efficientnet_b0 113 —— **差 0**。
+          googlenet 60 vs 实测 61、shufflenet 73 vs 77（tiling 在中段，IR 是最终态）。
+    """
+    return sum(1 for r in ir_rows
+               if r.get("target") == "NPU" and "Conv" in r.get("op_type", ""))
+
+
 def tiling_info_count(convs, gaps: int = 0, gemms: int = 0,
                       gap_h: int | None = None) -> int:
     """预计的 `RKNNOperatorTilingInfo` 对象数（**逐算子分解**，docs/131 §3）
@@ -127,9 +152,9 @@ def tiling_info_count(convs, gaps: int = 0, gemms: int = 0,
     gemms: `Gemm` 的个数（会被 `ReplaceGemmByConv` 变成 Conv）
     gap_h: GAP 的输入边长；给了就用实测表，没给就按 3 估（56x56 的值）
 
-    ⚠️ **这是区间模型，不是点模型**：受控实验说 GAP 贡献 2~3，
-       真实模型反推出来却是 1 —— **两者矛盾且未解决**（docs/131 §3）。
-       所以本函数返回 **(下界, 上界)**，调用方要按区间用。
+    ⚠️ **这是估算，不是首选**。首选是 `tiling_info_count_from_ir()`：
+       直接读编译器 verbose 打印的 IR 表，**不需要任何反推**（docs/132）。
+       本函数在拿不到 IR 表时用，返回 **(下界, 上界)** 区间。
     """
     base = split_conv_count(convs) + gemms * OP_CONTRIBUTION["Gemm"]
     if not gaps:
@@ -172,6 +197,39 @@ REAL_MODEL_CHECK: list[tuple[str, int, int, int, int]] = [
 ]
 #: 落在区间外的模型（真·未解）——与「已知残差」区分开
 OUT_OF_RANGE_MODELS = {"shufflenet_v2_x0_5"}
+
+#: ★★★★ 用 IR 表**直接数**的对账（docs/132 §2）：(模型, IR 里像 Conv 的 NPU 算子数, 实测对象数)
+#: 前 7 个差 0（精确）；后 2 个是残差（tiling 在流水线中段，IR 表是最终态）
+IR_TABLE_CHECK: list[tuple[str, int, int]] = [
+    ("resnet18",            22,  22),
+    ("squeezenet1_0",       28,  28),
+    ("mnasnet0_5",          54,  54),
+    ("mobilenet_v2",        54,  54),
+    ("densenet121",        122, 122),
+    ("regnet_x_400mf",     431, 431),
+    ("efficientnet_b0",    113, 113),
+    ("googlenet",           60,  61),   # 残差 +1
+    ("shufflenet_v2_x0_5",  73,  77),   # 残差 +4
+]
+IR_EXACT_MODELS = {"resnet18", "squeezenet1_0", "mnasnet0_5", "mobilenet_v2",
+                   "densenet121", "regnet_x_400mf", "efficientnet_b0"}
+
+#: ★★ 时间模型（docs/132 §3）：wall_us = K * (ΣNPU周期@1GHz, µs) + H * submits
+#: 9 个真实模型双参数拟合，R² = 0.9768
+TIMING_K = 0.796
+TIMING_H_US = 80.62
+#: 本项目早先**独立**测出的提交下限（docs/59，板上逐次计时）——
+#: 与上面拟合出来的 80.62 互相印证，这是本模型可信度的主要来源
+SUBMIT_FLOOR_US_MEASURED = (49.0, 71.0)
+
+
+def wall_us(npu_cycles: int, submits: int) -> float:
+    """用编译器 IR 表的 ΣNPU 周期 + 提交数估时间（µs）
+
+    ⚠️ **这不是「提交数预测模型」**：`submits` 是**输入**。
+       它只说明「提交数是怎么进时间模型的」。（docs/132 §3 边界）
+    """
+    return TIMING_K * (npu_cycles / 1e3) + TIMING_H_US * submits
 
 
 # ---------------------------------------------------------------- tile 数
@@ -274,7 +332,22 @@ def self_check() -> list[_Check]:
         out.append(_Check(f"GAP@{h}x{h} 贡献 = {c}",
                           gap_contribution(h) == c, f"得 {gap_contribution(h)}"))
 
-    # ⑦ ★ 反例守卫：MAC 相同的两个点 tile 数**不同** —— 如果谁「优化」成按 MAC 算，这条会失败
+    # ⑧ ★★★★ IR 表直接数（docs/132 §2）—— 这是首选手段，必须一直对
+    for name, ir_conv, objs in IR_TABLE_CHECK:
+        if name in IR_EXACT_MODELS:
+            out.append(_Check(f"{name} IR 直数精确命中", ir_conv == objs,
+                              f"IR {ir_conv} vs 实测 {objs}"))
+        else:
+            out.append(_Check(f"{name} IR 直数仍有残差（未解）", ir_conv != objs,
+                              f"IR {ir_conv} vs 实测 {objs}（差 {objs - ir_conv}）"))
+
+    # ⑨ ★★ 时间模型的系数与独立实测的提交下限**同量级**（docs/132 §3）
+    lo, hi = SUBMIT_FLOOR_US_MEASURED
+    out.append(_Check("拟合的每提交开销 ≈ 独立实测的提交下限",
+                      lo <= TIMING_H_US <= hi * 1.5,
+                      f"拟合 {TIMING_H_US} µs vs 独立实测 [{lo},{hi}] µs"))
+
+    # ⑩ ★ 反例守卫：MAC 相同的两个点 tile 数**不同** —— 如果谁「优化」成按 MAC 算，这条会失败
     mac1 = 64 * 64 * 9 * 56 * 56
     mac2 = 64 * 16 * 9 * 112 * 112
     t1, t2 = MEASURED_TILES[(64, 56)], MEASURED_TILES[(16, 112)]

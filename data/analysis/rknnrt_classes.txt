@@ -1,0 +1,106 @@
+# librknnrt.so（板子的**运行库**）里的 rknn:: 类（从 RTTI 名静态枚举）
+# 库：/usr/lib/librknnrt.so  aarch64  7.26 MB  **stripped**
+#      .dynsym 643 个 FUNC；.rodata 里 161 个 RTTI 名；重定位 25117 条
+# 手段：RKNN_SO=<librknnrt.so> python3 src/compiler/rtti_find.py <类名>
+# 共 35 个类
+
+    rknn::CLContext
+    rknn::CustomDelegateRegistration
+    rknn::RKNNConfig
+    rknn::RKNNCustomOpContext
+    rknn::RKNNDynCtrlInfo
+  ★ rknn::RKNNExecutor
+  ★ rknn::RKNNJob
+  ★ rknn::RKNNJobV2
+  ★ rknn::RKNNModel
+    rknn::RKNNNormalize
+  ★ rknn::RKNNOperator
+  ★ rknn::RKNNOperatorTilingInfo
+    rknn::RKNNProfiler
+  ★ rknn::RKNNRegisterTask
+  ★ rknn::RKNNRegisterTask_f2
+  ★ rknn::RKNNRegisterTask_lite
+  ★ rknn::RKNNRegisterTask_t3
+  ★ rknn::RKNNRegisterTask_t4
+  ★ rknn::RKNNRegisterTask_v2
+  ★ rknn::RKNNRegisterTask_w1
+  ★ rknn::RKNNRegisterTask_w2
+  ★ rknn::RKNNSubGraph
+  ★ rknn::RKNNTarget
+  ★ rknn::RKNNTargetF2
+  ★ rknn::RKNNTargetLite
+  ★ rknn::RKNNTargetT3
+  ★ rknn::RKNNTargetT4
+  ★ rknn::RKNNTargetV2
+  ★ rknn::RKNNTargetW1
+  ★ rknn::RKNNTargetW2
+  ★ rknn::RKNNTensor
+    rknn::bfloat16
+    rknn::float16
+    rknn::runtime
+    rknn::tf32
+
+# ── 关键类的 vtable（供板上 gdb/objdump 用）──
+
+# RKNNSubGraph
+#   ★ RKNNSubGraph
+#   RTTI 名 @vaddr 0x5a3188
+#   typeinfo @vaddr 0x6f7080
+#   typeinfo 指针位于 @vaddr 0x6c85d8
+#   ★ CODE @vaddr 0x6c85e0 = 0xe1698
+#   ★ CODE @vaddr 0x6c85e8 = 0xe16a0
+#   ★ CODE @vaddr 0x6c85f0 = 0xe5848
+#   ★ CODE @vaddr 0x6c85f8 = 0xe16b8
+#   ★ CODE @vaddr 0x6c8600 = 0xe16c0
+#   ★ CODE @vaddr 0x6c8618 = 0xe1690
+#   ★ CODE @vaddr 0x6c8620 = 0xe16a8
+#   ★ CODE @vaddr 0x6c8628 = 0xe3108
+#   ★ CODE @vaddr 0x6c8630 = 0xe16b0
+#   ★ CODE @vaddr 0x6c8638 = 0xe1718
+#   ★ CODE @vaddr 0x6c8650 = 0xe8cf0
+
+# RKNNRegisterTask
+#   ★ RKNNRegisterTask
+#   RTTI 名 @vaddr 0x5a4f38
+#   typeinfo @vaddr 0x6f70e0
+#   typeinfo 指针位于 @vaddr 0x6c86b8
+#   ★ CODE @vaddr 0x6c86c0 = 0xf2720
+#   ★ CODE @vaddr 0x6c86c8 = 0xf2728
+#   ★ CODE @vaddr 0x6c86d0 = 0xf2730
+#   ★ CODE @vaddr 0x6c86d8 = 0xf2738
+#   ★ CODE @vaddr 0x6c86e0 = 0xf2740
+#   ★ CODE @vaddr 0x6c86e8 = 0xf2748
+#   ★ CODE @vaddr 0x6c86f0 = 0xf2750
+#   ★ CODE @vaddr 0x6c86f8 = 0xf2758
+#   ★ CODE @vaddr 0x6c8700 = 0xf2760
+#   ★ CODE @vaddr 0x6c8708 = 0xf2768
+#   ★ CODE @vaddr 0x6c8710 = 0xf2770
+#   ★ CODE @vaddr 0x6c8718 = 0xf2778
+#   ★ CODE @vaddr 0x6c8720 = 0xf2780
+#   ★ CODE @vaddr 0x6c8728 = 0xf2788
+#   ★ CODE @vaddr 0x6c8730 = 0xf2790
+#   typeinfo 指针位于 @vaddr 0x6f71a8
+#   typeinfo 指针位于 @vaddr 0x6f71c0
+#   typeinfo 指针位于 @vaddr 0x6f71d8
+#   typeinfo 指针位于 @vaddr 0x6f71f0
+#   typeinfo 指针位于 @vaddr 0x6f7208
+#   typeinfo 指针位于 @vaddr 0x6f7220
+#   typeinfo 指针位于 @vaddr 0x6f7238
+
+# RKNNJob
+#   ★ RKNNJob
+#   RTTI 名 @vaddr 0x5a0740
+#   typeinfo @vaddr 0x6f6d50
+#   typeinfo 指针位于 @vaddr 0x6f5ff8
+#   ★ CODE @vaddr 0x6f6000 = 0x2b8d60
+#   ★ CODE @vaddr 0x6f6008 = 0x2b8fd0
+#   ★ CODE @vaddr 0x6f6010 = 0x2ba970
+#   ★ CODE @vaddr 0x6f6028 = 0x2b5f38
+#   ★ CODE @vaddr 0x6f6030 = 0x2b5f40
+#   ★ CODE @vaddr 0x6f6038 = 0x2b9010
+#   ★ CODE @vaddr 0x6f6040 = 0x2b5f58
+#   ★ CODE @vaddr 0x6f6048 = 0x2b5f60
+#   ★ CODE @vaddr 0x6f6060 = 0x2b5f18
+#   ★ CODE @vaddr 0x6f6068 = 0x2b5f48
+#   ★ CODE @vaddr 0x6f6070 = 0x2b5f20
+#   typeinfo 指针位于 @vaddr 0x6f7308

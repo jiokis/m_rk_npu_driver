@@ -21,12 +21,18 @@
 """
 from __future__ import annotations
 
+import os
 import re
 import struct
 import subprocess
 import sys
 
-SO = "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so"
+#: 要分析的库。默认是**编译器**（x86-64 主机侧）；
+#: 换成板子的运行库 librknnrt.so 时必须同时给 RKNN_SO_ARCH=aarch64，
+#: 因为段偏移（KNOWN）与 .text vaddr 是按架构写的（踩过）。
+SO = os.environ.get(
+    "RKNN_SO",
+    "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so")
 
 
 def sh(*args):
@@ -44,8 +50,12 @@ KNOWN = {
 
 
 def segments():
-    """返回 {段名: (file_off, vaddr, size)}；解析失败则用 KNOWN 兜底"""
-    out = dict(KNOWN)
+    """返回 {段名: (file_off, vaddr, size)}
+
+    ⚠️ **优先用 `readelf` 解析**（`KNOWN` 只是 x86-64 librknnc 的实测兜底值，
+       换库/换架构时必须靠解析 —— 板子的 librknnrt 是 aarch64，段偏移完全不同）。
+    """
+    out = dict(KNOWN) if "librknnc" in SO else {}
     for ln in sh("readelf", "-SW", SO).splitlines():
         parts = ln.split()
         # 形如: [13] .rodata PROGBITS 0000000001a84000 01a84000 043cfc ...
@@ -59,17 +69,33 @@ def segments():
     return out
 
 
+#: 支持的架构重定位前缀（x86-64 主机侧 / aarch64 板子侧）
+RELOC_PREFIXES = ("R_X86_64_", "R_AARCH64_")
+
+# ⚠️ 用**命名组**：交替（`(?:A|B)`）如果用普通组会让后面的 group 编号整体偏移，
+#    报错是 `IndexError: no such group`（踩过一次）。
+_RE_RELOC = re.compile(
+    r"^(?P<off>[0-9a-f]{16})\s+[0-9a-f]+\s+(?:" + "|".join(RELOC_PREFIXES) + r")\w*"
+    r"\s+(?:[0-9a-f]+\s+\S+\s+\+\s*)?(?P<val>[0-9a-f]+)?"
+)
+
+
 def relocs():
-    """返回 {被重定位的地址: 目标值}（R_X86_64_RELATIVE / R_X86_64_64）"""
+    """返回 {被重定位的地址: 目标值}
+
+    ⚠️ 原来只认 `R_X86_64_*`；板子的 `librknnrt.so` 是 **aarch64**，
+       重定位叫 `R_AARCH64_RELATIVE` ⇒ 不改就一条都读不到，
+       报错是「没有重定位指向 …（可能该 RTTI 未被使用）」——
+       **那个错误信息会把「架构不匹配」误导成「这个类型没被用」（踩过一次）。**
+    """
     r = {}
     for ln in sh("readelf", "-rW", SO).splitlines():
-        m = re.match(r"([0-9a-f]{16})\s+[0-9a-f]+\s+(R_X86_64_\w+)\s+(?:[0-9a-f]+\s+\S+\s+\+\s*)?([0-9a-f]+)?", ln)
+        m = _RE_RELOC.match(ln)
         if not m:
             continue
-        off = int(m.group(1), 16)
-        val = int(m.group(3), 16) if m.group(3) else None
-        if val is not None:
-            r[off] = val
+        val = m.group("val")
+        if val:
+            r[int(m.group("off"), 16)] = int(val, 16)
     return r
 
 

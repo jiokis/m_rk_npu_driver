@@ -77,6 +77,31 @@
 
 ---
 
+## 2b. ★★ 单核段里装的是什么算子？
+
+把单核段的 `op_idx` 映射回 IR 表的算子类型：
+
+| 模型 | 单核段数 | 单核段覆盖的算子类型 |
+|---|---|---|
+| resnet18 | 2 | `ConvAddRelu` 1, `Conv` 1 |
+| squeezenet1_0 | 4 | `ConvRelu` 4, `Concat` 1 |
+| mnasnet0_5 | 1 | `ConvRelu` 1 |
+| mobilenet_v2 | 1 | `ConvClip` 1 |
+| googlenet | 12 | `Split` 9, `Concat` 9, `ConvRelu` 8, `BatchNormalization` 3, `MaxPool` 1 |
+| shufflenet_v2_x0_5 | 12 | `ConvRelu` 12, `Conv` 7, `Concat` 2, `Split` 1 |
+| efficientnet_b0 | 63 | `ConvExSwish` 53, `Conv` 53, `ConvAdd` 31, `ConvSigmoid` 17, `Mul` 8 |
+| regnet_x_400mf | 23 | `Concat` 167, `Conv` 145, `Split` 37, `Relu` 14 |
+| densenet121 | 62 | `Concat` 48, `Conv` 14, `BatchNormalizationRelu` 3, `ConvRelu` 2 |
+
+**⇒ 单核段**多数只覆盖 1 个算子**（densenet121：62 段 / 67 个算子）。**
+**⇒ 类型上**偏向 `Concat`/`Split`**（densenet121 的 58 个 `Concat` 有 48 个落在单核段；
+   googlenet 的 `Split`/`Concat` 几乎全在单核段），**但**不是全部** ——
+   resnet18 的 2 个单核段都是**普通 conv**。**
+
+**⚠️ 所以「单核段 = Concat/Split」只是**倾向**，不是规则。**
+
+---
+
 ## 3. ★★ 一个异常：`efficientnet_b0` 只有 **1 遍**（其余都是 3 遍）
 
 | 模型 | 遍数 |

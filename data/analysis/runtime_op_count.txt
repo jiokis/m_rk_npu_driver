@@ -34,3 +34,20 @@ densenet121                 246          246           122        2572      183 
 #
 # ── 抓取产物入库 ──
 #   data/captures/<model>/tasks_*.bin（板子 /tmp 是 tmpfs，不拷就没了）
+
+# ── ★★ 单核段里装的是哪些算子（把 op_idx 映射回 IR 表的算子类型）──
+# model              单核段数   单核段覆盖的算子类型
+resnet18                 2    ConvAddRelu 1, Conv 1
+squeezenet1_0            4    ConvRelu 4, Concat 1
+mnasnet0_5               1    ConvRelu 1
+mobilenet_v2             1    ConvClip 1
+googlenet               12    Split 9, Concat 9, ConvRelu 8, BatchNormalization 3, MaxPool 1
+shufflenet_v2_x0_5      12    ConvRelu 12, Conv 7, Concat 2, Split 1
+efficientnet_b0         63    ConvExSwish 53, Conv 53, ConvAdd 31, ConvSigmoid 17, Mul 8
+regnet_x_400mf          23    Concat 167, Conv 145, Split 37, Relu 14, ...
+densenet121             62    Concat 48, Conv 14, BatchNormalizationRelu 3, ConvRelu 2
+# ⇒ 单核段**多数只覆盖 1 个算子**（densenet：62 段 / 67 个算子）
+# ⇒ 类型上**偏向 Concat/Split**（densenet 的 58 个 Concat 有 48 个在单核段；
+#    googlenet 的 Split/Concat 几乎都在单核段），但**不是全部** ——
+#    普通 Conv 也会出现在单核段（resnet18 的 2 个单核段都是普通 conv）
+# ⚠️ 所以「单核段 = Concat/Split」只是**倾向**，不是规则；判据见 docs/137 §5

@@ -1,0 +1,54 @@
+# 在 RK3588 NPU 上跑扩散模型：部署链路的实测结论
+#
+# ── ① 架构可转 RKNN（最大风险，先验掉）──
+#   三个 norm 变体都能 build/export（不量化）：
+#     norm=none  .rknn 5,687,822 B
+#     norm=batch .rknn 5,687,822 B   ← **与 none 完全相同 ⇒ BatchNorm 被折进 Conv**
+#     norm=group .rknn 11,564,430 B  ← 大了一倍
+#
+#   IR 表（verbose 打印的最终 IR，Target 列）：
+#     norm=none   98 行 / NPU 95：Conv 36, exSwish 27, Add 13, ConvAdd 13, Resize 3, Concat 3
+#                 CPU 只有 InputOperator×2 + OutputOperator×1
+#     norm=group 179 行 / NPU 176：多了 **Reshape 54** + exNorm 27
+#   ⇒ **UNet 可以做到 100% 落 NPU（除输入输出）**
+#   ⇒ norm=group 的 54 个 Reshape 是 layout 变换，代价高 ⇒ **选 norm=batch**
+#
+# ── ② w8a8 量化成功（关键：多输入标定集的格式）──
+#   dataset.txt **每行必须给每个输入一个文件**（空格分隔）：
+#       /path/x_000.npy /path/t_000.npy
+#   只给一个文件 ⇒ ValueError: The input num: 1 ... not match input num: 2 in model!
+#   标定集路径**不能含空格**（本仓库是 "orange pi"）⇒ 写到 /home/dunaandone/rknn-work/diffcalib
+#   标定分布：**真 MNIST + 随机 t** 算出的 x_t 与 temb（不是随机噪声）
+#   ⇒ 2.383 M 参数模型：ONNX 9.58 MB → .rknn **3.39 MB**
+#
+# ── ③ ★ 单次前向逐点对齐（部署里最该先做的一步）──
+#   同一输入 (x[1,1,32,32], temb[1,128,1,1])，torch(CPU) vs rknn(NPU)：
+#     torch: 均值 +0.2523  标准差 1.0074  min -2.866  max +3.532
+#     rknn : 均值 +0.2516  标准差 1.0059  min -2.896  max +3.544
+#     差值 : 均值 +0.0007  标准差 0.0283  |max| 0.0962
+#     **余弦相似度 0.9996   相对误差 2.75%**
+#   ⇒ 量化误差很小，链路数值正确
+#
+# ── ④ ★ RKNN 模型 batch 固定为 1 ──
+#   喂 [16,1,32,32] 只返回 1024 个元素（只算了第一张）
+#   ⇒ cannot reshape array of size 1024 into shape (16,1,32,32)
+#   ⇒ 采样时**逐张循环**
+#
+# ── ⑤ NPU vs CPU 速度（2.383 M 参数模型，32x32，单张）──
+#   板子 NPU（core_mask=0_1_2）：**64.1 ms/次**（200 次共 12.95 s）
+#   笔记本 CPU torch        ：493.0 ms/次（200 次共 98.66 s）
+#   ⇒ **NPU 快约 7.7 倍**
+#   ⚠️ 这是**未训练好**的 2.383 M 模型；最终用的是 0.631 M 模型，会更快
+#
+# ── ⑥ 采样必须用 DDIM(η=0)，不能用 DDPM 祖先采样 ──
+#   祖先采样跳步时方差公式要用「下一个实际采样时刻」的 abar；
+#   写错（用 abar[i-1]）⇒ 输出直接 **NaN**（踩过）
+#   且祖先采样每步注入随机噪声 ⇒ torch 与 NPU 无法逐点对比
+#   DDIM(η=0) 确定性 ⇒ 同种子两侧差异只剩量化误差
+#
+# ── ⑦ CPU 训练速度实测（16 核，batch 128，32x32）──
+#   base=32 mult=(1,2,4) 2.383 M  1294 ms/step  ⇒ 20k 步 431 min
+#   base=16 mult=(1,2)   0.165 M   387 ms/step
+#   base=16 mult=(1,2,2) 0.277 M   318 ms/step  ← **选它**（实测训练时 416 ms/step）
+#   base=24 mult=(1,2,2) 0.587 M   579 ms/step
+#   base=32 mult=(1,2,4) batch=256 2639 ms/step  ⇒ 加大 batch 在 CPU 上**不划算**

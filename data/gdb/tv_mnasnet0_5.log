@@ -1,0 +1,138 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 9250)]
+[New Thread 0x7fffd9bfe6c0 (LWP 9251)]
+[New Thread 0x7fffd51ff6c0 (LWP 9252)]
+[New Thread 0x7fffd27ff6c0 (LWP 9253)]
+[New Thread 0x7fffd1ffe6c0 (LWP 9254)]
+[New Thread 0x7fffcf5ff6c0 (LWP 9255)]
+[New Thread 0x7fffccbff6c0 (LWP 9256)]
+[New Thread 0x7fffca1ff6c0 (LWP 9257)]
+[New Thread 0x7fffc57ff6c0 (LWP 9258)]
+[New Thread 0x7fffc2dff6c0 (LWP 9259)]
+[New Thread 0x7fffc25fe6c0 (LWP 9260)]
+[New Thread 0x7fffbdbff6c0 (LWP 9261)]
+[New Thread 0x7fffbd3fe6c0 (LWP 9262)]
+[New Thread 0x7fffb89ff6c0 (LWP 9263)]
+[New Thread 0x7fffb5fff6c0 (LWP 9264)]
+[Detaching after vfork from child process 9267]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaef1b260  base=0x7fffaee00000
+Breakpoint 2 at 0x7fffaf191510
+[New Thread 0x7fff8cbff6c0 (LWP 9268)]
+[New Thread 0x7fff8c3fe6c0 (LWP 9269)]
+[New Thread 0x7fff8bbfd6c0 (LWP 9270)]
+[New Thread 0x7fff8b3fc6c0 (LWP 9271)]
+[New Thread 0x7fff8abfb6c0 (LWP 9272)]
+[New Thread 0x7fff8a3fa6c0 (LWP 9273)]
+[New Thread 0x7fff89bf96c0 (LWP 9274)]
+[New Thread 0x7fff893f86c0 (LWP 9275)]
+[New Thread 0x7fff88bf76c0 (LWP 9276)]
+[New Thread 0x7fff883f66c0 (LWP 9277)]
+[New Thread 0x7fff87bf56c0 (LWP 9278)]
+[New Thread 0x7fff873f46c0 (LWP 9279)]
+[New Thread 0x7fff86bf36c0 (LWP 9280)]
+[New Thread 0x7fff863f26c0 (LWP 9281)]
+[New Thread 0x7fff85bf16c0 (LWP 9282)]
+[Detaching after vfork from child process 9283]
+[Detaching after vfork from child process 9284]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff799e36c0 (LWP 9285)]
+I Loading :   0%|                                                           | 0/106 [00:00<?, ?it/s]I Loading : 100%|██████████████████████████████████████████████| 106/106 [00:00<00:00, 38483.18it/s]
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 8666.10it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :  97%|███████████████████████████████████████████▋ | 97/100 [00:00<00:00, 3931.16it/s]I OpFusing 1 :  95%|██████████████████████████████████████████▊  | 95/100 [00:00<00:00, 3741.82it/s]I OpFusing 1 :  94%|██████████████████████████████████████████▎  | 94/100 [00:00<00:00, 1646.34it/s]I OpFusing 1 :  93%|█████████████████████████████████████████▊   | 93/100 [00:00<00:00, 1615.65it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1167.61it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :  94%|███████████████████████████████████████████▏  | 94/100 [00:00<00:00, 933.03it/s]I OpFusing 0 :  96%|████████████████████████████████████████████▏ | 96/100 [00:00<00:00, 948.49it/s]I OpFusing 0 :  99%|█████████████████████████████████████████████▌| 99/100 [00:00<00:00, 974.58it/s]I OpFusing 0 :  97%|████████████████████████████████████████████▌ | 97/100 [00:00<00:00, 789.56it/s]I OpFusing 0 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 684.61it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 626.47it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 :  98%|█████████████████████████████████████████████ | 98/100 [00:00<00:00, 602.15it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 576.48it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 530.13it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 490.19it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 479.15it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 319.72it/s]
+[1;31mE[0m [1;31mbuild: Traceback (most recent call last):
+  File "rknn/api/rknn_log.py", line 344, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_base.py", line 2007, in rknn.api.rknn_base.RKNNBase.build
+  File "rknn/api/graph_optimizer.py", line 2338, in rknn.api.graph_optimizer.GraphOptimizer.fuse_ops
+  File "rknn/api/graph_optimizer.py", line 967, in rknn.api.graph_optimizer.GraphOptimizer.fold_constant
+  File "rknn/api/session.py", line 150, in rknn.api.session.Session.run
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py", line 322, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Invalid rank for input: /ReduceMean_output_0 Got: 4 Expected: 2 Please fix either the inputs/outputs or the model.
+[0m
+I ===================== WARN(0) =====================
+[1;31mE[0m [1;31mrknn-toolkit2 version: 2.3.2[0m
+
+
+
+
+
+
+
+Traceback (most recent call last):
+  File "rknn/api/rknn_log.py", line 344, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_base.py", line 2007, in rknn.api.rknn_base.RKNNBase.build
+  File "rknn/api/graph_optimizer.py", line 2338, in rknn.api.graph_optimizer.GraphOptimizer.fuse_ops
+  File "rknn/api/graph_optimizer.py", line 967, in rknn.api.graph_optimizer.GraphOptimizer.fold_constant
+  File "rknn/api/session.py", line 150, in rknn.api.session.Session.run
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py", line 322, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Invalid rank for input: /ReduceMean_output_0 Got: 4 Expected: 2 Please fix either the inputs/outputs or the model.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dunaandone/orange pi/rk3588-npu-re/tools/gdb/build_min.py", line 73, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/dunaandone/orange pi/rk3588-npu-re/tools/gdb/build_min.py", line 63, in main
+    ret = r.build(do_quantization=quant, dataset=CAL_TXT if quant else None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/rknn.py", line 198, in build
+    return self.rknn_base.build(do_quantization=do_quantization, dataset=dataset, expand_batch_size=rknn_batch_size, auto_hybrid=auto_hybrid)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "rknn/api/rknn_log.py", line 349, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_log.py", line 95, in rknn.api.rknn_log.RKNNLog.e
+ValueError: Traceback (most recent call last):
+  File "rknn/api/rknn_log.py", line 344, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_base.py", line 2007, in rknn.api.rknn_base.RKNNBase.build
+  File "rknn/api/graph_optimizer.py", line 2338, in rknn.api.graph_optimizer.GraphOptimizer.fuse_ops
+  File "rknn/api/graph_optimizer.py", line 967, in rknn.api.graph_optimizer.GraphOptimizer.fold_constant
+  File "rknn/api/session.py", line 150, in rknn.api.session.Session.run
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py", line 322, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Invalid rank for input: /ReduceMean_output_0 Got: 4 Expected: 2 Please fix either the inputs/outputs or the model.
+
+[Thread 0x7fff799e36c0 (LWP 9285) exited]
+[Thread 0x7fffccbff6c0 (LWP 9256) exited]
+[Thread 0x7fffc25fe6c0 (LWP 9260) exited]
+[Thread 0x7fffbdbff6c0 (LWP 9261) exited]
+[Thread 0x7fffbd3fe6c0 (LWP 9262) exited]
+[Thread 0x7fffc2dff6c0 (LWP 9259) exited]
+[Thread 0x7fffb89ff6c0 (LWP 9263) exited]
+[Thread 0x7fffc57ff6c0 (LWP 9258) exited]
+[Thread 0x7fffca1ff6c0 (LWP 9257) exited]
+[Thread 0x7fffcf5ff6c0 (LWP 9255) exited]
+[Thread 0x7fffd1ffe6c0 (LWP 9254) exited]
+[Thread 0x7fffb5fff6c0 (LWP 9264) exited]
+[Thread 0x7fffd27ff6c0 (LWP 9253) exited]
+[Thread 0x7fffd51ff6c0 (LWP 9252) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 9251) exited]
+[Thread 0x7fffda3ff6c0 (LWP 9250) exited]
+[Thread 0x7fff8a3fa6c0 (LWP 9273) exited]
+[Thread 0x7fff88bf76c0 (LWP 9276) exited]
+[Thread 0x7fff893f86c0 (LWP 9275) exited]
+[Thread 0x7fff87bf56c0 (LWP 9278) exited]
+[Thread 0x7fff873f46c0 (LWP 9279) exited]
+[Thread 0x7fff883f66c0 (LWP 9277) exited]
+[Thread 0x7fff86bf36c0 (LWP 9280) exited]
+[Thread 0x7fff89bf96c0 (LWP 9274) exited]
+[Thread 0x7fff8abfb6c0 (LWP 9272) exited]
+[Thread 0x7fff8b3fc6c0 (LWP 9271) exited]
+[Thread 0x7fff8bbfd6c0 (LWP 9270) exited]
+[Thread 0x7fff863f26c0 (LWP 9281) exited]
+[Thread 0x7fff8c3fe6c0 (LWP 9269) exited]
+[Thread 0x7fff85bf16c0 (LWP 9282) exited]
+[Thread 0x7fff8cbff6c0 (LWP 9268) exited]
+[Inferior 1 (process 9247) exited with code 01]
+
+[probe] run finished

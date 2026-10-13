@@ -1,0 +1,138 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 9484)]
+[New Thread 0x7fffd9bfe6c0 (LWP 9485)]
+[New Thread 0x7fffd51ff6c0 (LWP 9486)]
+[New Thread 0x7fffd27ff6c0 (LWP 9487)]
+[New Thread 0x7fffd1ffe6c0 (LWP 9488)]
+[New Thread 0x7fffcd5ff6c0 (LWP 9489)]
+[New Thread 0x7fffcabff6c0 (LWP 9490)]
+[New Thread 0x7fffc81ff6c0 (LWP 9491)]
+[New Thread 0x7fffc57ff6c0 (LWP 9492)]
+[New Thread 0x7fffc2dff6c0 (LWP 9493)]
+[New Thread 0x7fffc03ff6c0 (LWP 9494)]
+[New Thread 0x7fffbd9ff6c0 (LWP 9495)]
+[New Thread 0x7fffbafff6c0 (LWP 9496)]
+[New Thread 0x7fffb85ff6c0 (LWP 9497)]
+[New Thread 0x7fffb5bff6c0 (LWP 9498)]
+[Detaching after vfork from child process 9499]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaed1b260  base=0x7fffaec00000
+Breakpoint 2 at 0x7fffaef91510
+[New Thread 0x7fff8c9ff6c0 (LWP 9500)]
+[New Thread 0x7fff8c1fe6c0 (LWP 9501)]
+[New Thread 0x7fff8b9fd6c0 (LWP 9502)]
+[New Thread 0x7fff8b1fc6c0 (LWP 9503)]
+[New Thread 0x7fff8a9fb6c0 (LWP 9504)]
+[New Thread 0x7fff8a1fa6c0 (LWP 9505)]
+[New Thread 0x7fff899f96c0 (LWP 9506)]
+[New Thread 0x7fff891f86c0 (LWP 9507)]
+[New Thread 0x7fff889f76c0 (LWP 9508)]
+[New Thread 0x7fff881f66c0 (LWP 9509)]
+[New Thread 0x7fff879f56c0 (LWP 9510)]
+[New Thread 0x7fff871f46c0 (LWP 9511)]
+[New Thread 0x7fff869f36c0 (LWP 9512)]
+[New Thread 0x7fff861f26c0 (LWP 9513)]
+[New Thread 0x7fff859f16c0 (LWP 9514)]
+[Detaching after vfork from child process 9515]
+[Detaching after vfork from child process 9516]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff79d026c0 (LWP 9517)]
+I Loading :   0%|                                                           | 0/114 [00:00<?, ?it/s]I Loading : 100%|██████████████████████████████████████████████| 114/114 [00:00<00:00, 51837.67it/s]
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0:   6%|██▊                                            | 6/100 [00:00<00:00, 1197.57it/s]I OpFusing 0:   8%|███▊                                           | 8/100 [00:00<00:00, 1433.15it/s]I OpFusing 0:  12%|█████▌                                        | 12/100 [00:00<00:00, 1655.27it/s]I OpFusing 0:  13%|█████▉                                        | 13/100 [00:00<00:00, 1696.94it/s]I OpFusing 0:  17%|███████▊                                      | 17/100 [00:00<00:00, 1870.54it/s]I OpFusing 0:  19%|████████▋                                     | 19/100 [00:00<00:00, 2000.70it/s]I OpFusing 0:  23%|██████████▌                                   | 23/100 [00:00<00:00, 2123.98it/s]I OpFusing 0:  30%|█████████████▊                                | 30/100 [00:00<00:00, 2394.33it/s]I OpFusing 0:  31%|██████████████▎                               | 31/100 [00:00<00:00, 2403.66it/s]I OpFusing 0:  35%|████████████████                              | 35/100 [00:00<00:00, 2465.21it/s]I OpFusing 0:  37%|█████████████████                             | 37/100 [00:00<00:00, 2545.92it/s]I OpFusing 0:  41%|██████████████████▊                           | 41/100 [00:00<00:00, 2295.92it/s]I OpFusing 0:  42%|███████████████████▎                          | 42/100 [00:00<00:00, 2260.96it/s]I OpFusing 0:  47%|█████████████████████▌                        | 47/100 [00:00<00:00, 2335.55it/s]I OpFusing 0:  48%|██████████████████████                        | 48/100 [00:00<00:00, 2347.67it/s]I OpFusing 0:  53%|████████████████████████▍                     | 53/100 [00:00<00:00, 2377.75it/s]I OpFusing 0:  54%|████████████████████████▊                     | 54/100 [00:00<00:00, 2368.03it/s]I OpFusing 0:  58%|██████████████████████████▋                   | 58/100 [00:00<00:00, 2306.20it/s]I OpFusing 0:  60%|███████████████████████████▌                  | 60/100 [00:00<00:00, 2341.33it/s]I OpFusing 0:  64%|█████████████████████████████▍                | 64/100 [00:00<00:00, 2317.52it/s]I OpFusing 0:  66%|██████████████████████████████▎               | 66/100 [00:00<00:00, 2356.11it/s]I OpFusing 0:  71%|████████████████████████████████▋             | 71/100 [00:00<00:00, 2407.36it/s]I OpFusing 0:  77%|███████████████████████████████████▍          | 77/100 [00:00<00:00, 2445.97it/s]I OpFusing 0:  79%|████████████████████████████████████▎         | 79/100 [00:00<00:00, 2480.18it/s]I OpFusing 0:  84%|██████████████████████████████████████▋       | 84/100 [00:00<00:00, 2448.68it/s]I OpFusing 0:  85%|███████████████████████████████████████       | 85/100 [00:00<00:00, 2443.13it/s]I OpFusing 0:  90%|█████████████████████████████████████████▍    | 90/100 [00:00<00:00, 2481.09it/s]I OpFusing 0:  91%|█████████████████████████████████████████▊    | 91/100 [00:00<00:00, 2480.21it/s]I OpFusing 0:  96%|████████████████████████████████████████████▏ | 96/100 [00:00<00:00, 2514.21it/s]I OpFusing 0:   7%|███▎                                            | 7/100 [00:00<00:00, 130.88it/s]I OpFusing 0:  11%|█████▏                                         | 11/100 [00:00<00:00, 199.71it/s]I OpFusing 0:  16%|███████▌                                       | 16/100 [00:00<00:00, 284.69it/s]I OpFusing 0:  21%|█████████▊                                     | 21/100 [00:00<00:00, 365.56it/s]I OpFusing 0:  28%|█████████████▏                                 | 28/100 [00:00<00:00, 473.09it/s]I OpFusing 0:  33%|███████████████▌                               | 33/100 [00:00<00:00, 542.95it/s]I OpFusing 0:  38%|█████████████████▊                             | 38/100 [00:00<00:00, 607.91it/s]I OpFusing 0:  44%|████████████████████▋                          | 44/100 [00:00<00:00, 683.89it/s]I OpFusing 0:  50%|███████████████████████▌                       | 50/100 [00:00<00:00, 760.59it/s]I OpFusing 0:  56%|██████████████████████████▎                    | 56/100 [00:00<00:00, 831.32it/s]I OpFusing 0:  62%|█████████████████████████████▏                 | 62/100 [00:00<00:00, 903.73it/s]I OpFusing 0:  68%|███████████████████████████████▉               | 68/100 [00:00<00:00, 973.75it/s]I OpFusing 0:  76%|██████████████████████████████████▉           | 76/100 [00:00<00:00, 1065.28it/s]I OpFusing 0:  82%|█████████████████████████████████████▋        | 82/100 [00:00<00:00, 1126.74it/s]I OpFusing 0:  89%|████████████████████████████████████████▉     | 89/100 [00:00<00:00, 1202.80it/s]I OpFusing 0:  96%|████████████████████████████████████████████▏ | 96/100 [00:00<00:00, 1279.59it/s]I OpFusing 0: 100%|██████████████████████████████████████████████| 100/100 [00:00<00:00, 936.82it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :  98%|█████████████████████████████████████████████ | 98/100 [00:00<00:00, 800.73it/s]I OpFusing 1 :  96%|████████████████████████████████████████████▏ | 96/100 [00:00<00:00, 779.38it/s]I OpFusing 1 :  95%|███████████████████████████████████████████▋  | 95/100 [00:00<00:00, 590.47it/s]I OpFusing 1 :  95%|███████████████████████████████████████████▋  | 95/100 [00:00<00:00, 588.01it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 503.94it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :  95%|███████████████████████████████████████████▋  | 95/100 [00:00<00:00, 433.24it/s]I OpFusing 0 :  97%|████████████████████████████████████████████▌ | 97/100 [00:00<00:00, 441.76it/s]I OpFusing 0 :  99%|█████████████████████████████████████████████▌| 99/100 [00:00<00:00, 450.23it/s]I OpFusing 0 :  97%|████████████████████████████████████████████▌ | 97/100 [00:00<00:00, 386.88it/s]I OpFusing 0 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 353.11it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 328.93it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 :   8%|███▊                                            | 8/100 [00:00<00:03, 26.14it/s]I OpFusing 2 :  13%|██████                                         | 13/100 [00:00<00:02, 42.31it/s]I OpFusing 2 :  19%|████████▉                                      | 19/100 [00:00<00:01, 61.65it/s]I OpFusing 2 :  25%|███████████▊                                   | 25/100 [00:00<00:00, 80.86it/s]I OpFusing 2 :  32%|██████████████▋                               | 32/100 [00:00<00:00, 102.57it/s]I OpFusing 2 :  37%|█████████████████                             | 37/100 [00:00<00:00, 117.83it/s]I OpFusing 2 :  43%|███████████████████▊                          | 43/100 [00:00<00:00, 136.13it/s]I OpFusing 2 :  48%|██████████████████████                        | 48/100 [00:00<00:00, 150.98it/s]I OpFusing 2 :  54%|████████████████████████▊                     | 54/100 [00:00<00:00, 168.75it/s]I OpFusing 2 :  60%|███████████████████████████▌                  | 60/100 [00:00<00:00, 186.24it/s]I OpFusing 2 :  65%|█████████████████████████████▉                | 65/100 [00:00<00:00, 200.34it/s]I OpFusing 2 :  71%|████████████████████████████████▋             | 71/100 [00:00<00:00, 217.21it/s]I OpFusing 2 :  78%|███████████████████████████████████▉          | 78/100 [00:00<00:00, 233.19it/s]I OpFusing 2 :  83%|██████████████████████████████████████▏       | 83/100 [00:00<00:00, 243.45it/s]I OpFusing 2 :  89%|████████████████████████████████████████▉     | 89/100 [00:00<00:00, 254.95it/s]I OpFusing 2 :  95%|███████████████████████████████████████████▋  | 95/100 [00:00<00:00, 267.02it/s]I OpFusing 2 :  98%|█████████████████████████████████████████████ | 98/100 [00:00<00:00, 275.03it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 258.61it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :  95%|███████████████████████████████████████████▋  | 95/100 [00:00<00:00, 214.89it/s]I OpFusing 0 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 202.68it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 195.17it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 193.65it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 158.74it/s]
+[1;31mE[0m [1;31mbuild: Traceback (most recent call last):
+  File "rknn/api/rknn_log.py", line 344, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_base.py", line 2007, in rknn.api.rknn_base.RKNNBase.build
+  File "rknn/api/graph_optimizer.py", line 2338, in rknn.api.graph_optimizer.GraphOptimizer.fuse_ops
+  File "rknn/api/graph_optimizer.py", line 967, in rknn.api.graph_optimizer.GraphOptimizer.fold_constant
+  File "rknn/api/session.py", line 150, in rknn.api.session.Session.run
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py", line 322, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Invalid rank for input: /ReduceMean_output_0 Got: 4 Expected: 2 Please fix either the inputs/outputs or the model.
+[0m
+I ===================== WARN(0) =====================
+[1;31mE[0m [1;31mrknn-toolkit2 version: 2.3.2[0m
+
+
+
+
+
+
+
+Traceback (most recent call last):
+  File "rknn/api/rknn_log.py", line 344, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_base.py", line 2007, in rknn.api.rknn_base.RKNNBase.build
+  File "rknn/api/graph_optimizer.py", line 2338, in rknn.api.graph_optimizer.GraphOptimizer.fuse_ops
+  File "rknn/api/graph_optimizer.py", line 967, in rknn.api.graph_optimizer.GraphOptimizer.fold_constant
+  File "rknn/api/session.py", line 150, in rknn.api.session.Session.run
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py", line 322, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Invalid rank for input: /ReduceMean_output_0 Got: 4 Expected: 2 Please fix either the inputs/outputs or the model.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dunaandone/orange pi/rk3588-npu-re/tools/gdb/build_min.py", line 73, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/dunaandone/orange pi/rk3588-npu-re/tools/gdb/build_min.py", line 63, in main
+    ret = r.build(do_quantization=quant, dataset=CAL_TXT if quant else None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/rknn.py", line 198, in build
+    return self.rknn_base.build(do_quantization=do_quantization, dataset=dataset, expand_batch_size=rknn_batch_size, auto_hybrid=auto_hybrid)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "rknn/api/rknn_log.py", line 349, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_log.py", line 95, in rknn.api.rknn_log.RKNNLog.e
+ValueError: Traceback (most recent call last):
+  File "rknn/api/rknn_log.py", line 344, in rknn.api.rknn_log.error_catch_decorator.error_catch_wrapper
+  File "rknn/api/rknn_base.py", line 2007, in rknn.api.rknn_base.RKNNBase.build
+  File "rknn/api/graph_optimizer.py", line 2338, in rknn.api.graph_optimizer.GraphOptimizer.fuse_ops
+  File "rknn/api/graph_optimizer.py", line 967, in rknn.api.graph_optimizer.GraphOptimizer.fold_constant
+  File "rknn/api/session.py", line 150, in rknn.api.session.Session.run
+  File "/home/dunaandone/rknn-venv/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py", line 322, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Invalid rank for input: /ReduceMean_output_0 Got: 4 Expected: 2 Please fix either the inputs/outputs or the model.
+
+[Thread 0x7fff79d026c0 (LWP 9517) exited]
+[Thread 0x7fffc81ff6c0 (LWP 9491) exited]
+[Thread 0x7fffb5bff6c0 (LWP 9498) exited]
+[Thread 0x7fffb85ff6c0 (LWP 9497) exited]
+[Thread 0x7fffbafff6c0 (LWP 9496) exited]
+[Thread 0x7fffbd9ff6c0 (LWP 9495) exited]
+[Thread 0x7fffc03ff6c0 (LWP 9494) exited]
+[Thread 0x7fffc2dff6c0 (LWP 9493) exited]
+[Thread 0x7fffc57ff6c0 (LWP 9492) exited]
+[Thread 0x7fffcabff6c0 (LWP 9490) exited]
+[Thread 0x7fffcd5ff6c0 (LWP 9489) exited]
+[Thread 0x7fffd1ffe6c0 (LWP 9488) exited]
+[Thread 0x7fffd27ff6c0 (LWP 9487) exited]
+[Thread 0x7fffd51ff6c0 (LWP 9486) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 9485) exited]
+[Thread 0x7fffda3ff6c0 (LWP 9484) exited]
+[Thread 0x7fff8b9fd6c0 (LWP 9502) exited]
+[Thread 0x7fff8a9fb6c0 (LWP 9504) exited]
+[Thread 0x7fff891f86c0 (LWP 9507) exited]
+[Thread 0x7fff881f66c0 (LWP 9509) exited]
+[Thread 0x7fff889f76c0 (LWP 9508) exited]
+[Thread 0x7fff879f56c0 (LWP 9510) exited]
+[Thread 0x7fff899f96c0 (LWP 9506) exited]
+[Thread 0x7fff871f46c0 (LWP 9511) exited]
+[Thread 0x7fff869f36c0 (LWP 9512) exited]
+[Thread 0x7fff8a1fa6c0 (LWP 9505) exited]
+[Thread 0x7fff861f26c0 (LWP 9513) exited]
+[Thread 0x7fff8b1fc6c0 (LWP 9503) exited]
+[Thread 0x7fff8c1fe6c0 (LWP 9501) exited]
+[Thread 0x7fff8c9ff6c0 (LWP 9500) exited]
+[Thread 0x7fff859f16c0 (LWP 9514) exited]
+[Inferior 1 (process 9481) exited with code 01]
+
+[probe] run finished

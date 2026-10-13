@@ -1,0 +1,200 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 12212)]
+[New Thread 0x7fffd9bfe6c0 (LWP 12213)]
+[New Thread 0x7fffd51ff6c0 (LWP 12214)]
+[New Thread 0x7fffd49fe6c0 (LWP 12215)]
+[New Thread 0x7fffcffff6c0 (LWP 12216)]
+[New Thread 0x7fffcd5ff6c0 (LWP 12217)]
+[New Thread 0x7fffcabff6c0 (LWP 12218)]
+[New Thread 0x7fffca3fe6c0 (LWP 12219)]
+[New Thread 0x7fffc79ff6c0 (LWP 12220)]
+[New Thread 0x7fffc4fff6c0 (LWP 12221)]
+[New Thread 0x7fffc25ff6c0 (LWP 12222)]
+[New Thread 0x7fffbdbff6c0 (LWP 12223)]
+[New Thread 0x7fffbb1ff6c0 (LWP 12224)]
+[New Thread 0x7fffb87ff6c0 (LWP 12225)]
+[New Thread 0x7fffb5dff6c0 (LWP 12226)]
+[Detaching after vfork from child process 12227]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaef1b260  base=0x7fffaee00000
+Breakpoint 2 at 0x7fffaf191510
+[New Thread 0x7fff8c9ff6c0 (LWP 12228)]
+[New Thread 0x7fff8c1fe6c0 (LWP 12229)]
+[New Thread 0x7fff8b9fd6c0 (LWP 12230)]
+[New Thread 0x7fff8b1fc6c0 (LWP 12231)]
+[New Thread 0x7fff8a9fb6c0 (LWP 12232)]
+[New Thread 0x7fff8a1fa6c0 (LWP 12233)]
+[New Thread 0x7fff899f96c0 (LWP 12234)]
+[New Thread 0x7fff891f86c0 (LWP 12235)]
+[New Thread 0x7fff889f76c0 (LWP 12236)]
+[New Thread 0x7fff881f66c0 (LWP 12237)]
+[New Thread 0x7fff879f56c0 (LWP 12238)]
+[New Thread 0x7fff871f46c0 (LWP 12239)]
+[New Thread 0x7fff869f36c0 (LWP 12240)]
+[New Thread 0x7fff861f26c0 (LWP 12241)]
+[New Thread 0x7fff859f16c0 (LWP 12242)]
+[Detaching after vfork from child process 12243]
+[Detaching after vfork from child process 12244]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff7adff6c0 (LWP 12245)]
+I Loading :   0%|                                                             | 0/1 [00:00<?, ?it/s]I Loading : 100%|████████████████████████████████████████████████████| 1/1 [00:00<00:00, 278.21it/s]
+[1;33mW[0m [1;33mload_onnx: The config.mean_values is None, zeros will be set for input 0![0m
+[1;33mW[0m [1;33mload_onnx: The config.std_values is None, ones will be set for input 0![0m
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 410401.57it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|██████████████████████████████████████████| 100/100 [00:00<00:00, 167906.49it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|██████████████████████████████████████████| 100/100 [00:00<00:00, 135606.34it/s]I OpFusing 2 : 100%|██████████████████████████████████████████| 100/100 [00:00<00:00, 116057.11it/s]
+I rknn building ...
+
+=== HIT off=0x391510 this=0x65daae0 (hit #1) ===
+  [ 0] 0x00007fffb0bc4678
+  [ 1] 0x0000000100000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x00007fffdda7c658
+  [ 4] 0x00007fffdda7c658
+  [ 5] 0x0000000000000000
+  [ 6] 0x0000000000000000
+  [ 7] 0x0000000000000000
+  [ 8] 0x0000000000000000
+  [ 9] 0x0000000000000000
+  [10] 0x0000000000000000
+  [11] 0x0000000006618be0
+  [12] 0x0000000006619ac8
+  [13] 0x000000000661a660
+  [14] 0x00000000065e7c30
+  [15] 0x0000000000000151
+    [0] -> 0x7fffb0bc4678: 0x7fffaf1913e0 0x7fffaf191400 0x7fffaf191510 0x7fffaf191410
+    [1] -> 0x100000000: <不可读>
+    [3] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [4] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [11] -> 0x6618be0: 0x0 0x200000002 0x200000002 0x1
+    [12] -> 0x6619ac8: 0x6619b80 0x0 0x0 0xf10
+    [13] -> 0x661a660: 0x661a740 0x21 0x4000000001 0x3800000013
+    [14] -> 0x65e7c30: 0x0 0x0 0x0 0x0
+  rsi = 0x0
+  rdx = 0x8
+  rcx = 0xff
+  VEC@this+0x58: begin=0x6618be0 end=0x6619ac8 cap=0x661a660
+  ★ 元素个数 = 9  (stride 0x1a8)
+    [0] @0x6618be0 头部: 0x0 0x200000002 0x200000002 0x1 0x0 0x2 0x100000000 0x0
+        vec0 @+0x40: 0x660d170..0x660d180 (diff 0x10)
+        vec1 @+0x58: 0x660d190..0x660d1a0 (diff 0x10)
+        vec2 @+0x70: 0x660d1b0..0x660d1c0 (diff 0x10)
+        vec4 @+0xa0: 0x660d1d0..0x660d1e0 (diff 0x10)
+        vec5 @+0xb8: 0x660d1f0..0x660d200 (diff 0x10)
+        vec6 @+0xd0: 0x660d210..0x660d220 (diff 0x10)
+        vec8 @+0x100: 0x660d230..0x660d238 (diff 0x8)
+        vec9 @+0x118: 0x660d250..0x660d258 (diff 0x8)
+        vec10 @+0x130: 0x660d270..0x660d280 (diff 0x10)
+    [1] @0x6618d88 头部: 0x1000000000000 0x200000002 0x200000002 0x1 0x400000000 0x2 0x100000001 0x0
+        vec0 @+0x40: 0x660d610..0x660d620 (diff 0x10)
+        vec1 @+0x58: 0x660d630..0x660d640 (diff 0x10)
+        vec2 @+0x70: 0x660d650..0x660d660 (diff 0x10)
+        vec4 @+0xa0: 0x660d670..0x660d680 (diff 0x10)
+        vec5 @+0xb8: 0x660d690..0x660d6a0 (diff 0x10)
+        vec6 @+0xd0: 0x660d6b0..0x660d6c0 (diff 0x10)
+        vec8 @+0x100: 0x660d6d0..0x660d6d8 (diff 0x8)
+        vec9 @+0x118: 0x660d6f0..0x660d6f8 (diff 0x8)
+        vec10 @+0x130: 0x660d710..0x660d720 (diff 0x10)
+    [2] @0x6618f30 头部: 0x0 0x200000002 0x200000002 0x1 0x0 0x2 0x200000000 0x0
+        vec0 @+0x40: 0x660dea0..0x660deb0 (diff 0x10)
+        vec1 @+0x58: 0x660dec0..0x660ded0 (diff 0x10)
+        vec2 @+0x70: 0x660dee0..0x660def0 (diff 0x10)
+        vec4 @+0xa0: 0x660df00..0x660df10 (diff 0x10)
+        vec5 @+0xb8: 0x660df20..0x660df30 (diff 0x10)
+        vec6 @+0xd0: 0x660df40..0x660df50 (diff 0x10)
+        vec8 @+0x100: 0x660df60..0x660df68 (diff 0x8)
+        vec9 @+0x118: 0x660df80..0x660df88 (diff 0x8)
+        vec10 @+0x130: 0x660dfa0..0x660dfb0 (diff 0x10)
+    [3] @0x66190d8 头部: 0x0 0x200000002 0x200000002 0x1 0x7fff00000000 0x2 0x200000000 0x1
+        vec0 @+0x40: 0x660dfc0..0x660dfd0 (diff 0x10)
+        vec1 @+0x58: 0x660dfe0..0x660dff0 (diff 0x10)
+        vec2 @+0x70: 0x660e000..0x660e010 (diff 0x10)
+        vec4 @+0xa0: 0x660e020..0x660e030 (diff 0x10)
+        vec5 @+0xb8: 0x660e040..0x660e050 (diff 0x10)
+        vec6 @+0xd0: 0x660e060..0x660e070 (diff 0x10)
+        vec8 @+0x100: 0x660e080..0x660e088 (diff 0x8)
+        vec9 @+0x118: 0x660e0a0..0x660e0a8 (diff 0x8)
+        vec10 @+0x130: 0x660e0c0..0x660e0d0 (diff 0x10)
+    [4] @0x6619280 头部: 0x0 0x200000002 0x200000002 0x1 0x0 0x2 0x200000001 0x0
+        vec0 @+0x40: 0x660e0e0..0x660e0f0 (diff 0x10)
+        vec1 @+0x58: 0x661e930..0x661e940 (diff 0x10)
+        vec2 @+0x70: 0x661e950..0x661e960 (diff 0x10)
+        vec4 @+0xa0: 0x661e970..0x661e980 (diff 0x10)
+        vec5 @+0xb8: 0x661e990..0x661e9a0 (diff 0x10)
+        vec6 @+0xd0: 0x661e9b0..0x661e9c0 (diff 0x10)
+        vec8 @+0x100: 0x661e9d0..0x661e9d8 (diff 0x8)
+        vec9 @+0x118: 0x661e9f0..0x661e9f8 (diff 0x8)
+        vec10 @+0x130: 0x661ea10..0x661ea20 (diff 0x10)
+    [5] @0x6619428 头部: 0x0 0x200000002 0x200000002 0x1 0x0 0x2 0x200000001 0x1
+        vec0 @+0x40: 0x661ea30..0x661ea40 (diff 0x10)
+        vec1 @+0x58: 0x661ea50..0x661ea60 (diff 0x10)
+        vec2 @+0x70: 0x661ea70..0x661ea80 (diff 0x10)
+        vec4 @+0xa0: 0x661ea90..0x661eaa0 (diff 0x10)
+        vec5 @+0xb8: 0x661eab0..0x661eac0 (diff 0x10)
+        vec6 @+0xd0: 0x661ead0..0x661eae0 (diff 0x10)
+        vec8 @+0x100: 0x661eaf0..0x661eaf8 (diff 0x8)
+        vec9 @+0x118: 0x661eb10..0x661eb18 (diff 0x8)
+        vec10 @+0x130: 0x661eb30..0x661eb40 (diff 0x10)
+    [6] @0x66195d0 头部: 0x0 0x200000002 0x300000002 0x1 0x0 0x3 0x100000000 0x0
+        vec0 @+0x40: 0x661adf0..0x661ae00 (diff 0x10)
+        vec1 @+0x58: 0x661ae90..0x661aea0 (diff 0x10)
+        vec2 @+0x70: 0x661eb50..0x661eb60 (diff 0x10)
+        vec4 @+0xa0: 0x661eb70..0x661eb80 (diff 0x10)
+        vec5 @+0xb8: 0x661eb90..0x661eba0 (diff 0x10)
+        vec6 @+0xd0: 0x661ebb0..0x661ebc0 (diff 0x10)
+        vec8 @+0x100: 0x661ebd0..0x661ebd8 (diff 0x8)
+        vec9 @+0x118: 0x661ebf0..0x661ebf8 (diff 0x8)
+        vec10 @+0x130: 0x661ec10..0x661ec20 (diff 0x10)
+    [7] @0x6619778 头部: 0x0 0x200000002 0x300000002 0x1 0x0 0x3 0x100000001 0x0
+        vec0 @+0x40: 0x661ec30..0x661ec40 (diff 0x10)
+        vec1 @+0x58: 0x661ec50..0x661ec60 (diff 0x10)
+        vec2 @+0x70: 0x661ec70..0x661ec80 (diff 0x10)
+        vec4 @+0xa0: 0x661ec90..0x661eca0 (diff 0x10)
+        vec5 @+0xb8: 0x661ecb0..0x661ecc0 (diff 0x10)
+        vec6 @+0xd0: 0x661ecd0..0x661ece0 (diff 0x10)
+        vec8 @+0x100: 0x660d7f0..0x660d7f8 (diff 0x8)
+        vec9 @+0x118: 0x660d810..0x660d818 (diff 0x8)
+        vec10 @+0x130: 0x660d830..0x660d840 (diff 0x10)
+I rknn building done.
+
+
+[build_min] build OK  0.06s  onnx=c64_h56.onnx
+[Thread 0x7fff7adff6c0 (LWP 12245) exited]
+[Thread 0x7fffc4fff6c0 (LWP 12221) exited]
+[Thread 0x7fffbb1ff6c0 (LWP 12224) exited]
+[Thread 0x7fffb87ff6c0 (LWP 12225) exited]
+[Thread 0x7fffbdbff6c0 (LWP 12223) exited]
+[Thread 0x7fffb5dff6c0 (LWP 12226) exited]
+[Thread 0x7fffc25ff6c0 (LWP 12222) exited]
+[Thread 0x7fffc79ff6c0 (LWP 12220) exited]
+[Thread 0x7fffca3fe6c0 (LWP 12219) exited]
+[Thread 0x7fffcabff6c0 (LWP 12218) exited]
+[Thread 0x7fffcd5ff6c0 (LWP 12217) exited]
+[Thread 0x7fffcffff6c0 (LWP 12216) exited]
+[Thread 0x7fffd49fe6c0 (LWP 12215) exited]
+[Thread 0x7fffd51ff6c0 (LWP 12214) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 12213) exited]
+[Thread 0x7fffda3ff6c0 (LWP 12212) exited]
+[Thread 0x7fff869f36c0 (LWP 12240) exited]
+[Thread 0x7fff859f16c0 (LWP 12242) exited]
+[Thread 0x7fff861f26c0 (LWP 12241) exited]
+[Thread 0x7fff871f46c0 (LWP 12239) exited]
+[Thread 0x7fff879f56c0 (LWP 12238) exited]
+[Thread 0x7fff881f66c0 (LWP 12237) exited]
+[Thread 0x7fff889f76c0 (LWP 12236) exited]
+[Thread 0x7fff891f86c0 (LWP 12235) exited]
+[Thread 0x7fff899f96c0 (LWP 12234) exited]
+[Thread 0x7fff8a1fa6c0 (LWP 12233) exited]
+[Thread 0x7fff8a9fb6c0 (LWP 12232) exited]
+[Thread 0x7fff8b1fc6c0 (LWP 12231) exited]
+[Thread 0x7fff8b9fd6c0 (LWP 12230) exited]
+[Thread 0x7fff8c1fe6c0 (LWP 12229) exited]
+[Thread 0x7fff8c9ff6c0 (LWP 12228) exited]
+[Inferior 1 (process 12209) exited normally]
+
+[probe] run finished

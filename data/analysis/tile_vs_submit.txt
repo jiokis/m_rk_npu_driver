@@ -1,0 +1,26 @@
+# tile 数 / tiling-info 对象数 与真实提交数的对照
+#
+# 采集方法：
+#   提交数、Σtask_number  ← 板上捕获 ~/align2/tvcap/<model>_timer.log
+#   对象数、tile 数       ← tools/gdb/probe.py --off 0x391510 --vec-off 0x58 --vec-stride 0x1a8 --onnx <onnx>
+#
+# 列：model  Conv(ONNX)  objs  sum_tiles  submits  sum_task_number
+#   ⚠️ regnet_x_400mf 的 objs 撞上了 --cap 400 的上限 ⇒ 是下界
+#   ⚠️ mnasnet0_5 / shufflenet_v2_x0_5 用的是 deploy/onnx_fix/（原 onnx 有 ReduceMean 问题）
+densenet121        120   122     768      183    2572
+efficientnet_b0     81   113     585       88     318
+googlenet           57    61     395       35     402
+mnasnet0_5          52    54     326        3     166
+mobilenet_v2        52    54     342        3     169
+regnet_x_400mf      71  >=400  >=2403     113    3147
+resnet18            20    22     135        5      74
+shufflenet_v2_x0_5  56    77     463       63     499
+squeezenet1_0       26    28     175       22     191
+
+# ---- 受控实验：单 conv（cin=64 k=3 s=1 p=1），只改一个变量 ----
+# group 变：g1->1 obj, g2->2, g4->4, g8->8      ★ 1:1，机制确凿
+# cout x H 变（tile 数）：
+#           56x56  112x112  224x224
+#   cout16      7      17       71
+#   cout64      9      30      114
+#   cout256    21     114      892

@@ -210,6 +210,8 @@ def main() -> int:
     ap.add_argument("--off", dest="offs", nargs="*", default=[],
                     help="库内偏移（十六进制），如 0x3913e0")
     ap.add_argument("--onnx", default=None, help="覆盖 build_min.py 用的 ONNX")
+    ap.add_argument("--noquant", action="store_true",
+                    help="不做量化（非 3 通道输入的合成模型必须加：标定图片是 3 通道）")
     ap.add_argument("--qw", type=int, default=6, help="每个命中 dump 的 quadword 数")
     ap.add_argument("--bt", type=int, default=6, help="栈回溯深度（0=不回溯）")
     ap.add_argument("--cap", type=int, default=40, help="命中上限（占位，gdb 侧未强制）")
@@ -243,6 +245,8 @@ def main() -> int:
     env["LD_LIBRARY_PATH"] = GDB_LIB + ":" + env.get("LD_LIBRARY_PATH", "")
     if args.onnx:
         env["BUILD_MIN_ONNX"] = args.onnx
+    if args.noquant:
+        env["BUILD_MIN_NOQUANT"] = "1"
 
     print(f"[probe] {len(offs)} 个断点: {[hex(o) for o in offs]}")
     print(f"[probe] 脚本 {script}\n[probe] 日志 {log}")

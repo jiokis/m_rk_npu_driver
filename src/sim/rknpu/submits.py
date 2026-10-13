@@ -152,10 +152,49 @@ def self_check(root: str | None = None) -> int:
               f"{c.parallel_rounds():6d} {c.serial_tasks():8d} {c.total_tasks():6d}")
         bad += (0 if ok1 else 1) + (0 if not v2 else 1)
 
+    # ★★★★ 恒等式 Σtasks = 3P + S（docs/134 §3）
+    print(f"\n{'model':20s} {'P':>6s} {'S':>6s} {'3P+S':>7s} {'Σtask':>6s} {'恒等式':>6s} {'第1段-S':>8s}")
+    for c in caps:
+        ok, est, tot = identity_ok(c)
+        seg = REPETITION_SEGMENTS.get(c.model)
+        extra = (seg[0] - seg[1]) if seg else None
+        tag = "" if extra is None else ("✓" if extra == c.serial_tasks() else f"✗({extra})")
+        print(f"{c.model:20s} {c.parallel_rounds():6d} {c.serial_tasks():6d} "
+              f"{est:7d} {tot:6d} {'✓' if ok else '✗':>6s} {tag:>8s}")
+        bad += 0 if ok else 1
+
     print(f"\n合计 {len(caps)} 个模型 / {nsub} 次提交；失败 {bad} 项")
     print()
     print(falsified_report())
     return bad
+
+
+# ------------------------------------------------- 恒等式（docs/134 §3）
+
+#: ★★★★ `Σtasks = CORES_PARALLEL × P + S`，9/9 真实模型**精确**成立（docs/134 §3）
+#:   P = 3 核提交的轮数之和；S = 1 核提交的任务数之和
+#:   含义：并行部分的每个算子 × 3 个核各一个 task；串行部分只在 1 个核上跑
+CORES_PARALLEL = 3
+
+
+def identity_ok(cap: "Capture") -> tuple[bool, int, int]:
+    """返回 (是否成立, 3P+S, Σtasks)"""
+    est = CORES_PARALLEL * cap.parallel_rounds() + cap.serial_tasks()
+    tot = cap.total_tasks()
+    return est == tot, est, tot
+
+
+#: ★ 实测的「各段 task 数」（docs/134 §2）：模型被复制 3 份，后两段**完全等长**
+#:   第 1 段多出来的部分 == S（串行槽），这条也在下面的自检里核对
+REPETITION_SEGMENTS: dict[str, list[int]] = {
+    "resnet18":           [26, 24, 24],
+    "mnasnet0_5":         [54, 53, 53],
+    "mobilenet_v2":       [54, 53, 53],
+    "squeezenet1_0":      [65, 60, 60],
+    "shufflenet_v2_x0_5": [187, 156, 156],
+    "densenet121":        [902, 835, 835],
+    "regnet_x_400mf":     [1302, 921, 921],
+}
 
 
 # ------------------------------------------------------- 被证伪的假设（别复活）

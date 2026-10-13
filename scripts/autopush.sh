@@ -34,6 +34,13 @@ else
   git add -A
   # 生成能看出改了什么的提交信息
   summary=$(git diff --cached --stat | tail -1)
+  # ⚠️ 这个 cron 会和「我手写的描述性提交」抢同一个工作树：
+  #    如果它在我 `git add -A` 之后、`git commit` 之前触发，我的提交信息就没了。
+  #    （踩过一次：docs/128 的成果被记成 "auto: 2026-10-13 10:20:01"）
+  #    所以至少把**最新的文档名**写进信息里，保住「这一批落了什么」这条线索。
+  newest_doc=$(git diff --cached --name-only --diff-filter=A -- 'docs/*.md' \
+               | sort -V | tail -1)
+  [ -n "$newest_doc" ] && summary="$summary | 新文档: $(basename "$newest_doc")"
   git commit -q -m "auto: $(date '+%F %T')
 
 $summary" || { echo "$LOG_TAG ⚠️ 提交失败"; exit 1; }

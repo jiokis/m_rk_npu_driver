@@ -1,0 +1,73 @@
+# librknnc.so 编译器 pass 全表（从 RTTI 名静态枚举）  共 67 个
+# 全部是 onnc::CustomPass<NS::Name, onnc::ModulePass, void> 的实例
+
+## rknn 自己的 pass（38）
+  InterpreterPass                    RTTI@0x1a84720
+  RKNNAddConvBias                    RTTI@0x1a8bce0
+  RKNNAddConvWeightSparse            RTTI@0x1a8f280
+  RKNNAddFirstConv                   RTTI@0x1a8c020
+  RKNNAddSecondaryNode               RTTI@0x1a8c220
+  RKNNAllocateConvCachePass          RTTI@0x1a900e0
+  RKNNBandwidthProfilePass           RTTI@0x1a89d20
+  RKNNBindNorm                       RTTI@0x1a8bde0
+  RKNNBnQuant                        RTTI@0x1a8c440
+  RKNNCPUWeightTransposePass         RTTI@0x1a89ba0
+  RKNNConvStrideFixPass              RTTI@0x1a90180
+  RKNNDuplicateWeightPass            RTTI@0x1a8db80
+  RKNNEliminateQATDataConvert        RTTI@0x1a8c2a0
+  RKNNExtractCustomOpAttrs           RTTI@0x1a8f440
+  RKNNFlatcModelBuildPass            RTTI@0x1a8f020
+  RKNNFreeSharedTensorsPass          RTTI@0x1a8eae0
+  RKNNFuseOptimizerPass              RTTI@0x1a89380
+  RKNNInitCastConst                  RTTI@0x1a8d980
+  RKNNInitRNNConst                   RTTI@0x1a8d900
+  RKNNLayoutMatchPass                RTTI@0x1a8b7a0
+  RKNNMemStatisticsPass              RTTI@0x1a89560
+  RKNNModelBuildPass                 RTTI@0x1a8a480
+  RKNNModelExportPass                RTTI@0x1a8b1c0
+  RKNNModelRegCmdbuildPass           RTTI@0x1a8b120
+  RKNNMultiSurfacePass               RTTI@0x1a8b320
+  RKNNOperatorIdGenPass              RTTI@0x1a895e0
+  RKNNPerChannelPrep                 RTTI@0x1a8c3a0
+  RKNNProfileAnalysisPass            RTTI@0x1a8da00
+  RKNNReplaceConstantTensorPass      RTTI@0x1a8eb80
+  RKNNSetOpTargetPass                RTTI@0x1a8ea00
+  RKNNSubGraphMemoryPlanPass         RTTI@0x1a8f520
+  RKNNSubgraphManager                RTTI@0x1a8fe60
+  RKNNTileChannel                    RTTI@0x1a8c5e0
+  RKNNTileFcBatchFuse                RTTI@0x1a8c7e0
+  RKNNTileGroupConv                  RTTI@0x1a8c660
+  RKNNTilingPass                     RTTI@0x1a8d720
+  RKNNTurnAutoPad                    RTTI@0x1a8c500
+  RKNNWeightTransposePass            RTTI@0x1a89980
+
+## ONNC 框架的 pass（29）
+  BookONNXGraphs                     RTTI@0x1ab1f40
+  BuildInitializers                  RTTI@0x1ab1fc0
+  BuildInputOperators                RTTI@0x1ab2040
+  BuildMemOperand                    RTTI@0x1ab2ba0
+  BuildOutputOperators               RTTI@0x1ab20e0
+  BuildQuantizations                 RTTI@0x1ab29c0
+  BuildSlotIndexes                   RTTI@0x1ab30a0
+  CodeEmit                           RTTI@0x1aacb20
+  CountOperatorsPass                 RTTI@0x1a84840
+  DeadNodeElimination                RTTI@0x1ab2200
+  DivideGlobalAPIntoAPs              RTTI@0x1aa7d20
+  EliminateCast                      RTTI@0x1ab2540
+  EliminateIdentity                  RTTI@0x1aa7de0
+  ExpandBatchNormalization           RTTI@0x1aa7ec0
+  ExtractConstToInitializer          RTTI@0x1ab25c0
+  FuseInplaceValue                   RTTI@0x1aabc80
+  LinearScanMemAlloc                 RTTI@0x1ab2c40
+  LiveIntervals                      RTTI@0x1ab2cc0
+  LiveIntervalsData                  RTTI@0x1ab2da0
+  LiveValueMatrix                    RTTI@0x1ab2e40
+  MemAllocData                       RTTI@0x1ab2f00
+  ONNXOptPass                        RTTI@0x1aab840
+  PropagateConstWithDiffShape        RTTI@0x1aa8020
+  RKNNBypassNodePass                 RTTI@0x1a90060
+  RemoveTrainingNodes                RTTI@0x1ab26a0
+  ReplaceGemmByConv                  RTTI@0x1aa8100
+  SetMemOperand                      RTTI@0x1ab2f80
+  TensorSel                          RTTI@0x1ab2780
+  UpdateGraphOutputSize              RTTI@0x1ab2a60

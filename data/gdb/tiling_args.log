@@ -1,0 +1,380 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 7617)]
+[New Thread 0x7fffd9bfe6c0 (LWP 7618)]
+[New Thread 0x7fffd71ff6c0 (LWP 7619)]
+[New Thread 0x7fffd27ff6c0 (LWP 7620)]
+[New Thread 0x7fffd1ffe6c0 (LWP 7621)]
+[New Thread 0x7fffcd5ff6c0 (LWP 7622)]
+[New Thread 0x7fffcabff6c0 (LWP 7623)]
+[New Thread 0x7fffc81ff6c0 (LWP 7624)]
+[New Thread 0x7fffc57ff6c0 (LWP 7625)]
+[New Thread 0x7fffc2dff6c0 (LWP 7626)]
+[New Thread 0x7fffc03ff6c0 (LWP 7627)]
+[New Thread 0x7fffbfbfe6c0 (LWP 7628)]
+[New Thread 0x7fffbb1ff6c0 (LWP 7629)]
+[New Thread 0x7fffba9fe6c0 (LWP 7630)]
+[New Thread 0x7fffb5fff6c0 (LWP 7631)]
+[Detaching after vfork from child process 7632]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaef1b260  base=0x7fffaee00000
+Breakpoint 2 at 0x7fffaf084720
+Breakpoint 3 at 0x7fffaf084730
+Breakpoint 4 at 0x7fffaf084740
+Breakpoint 5 at 0x7fffaf084750
+Breakpoint 6 at 0x7fffaf0bed20
+Breakpoint 7 at 0x7fffaf17ca50
+Breakpoint 8 at 0x7fffaf17eb90
+Breakpoint 9 at 0x7fffaf17eba0
+Breakpoint 10 at 0x7fffaf17ed20
+Breakpoint 11 at 0x7fffaf17ed50
+Breakpoint 12 at 0x7fffaf17ede0
+Breakpoint 13 at 0x7fffaf17fd70
+Breakpoint 14 at 0x7fffaf180b00
+Breakpoint 15 at 0x7fffaf180b10
+Breakpoint 16 at 0x7fffaf180c90
+Breakpoint 17 at 0x7fffaf180cc0
+Breakpoint 18 at 0x7fffaf180d50
+Breakpoint 19 at 0x7fffaf1854b0
+Breakpoint 20 at 0x7fffaf1913f0
+Breakpoint 21 at 0x7fffaf191420
+Breakpoint 22 at 0x7fffaf191450
+Breakpoint 23 at 0x7fffaf1914d0
+[New Thread 0x7fff8cbff6c0 (LWP 7633)]
+[New Thread 0x7fff8c3fe6c0 (LWP 7634)]
+[New Thread 0x7fff8bbfd6c0 (LWP 7635)]
+[New Thread 0x7fff8b3fc6c0 (LWP 7636)]
+[New Thread 0x7fff8abfb6c0 (LWP 7637)]
+[New Thread 0x7fff8a3fa6c0 (LWP 7638)]
+[New Thread 0x7fff89bf96c0 (LWP 7639)]
+[New Thread 0x7fff893f86c0 (LWP 7640)]
+[New Thread 0x7fff88bf76c0 (LWP 7641)]
+[New Thread 0x7fff883f66c0 (LWP 7642)]
+[New Thread 0x7fff87bf56c0 (LWP 7643)]
+[New Thread 0x7fff873f46c0 (LWP 7644)]
+[New Thread 0x7fff86bf36c0 (LWP 7645)]
+[New Thread 0x7fff863f26c0 (LWP 7646)]
+[New Thread 0x7fff85bf16c0 (LWP 7647)]
+[Detaching after vfork from child process 7648]
+[Detaching after vfork from child process 7649]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff7afff6c0 (LWP 7650)]
+I Loading :   0%|                                                             | 0/9 [00:00<?, ?it/s]I Loading : 100%|██████████████████████████████████████████████████| 9/9 [00:00<00:00, 46035.04it/s]
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 50243.22it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :  85%|█████████████████████████████████████▍      | 85/100 [00:00<00:00, 17541.62it/s]I OpFusing 1 :  90%|███████████████████████████████████████▌    | 90/100 [00:00<00:00, 17260.51it/s]I OpFusing 1 :  79%|██████████████████████████████████▊         | 79/100 [00:00<00:00, 13424.76it/s]I OpFusing 1 :  73%|████████████████████████████████▊            | 73/100 [00:00<00:00, 6366.63it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 5504.19it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :  75%|█████████████████████████████████▊           | 75/100 [00:00<00:00, 3519.54it/s]I OpFusing 0 :  78%|███████████████████████████████████          | 78/100 [00:00<00:00, 3605.30it/s]I OpFusing 0 :  95%|██████████████████████████████████████████▊  | 95/100 [00:00<00:00, 4306.64it/s]I OpFusing 0 :  90%|████████████████████████████████████████▌    | 90/100 [00:00<00:00, 3377.33it/s]I OpFusing 0 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 3227.33it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 2916.03it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 :  90%|████████████████████████████████████████▌    | 90/100 [00:00<00:00, 2444.00it/s]I OpFusing 2 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 2578.29it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 2357.05it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 2202.17it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 2177.15it/s]I OpFusing 2 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1618.64it/s]
+
+
+
+
+
+
+
+I GraphPreparing :   0%|                                                     | 0/20 [00:00<?, ?it/s]I GraphPreparing : 100%|█████████████████████████████████████████| 20/20 [00:00<00:00, 10546.40it/s]
+I Quantizating :   0%|                                                       | 0/20 [00:00<?, ?it/s]I Quantizating : 100%|█████████████████████████████████████████████| 20/20 [00:00<00:00, 457.10it/s]
+[1;33mW[0m [1;33mbuild: The default input dtype of 'input' is changed from 'float32' to 'int8' in rknn model for performance!
+                       Please take care of this change when deploy rknn model with Runtime API![0m
+[1;33mW[0m [1;33mbuild: The default output dtype of 'output' is changed from 'float32' to 'int8' in rknn model for performance!
+                      Please take care of this change when deploy rknn model with Runtime API![0m
+I rknn building ...
+
+=== HIT off=0x380b00 this=0x6505ab0 (hit #1) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x6505ab0: 0x7fffb0c08f88 0x0 0x0 0x0
+  rdx = 0xbab010: 0x5000000000006 0x7000700060004 0x7000700000007 0x5000600050004
+  rcx = 0x6
+#0  0x00007fffaf180b00 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0b8e1d in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bb622 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x380b00 this=0x6505ab0 (hit #2) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x658c500: 0x65c3dfc 0x2c3ea8fe27463e41 0x20 0x41
+  rdx = 0x65c4950: 0x6505ab0 0x0 0x20 0x41
+  rcx = 0x5
+#0  0x00007fffaf180b00 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0bb62c in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0e4b39 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x380b00 this=0x6505ab0 (hit #3) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x6532ad0: 0x6532 0x2c3ea8fe27463e41 0x9 0x6e6f6974616c6964
+  rdx = 0x64faaf0: 0x210 0xd1 0x64fdefa 0x2c3ea8fe27463e41
+  rcx = 0x1
+#0  0x00007fffaf180b00 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0b9cc0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bafb4 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37eb90 this=0x65211f0 (hit #1) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x65211f0: 0x7fffb0c08ef0 0x0 0x0 0x0
+  rdx = 0xbab010: 0x5000000060007 0x7000700040004 0x7000700000007 0x5000600050004
+  rcx = 0x4
+#0  0x00007fffaf17eb90 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0b8e1d in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bb622 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37eb90 this=0x65211f0 (hit #2) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x658bac0: 0x658de1b 0x2c3ea8fe27463e41 0x20 0x31
+  rdx = 0x658c0e0: 0x65211f0 0x0 0x20 0x41
+  rcx = 0x6
+#0  0x00007fffaf17eb90 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0bb62c in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0e4d3f in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37eb90 this=0x65211f0 (hit #3) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x6532ad0: 0x6532 0x2c3ea8fe27463e41 0x9 0x6e6f6974616c6964
+  rdx = 0x64faaf0: 0x210 0xd1 0x64fdefa 0x2c3ea8fe27463e41
+  rcx = 0x1
+#0  0x00007fffaf17eb90 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0b9cc0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bafb4 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x3913f0 this=0x655a480 (hit #1) ===
+  [ 0] 0x00007fffb0c090d0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x6d5f747500000000
+    [0] -> 0x7fffb0c090d0: 0x7fffaf191450 0x7fffaf1914d0 0x7fffaf1913f0 0x7fffaf191420
+  rsi = 0x655a480: 0x7fffb0c090d0 0x0 0x0 0x6d5f747500000000
+  rdx = 0xbab010: 0x5000000000005 0x7000700010003 0x7000700000007 0x6000600070004
+  rcx = 0x3
+#0  0x00007fffaf1913f0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0b8e1d in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bb622 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x3913f0 this=0x655a480 (hit #2) ===
+  [ 0] 0x00007fffb0c090d0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x6d5f747500000000
+    [0] -> 0x7fffb0c090d0: 0x7fffaf191450 0x7fffaf1914d0 0x7fffaf1913f0 0x7fffaf191420
+  rsi = 0x658a5d0: 0x658cdea 0x2c3ea8fe27463e41 0x20 0x31
+  rdx = 0x658a500: 0x655a480 0x0 0x20 0x31
+  rcx = 0x4
+#0  0x00007fffaf1913f0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0bb62c in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0e5bc5 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x3913f0 this=0x655a480 (hit #3) ===
+  [ 0] 0x00007fffb0c090d0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x6d5f747500000000
+    [0] -> 0x7fffb0c090d0: 0x7fffaf191450 0x7fffaf1914d0 0x7fffaf1913f0 0x7fffaf191420
+  rsi = 0x0
+  rdx = 0x6505870: 0x210 0x41 0x1 0x6505b20
+  rcx = 0x7ffff7e04ac0: 0x0 0x1 0x658b2f0 0x0
+#0  0x00007fffaf1913f0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0b9cc0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bafb4 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x380b00 this=0x6505ab0 (hit #4) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x7fffffffbec0: 0x3 0x66372a0 0x6511cf0 0x7fffb0bc3808
+  rdx = 0x7fffffffc138: 0x6557990 0x8 0x624cdd0 0x624cd50
+  rcx = 0x624cf50: 0x6520b80 0x21 0x624dd90 0x59744d8
+#0  0x00007fffaf180b00 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0ba73b in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bae7e in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x380b10 this=0x6505ab0 (hit #1) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000012
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x7fffffffbec0: 0x3 0x66372a0 0x6511cf0 0x7fffb0bc3808
+  rdx = 0x7fffaf084720: 0x841f0f2e66c3c031 0x1f0f0000000000 0x841f0f2e66c3c031 0x1f0f0000000000
+  rcx = 0x7fffaf084740: 0x841f0f2e66c3 0x441f0f000000 0x841f0f2e66c3 0x441f0f000000
+#0  0x00007fffaf180b10 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0ba695 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0ba832 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37fd70 this=0x6505ab0 (hit #1) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000012
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x6568f20: 0x7fffb0bc3688 0x7fffffffbec0 0x6553ec8 0x64fc180
+  rdx = 0x66128f0: 0x6568f20 0x77645f62610005 0x0 0xb1
+  rcx = 0x1
+#0  0x00007fffaf17fd70 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf180b97 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0ba695 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37eb90 this=0x65211f0 (hit #4) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000000
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x7fffffffbec0: 0x3 0x66372a0 0x6511cf0 0x7fffb0bc3808
+  rdx = 0x7fffffffc138: 0x6557990 0x8 0x624cde0 0x624cd50
+  rcx = 0x624cf50: 0x6520b80 0x21 0x624dd90 0x59744d8
+#0  0x00007fffaf17eb90 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0ba73b in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bae7e in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37eba0 this=0x65211f0 (hit #1) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000014
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x7fffffffbec0: 0x3 0x66372a0 0x6511cf0 0x7fffb0bc3808
+  rdx = 0x7fffaf084720: 0x841f0f2e66c3c031 0x1f0f0000000000 0x841f0f2e66c3c031 0x1f0f0000000000
+  rcx = 0x7fffaf084740: 0x841f0f2e66c3 0x441f0f000000 0x841f0f2e66c3 0x441f0f000000
+#0  0x00007fffaf17eba0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0ba695 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0ba832 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37ca50 this=0x65211f0 (hit #1) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000014
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x6568f20: 0x7fffb0bc3688 0x7fffffffbec0 0x6553ec8 0x64fc180
+  rdx = 0x66128f0: 0x6568f20 0x77645f62610005 0x0 0xb1
+  rcx = 0x1
+#0  0x00007fffaf17ca50 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf17ec27 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0ba695 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x3913f0 this=0x655a480 (hit #4) ===
+  [ 0] 0x00007fffb0c090d0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x6d5f747500000000
+    [0] -> 0x7fffb0c090d0: 0x7fffaf191450 0x7fffaf1914d0 0x7fffaf1913f0 0x7fffaf191420
+  rsi = 0x7fffffffbec0: 0x3 0x66372a0 0x6511cf0 0x7fffb0bc3808
+  rdx = 0x7fffffffc138: 0x6557990 0x8 0x624ce48 0x624cd50
+  rcx = 0x624cf50: 0x6520b80 0x21 0x624dd90 0x59744d8
+#0  0x00007fffaf1913f0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0ba73b in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0bae7e in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x3854b0 this=0x655a480 (hit #1) ===
+  [ 0] 0x00007fffb0c090d0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x6d5f747500000021
+    [0] -> 0x7fffb0c090d0: 0x7fffaf191450 0x7fffaf1914d0 0x7fffaf1913f0 0x7fffaf191420
+  rsi = 0x7fffffffbec0: 0x3 0x66372a0 0x6511cf0 0x7fffb0bc3808
+  rdx = 0x7fffaf084720: 0x841f0f2e66c3c031 0x1f0f0000000000 0x841f0f2e66c3c031 0x1f0f0000000000
+  rcx = 0x7fffaf084740: 0x841f0f2e66c3 0x441f0f000000 0x841f0f2e66c3 0x441f0f000000
+#0  0x00007fffaf1854b0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf0ba695 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf0ba832 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+E RKNN: [09:55:39.361] Unkown op target: 0
+
+=== HIT off=0x3914d0 this=0x655a480 (hit #1) ===
+  [ 0] 0x00007fffb0c090d0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x6d5f747500000021
+    [0] -> 0x7fffb0c090d0: 0x7fffaf191450 0x7fffaf1914d0 0x7fffaf1913f0 0x7fffaf191420
+  rsi = 0x6557d70: 0x0 0x31 0x655fe37 0x7fffb088b796
+  rdx = 0x3
+  rcx = 0x6559b60: 0x0 0x31 0x658eee9 0x7fffb088d9eb
+#0  0x00007fffaf1914d0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf07e9cb in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf07ce1e in rknn::RKNNCompiler::build() () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x380cc0 this=0x6505ab0 (hit #1) ===
+  [ 0] 0x00007fffb0c08f88
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000012
+    [0] -> 0x7fffb0c08f88: 0x7fffaf180d50 0x7fffaf180cc0 0x7fffaf180b00 0x7fffaf180c90
+  rsi = 0x65cb940: 0x0 0x31 0x6633b0b 0x7fffb08b1f98
+  rdx = 0x3
+  rcx = 0x6635ec0: 0x30 0x31 0x6552625 0x0
+#0  0x00007fffaf180cc0 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf07e9cb in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf07ce1e in rknn::RKNNCompiler::build() () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+
+=== HIT off=0x37ed50 this=0x65211f0 (hit #1) ===
+  [ 0] 0x00007fffb0c08ef0
+  [ 1] 0x0000000000000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x0000000000000014
+    [0] -> 0x7fffb0c08ef0: 0x7fffaf17ede0 0x7fffaf17ed50 0x7fffaf17eb90 0x7fffaf17ed20
+  rsi = 0x65c8f80: 0x9998979998999b9a 0x31 0x65cdc88 0x7fffb088c64d
+  rdx = 0x3
+  rcx = 0x65cb940: 0x0 0x31 0x6633b0b 0x7fffb08b1f98
+#0  0x00007fffaf17ed50 in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#1  0x00007fffaf07e9cb in ?? () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+#2  0x00007fffaf07ce1e in rknn::RKNNCompiler::build() () from /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+I rknn building done.
+[build_min] build OK  0.39s  onnx=ab_dw.onnx
+[Thread 0x7fff7afff6c0 (LWP 7650) exited]
+[Thread 0x7fffc2dff6c0 (LWP 7626) exited]
+[Thread 0x7fffbb1ff6c0 (LWP 7629) exited]
+[Thread 0x7fffb5fff6c0 (LWP 7631) exited]
+[Thread 0x7fffba9fe6c0 (LWP 7630) exited]
+[Thread 0x7fffbfbfe6c0 (LWP 7628) exited]
+[Thread 0x7fffc03ff6c0 (LWP 7627) exited]
+[Thread 0x7fffc57ff6c0 (LWP 7625) exited]
+[Thread 0x7fffc81ff6c0 (LWP 7624) exited]
+[Thread 0x7fffcabff6c0 (LWP 7623) exited]
+[Thread 0x7fffcd5ff6c0 (LWP 7622) exited]
+[Thread 0x7fffd1ffe6c0 (LWP 7621) exited]
+[Thread 0x7fffd27ff6c0 (LWP 7620) exited]
+[Thread 0x7fffd71ff6c0 (LWP 7619) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 7618) exited]
+[Thread 0x7fffda3ff6c0 (LWP 7617) exited]
+[Thread 0x7fff893f86c0 (LWP 7640) exited]
+[Thread 0x7fff87bf56c0 (LWP 7643) exited]
+[Thread 0x7fff873f46c0 (LWP 7644) exited]
+[Thread 0x7fff86bf36c0 (LWP 7645) exited]
+[Thread 0x7fff883f66c0 (LWP 7642) exited]
+[Thread 0x7fff863f26c0 (LWP 7646) exited]
+[Thread 0x7fff88bf76c0 (LWP 7641) exited]
+[Thread 0x7fff85bf16c0 (LWP 7647) exited]
+[Thread 0x7fff89bf96c0 (LWP 7639) exited]
+[Thread 0x7fff8a3fa6c0 (LWP 7638) exited]
+[Thread 0x7fff8abfb6c0 (LWP 7637) exited]
+[Thread 0x7fff8b3fc6c0 (LWP 7636) exited]
+[Thread 0x7fff8bbfd6c0 (LWP 7635) exited]
+[Thread 0x7fff8c3fe6c0 (LWP 7634) exited]
+[Thread 0x7fff8cbff6c0 (LWP 7633) exited]
+[Inferior 1 (process 7614) exited normally]
+
+[probe] run finished

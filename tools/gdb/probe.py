@@ -70,9 +70,9 @@ import gdb, re
 
 class DumpBP(gdb.Breakpoint):
     """命中时打印 this 的 N 个 quadword，并把每个像指针的槽位解引用出 4 个 quadword"""
-    def __init__(self, spec, off, qw, bt, stop, cap, vec_off=None, vec_stride=0):
+    def __init__(self, spec, off, qw, bt, stop, cap, vec_off=None, vec_stride=0, arg_qw=4):
         super().__init__(spec, internal=False)
-        self.vec_off, self.vec_stride = vec_off, vec_stride
+        self.vec_off, self.vec_stride, self.arg_qw = vec_off, vec_stride, arg_qw
         # ⚠️ 不能叫 self.stop —— 那会把 Breakpoint.stop() **方法**覆盖成 bool（踩过一次，
         #    报错是 "attribute of type 'bool' is not callable"）
         self.off, self.qw, self.bt, self.do_stop, self.cap = off, qw, bt, stop, cap
@@ -118,12 +118,20 @@ class DumpBP(gdb.Breakpoint):
                 out.append(f"  {rn} = {rv:#x}")
                 continue
             try:
-                m3 = bytes(inf.read_memory(rv, 32))
+                m3 = bytes(inf.read_memory(rv, 8 * self.arg_qw))
             except Exception:
                 out.append(f"  {rn} = {rv:#x} <不可读>")
                 continue
-            w3 = [int.from_bytes(m3[8 * k:8 * k + 8], "little") for k in range(4)]
-            out.append(f"  {rn} = {rv:#x}: " + " ".join(f"{x:#x}" for x in w3))
+            for k in range(len(m3) // 8):
+                v = int.from_bytes(m3[8 * k:8 * k + 8], "little")
+                out.append(f"  {rn}+{8 * k:#05x} = {v:#018x}")
+            # 顺带把 32 位字段也标出来（很多字段是 u32 计数/索引）
+            for k in range(len(m3) // 4):
+                if k % 2 == 0:
+                    continue
+                v32 = int.from_bytes(m3[4 * k:4 * k + 4], "little")
+                if v32 and v32 < 0x1000000:
+                    out.append(f"      {rn}+{4 * k:#05x} (u32) = {v32}")
         # ★ 把 `this+vec_off` 当成 std::vector 头（begin/end/cap）来解析 ——
         #   这是「数出 tile 个数」的关键：count = (end - begin) / stride
         if self.vec_off is not None and mem:
@@ -168,7 +176,7 @@ class DumpBP(gdb.Breakpoint):
 
 
 def make_gdb_script(offs: list[int], qw: int, bt: int, cap: int, stop: bool,
-                    vec_off=None, vec_stride=0) -> str:
+                    vec_off=None, vec_stride=0, arg_qw=4) -> str:
     """生成 gdb 脚本。基址在 gdb 里算（ASLR 每次不同），所以断点在 gdb 里设。"""
     lines = [
         "set pagination off",
@@ -192,7 +200,7 @@ def make_gdb_script(offs: list[int], qw: int, bt: int, cap: int, stop: bool,
     for off in offs:
         lines.append(
             f"    DumpBP('*' + hex(base + {off:#x}), {off:#x}, {qw}, {bt}, "
-            f"{'True' if stop else 'False'}, {cap}, {vec_off!r}, {vec_stride})"
+            f"{'True' if stop else 'False'}, {cap}, {vec_off!r}, {vec_stride}, {arg_qw})"
         )
     lines += [
         "end",
@@ -218,6 +226,8 @@ def main() -> int:
     ap.add_argument("--stop", action="store_true", help="命中即停（普查模式的反面）")
     ap.add_argument("--vec-off", default=None, help="把 this+该偏移当作 std::vector 头解析，如 0x58")
     ap.add_argument("--vec-stride", default="0", help="vector 元素大小，如 0x1a8")
+    ap.add_argument("--arg-qw", type=int, default=4,
+                    help="dump rsi/rdx/rcx 指向内存的 quadword 数（看深一点的参数对象，如 Module）")
     ap.add_argument("--tag", default=None, help="日志名（默认按类名/偏移自动生成）")
     args = ap.parse_args()
 
@@ -239,7 +249,7 @@ def main() -> int:
     script = os.path.join(OUTDIR, f"{tag}.gdb")
     with open(script, "w") as f:
         f.write(make_gdb_script(offs, args.qw, args.bt, args.cap, args.stop,
-                                vec_off, vec_stride))
+                                vec_off, vec_stride, args.arg_qw))
 
     env = dict(os.environ)
     env["LD_LIBRARY_PATH"] = GDB_LIB + ":" + env.get("LD_LIBRARY_PATH", "")

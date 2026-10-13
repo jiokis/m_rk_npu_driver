@@ -1,0 +1,8 @@
+# RKNNOperatorTilingInfo 的 tile 数（用 tools/gdb/probe.py --off 0x391510 --vec-off 0x58 --vec-stride 0x1a8 读出）
+# 每个模型一行：tiling-info 对象数 | 各对象的 tile 数
+# 采集：2025 本轮，ab_dw/tiny_cnn/dwsep/residual/ab_deep24（deploy/onnx/*.onnx）
+ab_dw        9   3 3 6 6 6 6 6 6 6
+tiny_cnn     6   3 3 6 6 6 10
+dwsep        13  6 6 6 6 6 6 6 3 3 6 6 6 10
+residual     14  3 10 7 7 6 7 7 7 7 7 6 3 7 4
+ab_deep24    20  6 6 6 3 6 6 3 6 6 10 9 6 6 6 6 6 7 6 9 6

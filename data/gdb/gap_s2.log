@@ -1,0 +1,188 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 17963)]
+[New Thread 0x7fffd9bfe6c0 (LWP 17964)]
+[New Thread 0x7fffd51ff6c0 (LWP 17965)]
+[New Thread 0x7fffd27ff6c0 (LWP 17966)]
+[New Thread 0x7fffcfdff6c0 (LWP 17967)]
+[New Thread 0x7fffcd3ff6c0 (LWP 17968)]
+[New Thread 0x7fffca9ff6c0 (LWP 17969)]
+[New Thread 0x7fffc7fff6c0 (LWP 17970)]
+[New Thread 0x7fffc55ff6c0 (LWP 17971)]
+[New Thread 0x7fffc4dfe6c0 (LWP 17972)]
+[New Thread 0x7fffc03ff6c0 (LWP 17973)]
+[New Thread 0x7fffbfbfe6c0 (LWP 17974)]
+[New Thread 0x7fffbb1ff6c0 (LWP 17975)]
+[New Thread 0x7fffb87ff6c0 (LWP 17976)]
+[New Thread 0x7fffb5dff6c0 (LWP 17977)]
+[Detaching after vfork from child process 17978]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaef1b260  base=0x7fffaee00000
+Breakpoint 2 at 0x7fffaf191510
+[New Thread 0x7fff8c9ff6c0 (LWP 17979)]
+[New Thread 0x7fff8c1fe6c0 (LWP 17980)]
+[New Thread 0x7fff8b9fd6c0 (LWP 17981)]
+[New Thread 0x7fff8b1fc6c0 (LWP 17982)]
+[New Thread 0x7fff8a9fb6c0 (LWP 17983)]
+[New Thread 0x7fff8a1fa6c0 (LWP 17984)]
+[New Thread 0x7fff899f96c0 (LWP 17985)]
+[New Thread 0x7fff891f86c0 (LWP 17986)]
+[New Thread 0x7fff889f76c0 (LWP 17987)]
+[New Thread 0x7fff881f66c0 (LWP 17988)]
+[New Thread 0x7fff879f56c0 (LWP 17989)]
+[New Thread 0x7fff871f46c0 (LWP 17990)]
+[New Thread 0x7fff869f36c0 (LWP 17991)]
+[New Thread 0x7fff861f26c0 (LWP 17992)]
+[New Thread 0x7fff859f16c0 (LWP 17993)]
+[Detaching after vfork from child process 17994]
+[Detaching after vfork from child process 17995]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff7adff6c0 (LWP 17996)]
+I Loading :   0%|                                                             | 0/1 [00:00<?, ?it/s]I Loading : 100%|████████████████████████████████████████████████████| 1/1 [00:00<00:00, 450.76it/s]
+[1;33mW[0m [1;33mload_onnx: The config.mean_values is None, zeros will be set for input 0![0m
+[1;33mW[0m [1;33mload_onnx: The config.std_values is None, ones will be set for input 0![0m
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 465516.54it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :  33%|██████████████▌                             | 33/100 [00:00<00:00, 20670.85it/s]I OpFusing 1 : 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 35544.95it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 : 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 30813.28it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 26973.02it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 25664.22it/s]I OpFusing 2 : 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 11810.62it/s]
+I rknn building ...
+
+=== HIT off=0x391510 this=0x64a91d0 (hit #1) ===
+  [ 0] 0x00007fffb0bc4678
+  [ 1] 0x0000000100000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x00007fffdda7c658
+  [ 4] 0x00007fffdda7c658
+  [ 5] 0x0000000000000000
+  [ 6] 0x0000000000000000
+  [ 7] 0x0000000000000000
+  [ 8] 0x0000000000000000
+  [ 9] 0x0000000000000000
+  [10] 0x0000000000000000
+  [11] 0x0000000006705130
+  [12] 0x0000000006705628
+  [13] 0x00000000067057d0
+  [14] 0x0000000000000080
+  [15] 0x0000000000000031
+    [0] -> 0x7fffb0bc4678: 0x7fffaf1913e0 0x7fffaf191400 0x7fffaf191510 0x7fffaf191410
+    [1] -> 0x100000000: <不可读>
+    [3] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [4] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [11] -> 0x6705130: 0x100000001 0x200000002 0x100000002 0x1
+    [12] -> 0x6705628: 0x40 0x6703195 0x0 0x0
+    [13] -> 0x67057d0: 0x67055c0 0x111 0x0 0x0
+  rsi = 0x0
+  rdx = 0x8
+  rcx = 0xff
+
+=== HIT off=0x391510 this=0x5a47160 (hit #2) ===
+  [ 0] 0x00007fffb0bc4678
+  [ 1] 0x0000000100000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x00007fffdda7c658
+  [ 4] 0x00007fffdda7c658
+  [ 5] 0x0000000000000000
+  [ 6] 0x0000000000000000
+  [ 7] 0x0000000000000000
+  [ 8] 0x0000000000000000
+  [ 9] 0x0000000000000000
+  [10] 0x0000000000000000
+  [11] 0x0000000006703e20
+  [12] 0x0000000006704810
+  [13] 0x0000000006704b60
+  [14] 0x0000000000000080
+  [15] 0x0000000000000021
+    [0] -> 0x7fffb0bc4678: 0x7fffaf1913e0 0x7fffaf191400 0x7fffaf191510 0x7fffaf191410
+    [1] -> 0x100000000: <不可读>
+    [3] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [4] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [11] -> 0x6703e20: 0x100000001 0x200000002 0x100000002 0x1
+    [12] -> 0x6704810: 0x900000000 0x3 0x700000003 0x1
+    [13] -> 0x6704b60: 0xec0 0x111 0x0 0x0
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000066cb9fe
+  rsi+0x018 = 0x0000000006709280
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000030
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000066a9c3d
+  rcx+0x018 = 0x0000000000000002
+
+=== HIT off=0x391510 this=0x65e78c0 (hit #3) ===
+  [ 0] 0x00007fffb0bc4678
+  [ 1] 0x0000000100000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x00007fffdda7c658
+  [ 4] 0x00007fffdda7c658
+  [ 5] 0x0000000000000000
+  [ 6] 0x0000000000000000
+  [ 7] 0x0000000000000000
+  [ 8] 0x0000000000000000
+  [ 9] 0x0000000000000000
+  [10] 0x0000000000000000
+  [11] 0x00000000065ecdd0
+  [12] 0x00000000065edcb8
+  [13] 0x00000000065ee850
+  [14] 0x00002c312c002c33
+  [15] 0x0000000000000041
+    [0] -> 0x7fffb0bc4678: 0x7fffaf1913e0 0x7fffaf191400 0x7fffaf191510 0x7fffaf191410
+    [1] -> 0x100000000: <不可读>
+    [3] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [4] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [11] -> 0x65ecdd0: 0x0 0x200000002 0x200000002 0x1
+    [12] -> 0x65edcb8: 0x3d1249253d124925 0x3d1249253d124925 0x3d1249253d124925 0x3d1249253d124925
+    [13] -> 0x65ee850: 0x65fd4be 0x21 0x4000000001 0x3800000013
+    [14] -> 0x2c312c002c33: <不可读>
+  rsi+0x000 = 0x00000000066d9fb8
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000065e8fa6
+  rsi+0x018 = 0x0000000006708bf0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000066cb9fe
+  rcx+0x018 = 0x0000000006709280
+I rknn building done.
+
+
+
+
+[build_min] build OK  0.06s  onnx=gap_s2.onnx
+[Thread 0x7fff7adff6c0 (LWP 17996) exited]
+[Thread 0x7fffc03ff6c0 (LWP 17973) exited]
+[Thread 0x7fffb5dff6c0 (LWP 17977) exited]
+[Thread 0x7fffb87ff6c0 (LWP 17976) exited]
+[Thread 0x7fffbb1ff6c0 (LWP 17975) exited]
+[Thread 0x7fffbfbfe6c0 (LWP 17974) exited]
+[Thread 0x7fffc4dfe6c0 (LWP 17972) exited]
+[Thread 0x7fffc55ff6c0 (LWP 17971) exited]
+[Thread 0x7fffc7fff6c0 (LWP 17970) exited]
+[Thread 0x7fffca9ff6c0 (LWP 17969) exited]
+[Thread 0x7fffcd3ff6c0 (LWP 17968) exited]
+[Thread 0x7fffcfdff6c0 (LWP 17967) exited]
+[Thread 0x7fffd27ff6c0 (LWP 17966) exited]
+[Thread 0x7fffd51ff6c0 (LWP 17965) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 17964) exited]
+[Thread 0x7fffda3ff6c0 (LWP 17963) exited]
+[Thread 0x7fff8c9ff6c0 (LWP 17979) exited]
+[Thread 0x7fff8c1fe6c0 (LWP 17980) exited]
+[Thread 0x7fff8b9fd6c0 (LWP 17981) exited]
+[Thread 0x7fff8a1fa6c0 (LWP 17984) exited]
+[Thread 0x7fff899f96c0 (LWP 17985) exited]
+[Thread 0x7fff891f86c0 (LWP 17986) exited]
+[Thread 0x7fff8a9fb6c0 (LWP 17983) exited]
+[Thread 0x7fff8b1fc6c0 (LWP 17982) exited]
+[Thread 0x7fff881f66c0 (LWP 17988) exited]
+[Thread 0x7fff889f76c0 (LWP 17987) exited]
+[Thread 0x7fff879f56c0 (LWP 17989) exited]
+[Thread 0x7fff869f36c0 (LWP 17991) exited]
+[Thread 0x7fff861f26c0 (LWP 17992) exited]
+[Thread 0x7fff871f46c0 (LWP 17990) exited]
+[Thread 0x7fff859f16c0 (LWP 17993) exited]
+[Inferior 1 (process 17960) exited normally]
+
+[probe] run finished

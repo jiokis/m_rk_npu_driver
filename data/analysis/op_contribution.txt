@@ -1,0 +1,48 @@
+# 逐算子对 RKNNOperatorTilingInfo 对象数的贡献（受控实验，docs/131）
+#
+# 做法：单 conv（基线 = 1 个对象）上追加一个算子，比较对象数。
+# 手段：tools/gdb/probe.py --off 0x391510 --onnx <model> --noquant
+#
+# 追加算子              对象数   贡献
+# （基线）单 conv          1       —
+# Relu                    1       0
+# Add                     1       0
+# Mul                     1       0
+# Concat                  1       0
+# MaxPool                 1       0
+# Reshape                 1       0
+# Transpose               1       0
+# GlobalAveragePool       4      +3      ← 见下方尺寸依赖
+# Gemm（→Conv）           —      +1      ← 由 conv→GAP→Flatten→Gemm = 5 反推
+#
+# ── GlobalAveragePool 的贡献随输入尺寸变（conv(stride=s)+GAP） ──
+#   GAP 输入    对象数   贡献
+#   56x56         4      +3
+#   28x28         3      +2
+#   14x14         3      +2
+#    7x7          3      +2
+#
+# ── ★★★ 反例：「+2 常数」不存在 ──
+#   c_2conv   (conv → conv)                ⇒ 2 个对象   ⇒ 无常数项
+#   c_mpconv  (conv → MaxPool → conv)      ⇒ 2 个对象   ⇒ MaxPool 贡献 0
+#   c_gemm    (conv → GAP → Flatten → Gemm)⇒ 5 个对象
+#           = conv(1) + GAP@56x56(3) + Gemm(1)
+#   ⇒ docs/129/130 的「Σ拆分 + 2」是**过拟合**：那 6 个模型恰好各有 1 个 GAP + 1 个 Gemm
+#
+# ── ★★ 一个未解决的矛盾 ──
+#   受控实验：GAP 贡献 2~3（随尺寸）
+#   真实模型反推：resnet18 / mnasnet0_5 / mobilenet_v2 / regnet_x_400mf
+#                 都是「Σ拆分 + GAP + Gemm」才等于实测 ⇒ GAP 贡献 = 1
+#   ⇒ 两者对不上。所以 tiling.py 只能给区间 [1,3]，不能给点值。
+#
+# ── 真实模型区间对账（GAP 贡献 ∈ [1,3]） ──
+#   model              Σ拆分  GAP Gemm  区间      实测   结果
+regnet_x_400mf          429    1    1   [431,433]  431   区间内
+resnet18                 20    1    1   [22,24]     22   区间内
+densenet121             120    1    1   [122,124]  122   区间内
+squeezenet1_0            26    1    0   [27,29]     28   区间内
+mnasnet0_5               52    1    1   [54,56]     54   区间内
+mobilenet_v2             52    1    1   [54,56]     54   区间内
+googlenet                57    1    1   [59,61]     61   区间内
+efficientnet_b0          81   17    1   [99,133]   113   区间内
+shufflenet_v2_x0_5       56    1    1   [58,60]     77   ★ 区间外（唯一真·未解）

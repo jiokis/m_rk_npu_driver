@@ -1,0 +1,873 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 17639)]
+[New Thread 0x7fffd79ff6c0 (LWP 17640)]
+[New Thread 0x7fffd4fff6c0 (LWP 17641)]
+[New Thread 0x7fffd25ff6c0 (LWP 17642)]
+[New Thread 0x7fffcfbff6c0 (LWP 17643)]
+[New Thread 0x7fffcd1ff6c0 (LWP 17644)]
+[New Thread 0x7fffca7ff6c0 (LWP 17645)]
+[New Thread 0x7fffc7dff6c0 (LWP 17646)]
+[New Thread 0x7fffc53ff6c0 (LWP 17647)]
+[New Thread 0x7fffc29ff6c0 (LWP 17648)]
+[New Thread 0x7fffbffff6c0 (LWP 17649)]
+[New Thread 0x7fffbd5ff6c0 (LWP 17650)]
+[New Thread 0x7fffbabff6c0 (LWP 17651)]
+[New Thread 0x7fffba3fe6c0 (LWP 17652)]
+[New Thread 0x7fffb59ff6c0 (LWP 17653)]
+[Detaching after vfork from child process 17654]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaed1b260  base=0x7fffaec00000
+Breakpoint 2 at 0x7fffaef91510
+[New Thread 0x7fff8c7ff6c0 (LWP 17655)]
+[New Thread 0x7fff8bffe6c0 (LWP 17656)]
+[New Thread 0x7fff8b7fd6c0 (LWP 17657)]
+[New Thread 0x7fff8affc6c0 (LWP 17658)]
+[New Thread 0x7fff8a7fb6c0 (LWP 17659)]
+[New Thread 0x7fff89ffa6c0 (LWP 17660)]
+[New Thread 0x7fff897f96c0 (LWP 17661)]
+[New Thread 0x7fff88ff86c0 (LWP 17662)]
+[New Thread 0x7fff887f76c0 (LWP 17663)]
+[New Thread 0x7fff87ff66c0 (LWP 17664)]
+[New Thread 0x7fff877f56c0 (LWP 17665)]
+[New Thread 0x7fff86ff46c0 (LWP 17666)]
+[New Thread 0x7fff867f36c0 (LWP 17667)]
+[New Thread 0x7fff85ff26c0 (LWP 17668)]
+[New Thread 0x7fff857f16c0 (LWP 17669)]
+[Detaching after vfork from child process 17670]
+[Detaching after vfork from child process 17671]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff7acff6c0 (LWP 17672)]
+I Loading :   0%|                                                           | 0/116 [00:00<?, ?it/s]I Loading : 100%|██████████████████████████████████████████████| 116/116 [00:00<00:00, 27100.72it/s]
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 7101.89it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :   1%|▍                                               | 1/100 [00:00<00:01, 66.73it/s]I OpFusing 1 :   1%|▍                                               | 1/100 [00:00<00:01, 65.06it/s]I OpFusing 1 :   2%|▉                                              | 2/100 [00:00<00:00, 127.97it/s]I OpFusing 1 :   3%|█▍                                             | 3/100 [00:00<00:00, 190.23it/s]I OpFusing 1 :   4%|█▉                                             | 4/100 [00:00<00:00, 249.35it/s]I OpFusing 1 :   5%|██▎                                            | 5/100 [00:00<00:00, 307.16it/s]I OpFusing 1 :   6%|██▊                                            | 6/100 [00:00<00:00, 365.48it/s]I OpFusing 1 :   7%|███▎                                           | 7/100 [00:00<00:00, 417.82it/s]I OpFusing 1 :  98%|████████████████████████████████████████████ | 98/100 [00:00<00:00, 2800.37it/s]I OpFusing 1 :  98%|████████████████████████████████████████████ | 98/100 [00:00<00:00, 2780.77it/s]I OpFusing 1 :  96%|███████████████████████████████████████████▏ | 96/100 [00:00<00:00, 2691.48it/s]I OpFusing 1 :  95%|██████████████████████████████████████████▊  | 95/100 [00:00<00:00, 1469.78it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1140.00it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :   4%|█▉                                              | 4/100 [00:00<00:02, 45.14it/s]I OpFusing 0 :  96%|████████████████████████████████████████████▏ | 96/100 [00:00<00:00, 956.25it/s]I OpFusing 0 :  96%|████████████████████████████████████████████▏ | 96/100 [00:00<00:00, 954.09it/s]I OpFusing 0 :  99%|█████████████████████████████████████████████▌| 99/100 [00:00<00:00, 980.10it/s]I OpFusing 0 :   1%|▍                                               | 1/100 [00:00<00:10,  9.13it/s]I OpFusing 0 :   2%|▉                                               | 2/100 [00:00<00:05, 18.22it/s]I OpFusing 0 :  98%|█████████████████████████████████████████████ | 98/100 [00:00<00:00, 806.29it/s]I OpFusing 0 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 703.59it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 649.48it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 :  98%|█████████████████████████████████████████████ | 98/100 [00:00<00:00, 626.16it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 606.58it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 558.03it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 516.71it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 509.15it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 320.99it/s]
+I rknn building ...
+
+=== HIT off=0x391510 this=0xcd09b20 (hit #1) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000bdc7d50
+  rsi+0x008 = 0x0000000000000171
+  rsi+0x010 = 0x000000000bfab74f
+  rsi+0x018 = 0x6ab26c643a2272b6
+  rdx+0x000 = 0x0000000000000000
+  rdx+0x008 = 0x007ffff7e04b2000
+  rdx+0x010 = 0x0000000000000000
+  rdx+0x018 = 0x0000000000004100
+      rdx+0x00c (u32) = 8388599
+  rcx = 0x3
+
+=== HIT off=0x391510 this=0xb883390 (hit #2) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi = 0x0
+  rdx = 0x8
+  rcx = 0xff
+
+=== HIT off=0x391510 this=0x9618c40 (hit #3) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00007fffb0a2d938
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc62879
+  rsi+0x018 = 0x000000000d750280
+      rsi+0x004 (u32) = 32767
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000000cc69
+  rcx+0x018 = 0x0000000000000002
+
+=== HIT off=0x391510 this=0xb816f00 (hit #4) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000009624208
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8a0a64
+  rsi+0x018 = 0x000000000bf9ef40
+  rdx = 0x3
+  rcx+0x000 = 0x00007fffb0a2d938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000cc62879
+  rcx+0x018 = 0x000000000d750280
+      rcx+0x004 (u32) = 32767
+
+=== HIT off=0x391510 this=0xb8654d0 (hit #5) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000040
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000962f999
+  rsi+0x018 = 0x000000000be45d80
+  rdx = 0x3
+  rcx+0x000 = 0x0000000009624208
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8a0a64
+  rcx+0x018 = 0x000000000bf9ef40
+
+=== HIT off=0x391510 this=0xb86bff0 (hit #6) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000be43228
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b84ed1f
+  rsi+0x018 = 0x000000000be445b0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000040
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8150c5
+  rcx+0x018 = 0x0000000100000001
+      rcx+0x01c (u32) = 1
+
+=== HIT off=0x391510 this=0x8e6cad0 (hit #7) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000009714598
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8d4f88
+  rsi+0x018 = 0x000000000d5d78d0
+  rdx = 0x3
+  rcx+0x000 = 0x000000000be43228
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b84ed1f
+  rcx+0x018 = 0x000000000be445b0
+
+=== HIT off=0x391510 this=0x94e1ba0 (hit #8) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d6f221b
+  rsi+0x018 = 0x000000000d3a7480
+  rdx = 0x3
+  rcx+0x000 = 0x00007fffb0a2d938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d6f25af
+  rcx+0x018 = 0x0000000e00000004
+      rcx+0x004 (u32) = 32767
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xd326e20 (hit #9) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000094ed089
+  rsi+0x018 = 0x0000000009647890
+  rdx = 0x3
+  rcx+0x000 = 0x00000000ffffffff
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000973e8b1
+  rcx+0x018 = 0x0000000700000002
+      rcx+0x01c (u32) = 7
+
+=== HIT off=0x391510 this=0xb889040 (hit #10) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc44276
+  rsi+0x018 = 0x000000000be479a0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000094ed089
+  rcx+0x018 = 0x0000000009647890
+
+=== HIT off=0x391510 this=0xb822b60 (hit #11) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b88085e
+  rsi+0x018 = 0x000000000be43690
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000040
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b88299d
+  rcx+0x018 = 0x0000000e0000000e
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0x94c7280 (hit #12) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d3b5f51
+  rsi+0x018 = 0x000000000d5d8250
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b88085e
+  rcx+0x018 = 0x000000000be43690
+
+=== HIT off=0x391510 this=0xb842bd0 (hit #13) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000009625058
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8ef694
+  rsi+0x018 = 0x000000000bfa26a0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b85f886
+  rcx+0x018 = 0x0000001c0000000a
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xb828bd0 (hit #14) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000005
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000009629cfe
+  rsi+0x018 = 0x000000000be466c0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000009625058
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8ef694
+  rcx+0x018 = 0x000000000bfa26a0
+
+=== HIT off=0x391510 this=0xcf86f50 (hit #15) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000096f68a5
+  rsi+0x018 = 0x000000000be45400
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000005
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d317e5b
+  rcx+0x018 = 0x0000000e00000005
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xb8838b0 (hit #16) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00007fffb0a2d938
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d6f1fb4
+  rsi+0x018 = 0x000000000d3a3ad0
+      rsi+0x004 (u32) = 32767
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000110
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x00000000097237c8
+  rcx+0x018 = 0x0000000e0000000e
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0x7344900 (hit #17) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b88cc88
+  rsi+0x018 = 0x000000000be423b0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000040
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000009752fa7
+  rcx+0x018 = 0x0000000300000003
+      rcx+0x01c (u32) = 3
+
+=== HIT off=0x391510 this=0xb876410 (hit #18) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000100000001
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d709c84
+  rsi+0x018 = 0x000000000d39f7c0
+      rsi+0x004 (u32) = 1
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000110
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x000000000d70c040
+  rcx+0x018 = 0x0000000e0000000e
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xd700b30 (hit #19) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000009714578
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8b436c
+  rsi+0x018 = 0x000000000d5d4620
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8de1df
+  rcx+0x018 = 0x0000001c0000001c
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xb870a10 (hit #20) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00007fffb0a2d938
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d70daac
+  rsi+0x018 = 0x0000000009642fc0
+      rsi+0x004 (u32) = 32767
+  rdx = 0x3
+  rcx+0x000 = 0x00007fffb0a2d938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d6f28d0
+  rcx+0x018 = 0x0000000e00000004
+      rcx+0x004 (u32) = 32767
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xb829970 (hit #21) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000973cbc8
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8029ec
+  rsi+0x018 = 0x000000000bfa0650
+  rdx = 0x3
+  rcx+0x000 = 0x00000000000000e0
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d6c2aab
+  rcx+0x018 = 0x0000003800000010
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0xb88b6b0 (hit #22) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00000000000000e0
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000097307b7
+  rsi+0x018 = 0x000000000bfa13e0
+  rdx = 0x3
+  rcx+0x000 = 0x000000000973c048
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8734db
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xb8416d0 (hit #23) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8cebbf
+  rsi+0x018 = 0x000000000d5d6670
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8dd635
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0x953ba50 (hit #24) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000511
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8a435b
+  rsi+0x018 = 0x000000000bfa1d60
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8cebbf
+  rcx+0x018 = 0x000000000d5d6670
+
+=== HIT off=0x391510 this=0xcc4d150 (hit #25) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b880d76
+  rsi+0x018 = 0x000000000bfa2110
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000511
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8a435b
+  rcx+0x018 = 0x000000000bfa1d60
+
+=== HIT off=0x391510 this=0xb887050 (hit #26) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b81fb31
+  rsi+0x018 = 0x0000000009645690
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b880d76
+  rcx+0x018 = 0x000000000bfa2110
+
+=== HIT off=0x391510 this=0xcc5d500 (hit #27) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000d6dea38
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000094ecace
+  rsi+0x018 = 0x000000000d5d0c60
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b81fb31
+  rcx+0x018 = 0x0000000009645690
+
+=== HIT off=0x391510 this=0xb83d790 (hit #28) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc6dfed
+  rsi+0x018 = 0x000000000d740240
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000009706e80
+  rcx+0x018 = 0x00007ffff7e04b40
+      rcx+0x01c (u32) = 32767
+
+=== HIT off=0x391510 this=0xb81e470 (hit #29) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000cf74d80
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8bfcb4
+  rsi+0x018 = 0x000000000d5d2330
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8eb523
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xb8090a0 (hit #30) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b87707e
+  rsi+0x018 = 0x000000000d5d3b00
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8c73ec
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0x94b9950 (hit #31) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000097347b8
+  rsi+0x018 = 0x000000000d5d5900
+  rdx = 0x3
+  rcx+0x000 = 0x000000000b8d5b88
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8d779f
+  rcx+0x018 = 0x0000001c0000001c
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0x94a4af0 (hit #32) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000005
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8b09f1
+  rsi+0x018 = 0x000000000d3a27f0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000097347b8
+  rcx+0x018 = 0x000000000d5d5900
+
+=== HIT off=0x391510 this=0x9617820 (hit #33) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d6f4f9f
+  rsi+0x018 = 0x000000000d707980
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d346f18
+  rcx+0x018 = 0x0000000700000007
+      rcx+0x01c (u32) = 7
+
+=== HIT off=0x391510 this=0xb85ed90 (hit #34) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000b7f2808
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000094c5dc2
+  rsi+0x018 = 0x000000000bf9fcd0
+  rdx = 0x3
+  rcx+0x000 = 0x00000000094ceaa8
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000009737dae
+  rcx+0x018 = 0x0000003800000012
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0x97332e0 (hit #35) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000040
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b7f9f76
+  rsi+0x018 = 0x000000000be47040
+  rdx = 0x3
+  rcx+0x000 = 0x000000000b7f2808
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000094c5dc2
+  rcx+0x018 = 0x000000000bf9fcd0
+
+=== HIT off=0x391510 this=0xb898450 (hit #36) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8edf65
+  rsi+0x018 = 0x000000000be42d30
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000040
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b7f9f76
+  rcx+0x018 = 0x000000000be47040
+
+=== HIT off=0x391510 this=0xb8873d0 (hit #37) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8731b1
+  rsi+0x018 = 0x000000000be488c0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000090
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x000000000b8894ce
+  rcx+0x018 = 0x0000000e0000000e
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xd329ef0 (hit #38) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8ccd96
+  rsi+0x018 = 0x000000000d5d3180
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000096e5ce7
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xb806710 (hit #39) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x3e1bb18d3f000a7d
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b87f2ee
+  rsi+0x018 = 0x000000000be4a090
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8ccd96
+  rcx+0x018 = 0x000000000d5d3180
+
+=== HIT off=0x391510 this=0xcf80440 (hit #40) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000be4e8c9
+  rsi+0x018 = 0x000000000be4b350
+  rdx = 0x3
+  rcx+0x000 = 0x0000000100000001
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000be42223
+  rcx+0x018 = 0x0000000e00000004
+      rcx+0x004 (u32) = 1
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xb808480 (hit #41) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000100000001
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d320926
+  rsi+0x018 = 0x000000000be4a9d0
+      rsi+0x004 (u32) = 1
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000be4e8c9
+  rcx+0x018 = 0x000000000be4b350
+
+=== HIT off=0x391510 this=0xd702680 (hit #42) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d325fa6
+  rsi+0x018 = 0x000000000be49710
+  rdx = 0x3
+  rcx+0x000 = 0x000000000000000b
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000009603e68
+  rcx+0x018 = 0x0000000e00000005
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xcc490e0 (hit #43) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc4865f
+  rsi+0x018 = 0x000000000d3a7de0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d70f5e0
+  rcx+0x018 = 0x0000000300000003
+      rcx+0x01c (u32) = 3
+
+=== HIT off=0x391510 this=0xd7022e0 (hit #44) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00000000094d2970
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000963f767
+  rsi+0x018 = 0x0000000009646010
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000094ce084
+  rcx+0x018 = 0x0000000700000002
+      rcx+0x01c (u32) = 7
+
+=== HIT off=0x391510 this=0xd690f50 (hit #45) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000080
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b800614
+  rsi+0x018 = 0x000000000d3a1530
+  rdx = 0x3
+  rcx+0x000 = 0x00000000094d2970
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000963f767
+  rcx+0x018 = 0x0000000009646010
+
+=== HIT off=0x391510 this=0x8e5ee40 (hit #46) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000300000002
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b7d65b7
+  rsi+0x018 = 0x000000000d3a06e0
+      rsi+0x004 (u32) = 3
+  rdx = 0x3
+  rcx+0x000 = 0x4d2f302e34680100
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000cf8e1fe
+  rcx+0x018 = 0x0000000100000001
+      rcx+0x01c (u32) = 1
+
+=== HIT off=0x391510 this=0x8e61be0 (hit #47) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000009483f14
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8843d4
+  rsi+0x018 = 0x000000000d3a1eb0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000110
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b84fef3
+  rcx+0x018 = 0x0000000100000001
+      rcx+0x01c (u32) = 1
+
+=== HIT off=0x391510 this=0xd6f9b10 (hit #48) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000300000002
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000008e847ae
+  rsi+0x018 = 0x000000000d3a3170
+      rsi+0x004 (u32) = 3
+  rdx = 0x3
+  rcx+0x000 = 0x00007fffb0a2d938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000962646c
+  rcx+0x018 = 0x0000000e00000004
+      rcx+0x004 (u32) = 32767
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0xb88fd50 (hit #49) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000d695ab8
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000008e6ad40
+  rsi+0x018 = 0x000000000d3a5840
+  rdx = 0x3
+  rcx+0x000 = 0x000000000000000b
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d6f15b3
+  rcx+0x018 = 0x00007ffff7e04b40
+      rcx+0x01c (u32) = 32767
+
+=== HIT off=0x391510 this=0xd6fb580 (hit #50) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000005
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b81faa1
+  rsi+0x018 = 0x000000000d3a49f0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000110
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x0000000009541f87
+  rcx+0x018 = 0x0000000e0000000e
+      rcx+0x01c (u32) = 14
+
+=== HIT off=0x391510 this=0x8e6fc80 (hit #51) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d6f6099
+  rsi+0x018 = 0x000000000d3a61c0
+  rdx = 0x3
+  rcx+0x000 = 0x00007fffb0a2d938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000008e6caab
+  rcx+0x018 = 0x0000000100000001
+      rcx+0x004 (u32) = 32767
+      rcx+0x01c (u32) = 1
+
+=== HIT off=0x391510 this=0xcc43aa0 (hit #52) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000d700938
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d6f4c80
+  rsi+0x018 = 0x000000000d3a6b00
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d6f6099
+  rcx+0x018 = 0x000000000d3a61c0
+
+=== HIT off=0x391510 this=0xb806f10 (hit #53) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00003432375f766e
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000d70dca3
+  rsi+0x018 = 0x00000000096443d0
+      rsi+0x004 (u32) = 13362
+  rdx = 0x3
+  rcx+0x000 = 0x000000000d700938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000d6f4c80
+  rcx+0x018 = 0x000000000d3a6b00
+
+=== HIT off=0x391510 this=0x8e80770 (hit #54) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8f5047
+  rsi+0x018 = 0x000000000d5d4fa0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8ec85e
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xb80f3c0 (hit #55) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc5ce3d
+  rsi+0x018 = 0x0000000009646970
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000008e7ae20
+  rcx+0x018 = 0x0000000300000003
+      rcx+0x01c (u32) = 3
+
+=== HIT off=0x391510 this=0xcc53200 (hit #56) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00000000094ca358
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8cc43a
+  rsi+0x018 = 0x000000000d5d15c0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b8ee1a5
+  rcx+0x018 = 0x0000001c00000009
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xcc5a4b0 (hit #57) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc5ec60
+  rsi+0x018 = 0x00000000096486e0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000cc5ffc6
+  rcx+0x018 = 0x00007ffff7e04b40
+      rcx+0x01c (u32) = 32767
+
+=== HIT off=0x391510 this=0xd5d3fa0 (hit #58) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b8698d4
+  rsi+0x018 = 0x000000000d705f00
+  rdx = 0x3
+  rcx+0x000 = 0x0000000008e7ca30
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000008e7fa00
+  rcx+0x018 = 0x0000000100000001
+      rcx+0x01c (u32) = 1
+
+=== HIT off=0x391510 this=0xb87d090 (hit #59) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc59cea
+  rsi+0x018 = 0x000000000d746c80
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000cc5b945
+  rcx+0x018 = 0x0000000100000001
+      rcx+0x01c (u32) = 1
+
+=== HIT off=0x391510 this=0xb8074e0 (hit #60) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cc55d79
+  rsi+0x018 = 0x000000000d74b030
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000b874d0f
+  rcx+0x018 = 0x0000000300000003
+      rcx+0x01c (u32) = 3
+
+=== HIT off=0x391510 this=0xcc64500 (hit #61) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000b80b9e3
+  rsi+0x018 = 0x0000000009644d50
+  rdx = 0x3
+  rcx+0x000 = 0x000000000b882b80
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000aa82d57
+  rcx+0x018 = 0x0000000700000007
+      rcx+0x01c (u32) = 7
+I rknn building done.
+
+
+
+
+
+
+
+[build_min] build OK  0.98s  onnx=googlenet.onnx
+[Thread 0x7fff7acff6c0 (LWP 17672) exited]
+[Thread 0x7fffc53ff6c0 (LWP 17647) exited]
+[Thread 0x7fffbd5ff6c0 (LWP 17650) exited]
+[Thread 0x7fffb59ff6c0 (LWP 17653) exited]
+[Thread 0x7fffba3fe6c0 (LWP 17652) exited]
+[Thread 0x7fffbabff6c0 (LWP 17651) exited]
+[Thread 0x7fffbffff6c0 (LWP 17649) exited]
+[Thread 0x7fffc29ff6c0 (LWP 17648) exited]
+[Thread 0x7fffc7dff6c0 (LWP 17646) exited]
+[Thread 0x7fffca7ff6c0 (LWP 17645) exited]
+[Thread 0x7fffcd1ff6c0 (LWP 17644) exited]
+[Thread 0x7fffcfbff6c0 (LWP 17643) exited]
+[Thread 0x7fffd25ff6c0 (LWP 17642) exited]
+[Thread 0x7fffd4fff6c0 (LWP 17641) exited]
+[Thread 0x7fffd79ff6c0 (LWP 17640) exited]
+[Thread 0x7fffda3ff6c0 (LWP 17639) exited]
+[Thread 0x7fff897f96c0 (LWP 17661) exited]
+[Thread 0x7fff89ffa6c0 (LWP 17660) exited]
+[Thread 0x7fff887f76c0 (LWP 17663) exited]
+[Thread 0x7fff87ff66c0 (LWP 17664) exited]
+[Thread 0x7fff877f56c0 (LWP 17665) exited]
+[Thread 0x7fff86ff46c0 (LWP 17666) exited]
+[Thread 0x7fff88ff86c0 (LWP 17662) exited]
+[Thread 0x7fff8a7fb6c0 (LWP 17659) exited]
+[Thread 0x7fff8affc6c0 (LWP 17658) exited]
+[Thread 0x7fff85ff26c0 (LWP 17668) exited]
+[Thread 0x7fff857f16c0 (LWP 17669) exited]
+[Thread 0x7fff867f36c0 (LWP 17667) exited]
+[Thread 0x7fff8b7fd6c0 (LWP 17657) exited]
+[Thread 0x7fff8bffe6c0 (LWP 17656) exited]
+[Thread 0x7fff8c7ff6c0 (LWP 17655) exited]
+[Inferior 1 (process 17636) exited normally]
+
+[probe] run finished

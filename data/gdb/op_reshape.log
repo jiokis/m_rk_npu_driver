@@ -1,0 +1,117 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 17360)]
+[New Thread 0x7fffd9bfe6c0 (LWP 17361)]
+[New Thread 0x7fffd51ff6c0 (LWP 17362)]
+[New Thread 0x7fffd27ff6c0 (LWP 17363)]
+[New Thread 0x7fffd1ffe6c0 (LWP 17364)]
+[New Thread 0x7fffcd5ff6c0 (LWP 17365)]
+[New Thread 0x7fffcabff6c0 (LWP 17366)]
+[New Thread 0x7fffc81ff6c0 (LWP 17367)]
+[New Thread 0x7fffc57ff6c0 (LWP 17368)]
+[New Thread 0x7fffc2dff6c0 (LWP 17369)]
+[New Thread 0x7fffc25fe6c0 (LWP 17370)]
+[New Thread 0x7fffbdbff6c0 (LWP 17371)]
+[New Thread 0x7fffbb1ff6c0 (LWP 17372)]
+[New Thread 0x7fffba9fe6c0 (LWP 17373)]
+[New Thread 0x7fffb5fff6c0 (LWP 17374)]
+[Detaching after vfork from child process 17375]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaef1b260  base=0x7fffaee00000
+Breakpoint 2 at 0x7fffaf191510
+[New Thread 0x7fff8cbff6c0 (LWP 17376)]
+[New Thread 0x7fff8c3fe6c0 (LWP 17377)]
+[New Thread 0x7fff8bbfd6c0 (LWP 17378)]
+[New Thread 0x7fff8b3fc6c0 (LWP 17379)]
+[New Thread 0x7fff8abfb6c0 (LWP 17380)]
+[New Thread 0x7fff8a3fa6c0 (LWP 17381)]
+[New Thread 0x7fff89bf96c0 (LWP 17382)]
+[New Thread 0x7fff893f86c0 (LWP 17383)]
+[New Thread 0x7fff88bf76c0 (LWP 17384)]
+[New Thread 0x7fff883f66c0 (LWP 17385)]
+[New Thread 0x7fff87bf56c0 (LWP 17386)]
+[New Thread 0x7fff873f46c0 (LWP 17387)]
+[New Thread 0x7fff86bf36c0 (LWP 17388)]
+[New Thread 0x7fff863f26c0 (LWP 17389)]
+[New Thread 0x7fff85bf16c0 (LWP 17390)]
+[Detaching after vfork from child process 17391]
+[Detaching after vfork from child process 17392]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff7afff6c0 (LWP 17393)]
+I Loading :   0%|                                                             | 0/2 [00:00<?, ?it/s]I Loading : 100%|████████████████████████████████████████████████████| 2/2 [00:00<00:00, 703.27it/s]
+[1;33mW[0m [1;33mload_onnx: The config.mean_values is None, zeros will be set for input 0![0m
+[1;33mW[0m [1;33mload_onnx: The config.std_values is None, ones will be set for input 0![0m
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 261490.27it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|██████████████████████████████████████████| 100/100 [00:00<00:00, 132187.33it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|██████████████████████████████████████████| 100/100 [00:00<00:00, 110843.13it/s]I OpFusing 2 : 100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 98619.89it/s]
+I rknn building ...
+
+=== HIT off=0x391510 this=0x65dbbc0 (hit #1) ===
+  [ 0] 0x00007fffb0bc4678
+  [ 1] 0x0000000100000000
+  [ 2] 0x0000000000000000
+  [ 3] 0x00007fffdda7c658
+  [ 4] 0x00007fffdda7c658
+  [ 5] 0x0000000000000000
+  [ 6] 0x0000000000000000
+  [ 7] 0x0000000000000000
+  [ 8] 0x0000000000000000
+  [ 9] 0x0000000000000000
+  [10] 0x0000000000000000
+  [11] 0x00000000066c2cf0
+  [12] 0x00000000066c3bd8
+  [13] 0x00000000066c4770
+  [14] 0x0000000000000000
+  [15] 0x0000000000000481
+    [0] -> 0x7fffb0bc4678: 0x7fffaf1913e0 0x7fffaf191400 0x7fffaf191510 0x7fffaf191410
+    [1] -> 0x100000000: <不可读>
+    [3] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [4] -> 0x7fffdda7c658: 0x0 0x0 0x0 0x0
+    [11] -> 0x66c2cf0: 0x0 0x200000002 0x200000002 0x1
+    [12] -> 0x66c3bd8: 0x11 0xffffffff 0x75715f7475706e69 0x6c6163735f746e61
+    [13] -> 0x66c4770: 0x3 0x21 0x4000000001 0x3800000013
+  rsi = 0x0
+  rdx = 0x8
+  rcx = 0xff
+I rknn building done.
+
+
+[build_min] build OK  0.05s  onnx=op_reshape.onnx
+[Thread 0x7fff7afff6c0 (LWP 17393) exited]
+[Thread 0x7fffc25fe6c0 (LWP 17370) exited]
+[Thread 0x7fffb5fff6c0 (LWP 17374) exited]
+[Thread 0x7fffba9fe6c0 (LWP 17373) exited]
+[Thread 0x7fffbb1ff6c0 (LWP 17372) exited]
+[Thread 0x7fffbdbff6c0 (LWP 17371) exited]
+[Thread 0x7fffc2dff6c0 (LWP 17369) exited]
+[Thread 0x7fffc57ff6c0 (LWP 17368) exited]
+[Thread 0x7fffc81ff6c0 (LWP 17367) exited]
+[Thread 0x7fffcabff6c0 (LWP 17366) exited]
+[Thread 0x7fffcd5ff6c0 (LWP 17365) exited]
+[Thread 0x7fffd1ffe6c0 (LWP 17364) exited]
+[Thread 0x7fffd27ff6c0 (LWP 17363) exited]
+[Thread 0x7fffd51ff6c0 (LWP 17362) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 17361) exited]
+[Thread 0x7fffda3ff6c0 (LWP 17360) exited]
+[Thread 0x7fff8bbfd6c0 (LWP 17378) exited]
+[Thread 0x7fff8a3fa6c0 (LWP 17381) exited]
+[Thread 0x7fff89bf96c0 (LWP 17382) exited]
+[Thread 0x7fff893f86c0 (LWP 17383) exited]
+[Thread 0x7fff8abfb6c0 (LWP 17380) exited]
+[Thread 0x7fff8b3fc6c0 (LWP 17379) exited]
+[Thread 0x7fff88bf76c0 (LWP 17384) exited]
+[Thread 0x7fff883f66c0 (LWP 17385) exited]
+[Thread 0x7fff87bf56c0 (LWP 17386) exited]
+[Thread 0x7fff8c3fe6c0 (LWP 17377) exited]
+[Thread 0x7fff873f46c0 (LWP 17387) exited]
+[Thread 0x7fff8cbff6c0 (LWP 17376) exited]
+[Thread 0x7fff85bf16c0 (LWP 17390) exited]
+[Thread 0x7fff863f26c0 (LWP 17389) exited]
+[Thread 0x7fff86bf36c0 (LWP 17388) exited]
+[Inferior 1 (process 17357) exited normally]
+
+[probe] run finished

@@ -1,0 +1,368 @@
+Reading symbols from /home/dunaandone/rknn-venv/bin/python...
+(No debugging symbols found in /home/dunaandone/rknn-venv/bin/python)
+Catchpoint 1 (load)
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffda3ff6c0 (LWP 17489)]
+[New Thread 0x7fffd9bfe6c0 (LWP 17490)]
+[New Thread 0x7fffd51ff6c0 (LWP 17491)]
+[New Thread 0x7fffd27ff6c0 (LWP 17492)]
+[New Thread 0x7fffd1ffe6c0 (LWP 17493)]
+[New Thread 0x7fffcd5ff6c0 (LWP 17494)]
+[New Thread 0x7fffcabff6c0 (LWP 17495)]
+[New Thread 0x7fffc81ff6c0 (LWP 17496)]
+[New Thread 0x7fffc79fe6c0 (LWP 17497)]
+[New Thread 0x7fffc4fff6c0 (LWP 17498)]
+[New Thread 0x7fffc25ff6c0 (LWP 17499)]
+[New Thread 0x7fffbfbff6c0 (LWP 17500)]
+[New Thread 0x7fffbb1ff6c0 (LWP 17501)]
+[New Thread 0x7fffb87ff6c0 (LWP 17502)]
+[New Thread 0x7fffb5dff6c0 (LWP 17503)]
+[Detaching after vfork from child process 17504]
+
+Thread 1 "pt_main_thread" hit Catchpoint 1
+  Inferior loaded /home/dunaandone/rknn-venv/lib/python3.12/site-packages/rknn/api/lib/linux-x86_64/librknnc.so
+0x00007ffff7fd2c4f in ?? () from /lib64/ld-linux-x86-64.so.2
+[probe] text_load=0x7fffaef1b260  base=0x7fffaee00000
+Breakpoint 2 at 0x7fffaf191510
+[New Thread 0x7fff8c9ff6c0 (LWP 17505)]
+[New Thread 0x7fff8c1fe6c0 (LWP 17506)]
+[New Thread 0x7fff8b9fd6c0 (LWP 17507)]
+[New Thread 0x7fff8b1fc6c0 (LWP 17508)]
+[New Thread 0x7fff8a9fb6c0 (LWP 17509)]
+[New Thread 0x7fff8a1fa6c0 (LWP 17510)]
+[New Thread 0x7fff899f96c0 (LWP 17511)]
+[New Thread 0x7fff891f86c0 (LWP 17512)]
+[New Thread 0x7fff889f76c0 (LWP 17513)]
+[New Thread 0x7fff881f66c0 (LWP 17514)]
+[New Thread 0x7fff879f56c0 (LWP 17515)]
+[New Thread 0x7fff871f46c0 (LWP 17516)]
+[New Thread 0x7fff869f36c0 (LWP 17517)]
+[New Thread 0x7fff861f26c0 (LWP 17518)]
+[New Thread 0x7fff859f16c0 (LWP 17519)]
+[Detaching after vfork from child process 17520]
+[Detaching after vfork from child process 17521]
+I rknn-toolkit2 version: 2.3.2
+[New Thread 0x7fff790af6c0 (LWP 17522)]
+I Loading :   0%|                                                            | 0/42 [00:00<?, ?it/s]I Loading : 100%|█████████████████████████████████████████████████| 42/42 [00:00<00:00, 3869.54it/s]
+I OpFusing 0:   0%|                                                         | 0/100 [00:00<?, ?it/s]I OpFusing 0: 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 22939.75it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 :  93%|█████████████████████████████████████████▊   | 93/100 [00:00<00:00, 7588.47it/s]I OpFusing 1 :  95%|██████████████████████████████████████████▊  | 95/100 [00:00<00:00, 7574.69it/s]I OpFusing 1 :  90%|████████████████████████████████████████▌    | 90/100 [00:00<00:00, 6886.44it/s]I OpFusing 1 :  87%|███████████████████████████████████████▏     | 87/100 [00:00<00:00, 3505.23it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 3046.22it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 :  88%|███████████████████████████████████████▌     | 88/100 [00:00<00:00, 2361.69it/s]I OpFusing 0 :  90%|████████████████████████████████████████▌    | 90/100 [00:00<00:00, 2393.22it/s]I OpFusing 0 :  98%|████████████████████████████████████████████ | 98/100 [00:00<00:00, 2563.42it/s]I OpFusing 0 :  95%|██████████████████████████████████████████▊  | 95/100 [00:00<00:00, 2097.48it/s]I OpFusing 0 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1883.22it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1737.53it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 :  95%|██████████████████████████████████████████▊  | 95/100 [00:00<00:00, 1615.40it/s]I OpFusing 2 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1613.37it/s]I OpFusing 0 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 0 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1502.12it/s]I OpFusing 1 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 1 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1407.61it/s]I OpFusing 2 :   0%|                                                        | 0/100 [00:00<?, ?it/s]I OpFusing 2 : 100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 1390.01it/s]I OpFusing 2 : 100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 673.87it/s]
+I rknn building ...
+
+=== HIT off=0x391510 this=0x721e380 (hit #1) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi = 0x0
+  rdx = 0x8
+  rcx = 0xff
+
+=== HIT off=0x391510 this=0x606c3e0 (hit #2) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00000000124038f0
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000000061ee
+  rsi+0x018 = 0x000000000664a6e0
+  rdx = 0x3
+  rcx = 0x0
+
+=== HIT off=0x391510 this=0x723d170 (hit #3) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000005dacb23
+  rsi+0x018 = 0x000000000664a110
+  rdx = 0x3
+  rcx+0x000 = 0x0000000005da1560
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000060699fb
+  rcx+0x018 = 0x00007ffff7e04b40
+      rcx+0x01c (u32) = 32767
+
+=== HIT off=0x391510 this=0x723aa90 (hit #4) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00007fffb0c2d938
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000007234ceb
+  rsi+0x018 = 0x0000000006658890
+      rsi+0x004 (u32) = 32767
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000005dacb23
+  rcx+0x018 = 0x000000000664a110
+
+=== HIT off=0x391510 this=0x721bcc0 (hit #5) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000ae232fb
+  rsi+0x018 = 0x0000000006657b80
+  rdx = 0x3
+  rcx+0x000 = 0x0000000006748f40
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000072113e4
+  rcx+0x018 = 0x0000000700000007
+      rcx+0x01c (u32) = 7
+
+=== HIT off=0x391510 this=0x7226ca0 (hit #6) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000721cf16
+  rsi+0x018 = 0x00000000066575b0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000ae232fb
+  rcx+0x018 = 0x0000000006657b80
+
+=== HIT off=0x391510 this=0x7228780 (hit #7) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000007221fa8
+  rsi+0x018 = 0x0000000006656c30
+  rdx = 0x3
+  rcx+0x000 = 0x00007fffb0c2d938
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000007221f36
+  rcx+0x018 = 0x0000000700000007
+      rcx+0x004 (u32) = 32767
+      rcx+0x01c (u32) = 7
+
+=== HIT off=0x391510 this=0x721d010 (hit #8) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000066c1454
+  rsi+0x018 = 0x0000000006655f20
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000008
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000722eea7
+  rcx+0x018 = 0x00007ffff7e04b40
+      rcx+0x01c (u32) = 32767
+
+=== HIT off=0x391510 this=0x61ed6d0 (hit #9) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000606b7d6
+  rsi+0x018 = 0x000000000cf9e5a0
+  rdx = 0x3
+  rcx+0x000 = 0x000000000000606c
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000060696cc
+  rcx+0x018 = 0x00007ffff7e04b40
+      rcx+0x01c (u32) = 32767
+
+=== HIT off=0x391510 this=0x621f510 (hit #10) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000007dacc71
+  rsi+0x018 = 0x0000000006205620
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000007da784a
+  rcx+0x018 = 0x000000e000000027
+      rcx+0x01c (u32) = 224
+
+=== HIT off=0x391510 this=0x61f7910 (hit #11) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000061e6d03
+  rsi+0x018 = 0x0000000006659210
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000007dacc71
+  rcx+0x018 = 0x0000000006205620
+
+=== HIT off=0x391510 this=0x621d290 (hit #12) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000006765718
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000721af77
+  rsi+0x018 = 0x0000000007d8fc00
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000110
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x000000000721cd4c
+  rcx+0x018 = 0x0000003800000038
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0x599cbc0 (hit #13) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x000000000ae1c518
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cfaf24c
+  rsi+0x018 = 0x0000000007d92570
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000090
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x00000000072144b5
+  rcx+0x018 = 0x0000001c0000001c
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0xcf9e110 (hit #14) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00000000000001cb
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000007da5cad
+  rsi+0x018 = 0x0000000006206560
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000020
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x00000000061dc573
+  rcx+0x018 = 0x0000003800000013
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0xcfa8330 (hit #15) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000006765718
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000066519e8
+  rsi+0x018 = 0x0000000007d91290
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000090
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x000000000721c386
+  rcx+0x018 = 0x0000001c0000001c
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0x61f9820 (hit #16) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0078616d5f746e61
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000061daa88
+  rsi+0x018 = 0x000000000cf9bc30
+      rsi+0x004 (u32) = 7889261
+  rdx = 0x3
+  rcx+0x000 = 0x00000000000000c0
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000cf9a4ac
+  rcx+0x018 = 0x0000001c0000001c
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0x61f16f0 (hit #17) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000006214ce8
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000007d9f98a
+  rsi+0x018 = 0x0000000006207bf0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000007da147c
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000007da5ad8
+  rcx+0x018 = 0x0000003800000012
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0xcfa0010 (hit #18) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000020
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x0000000007d9e085
+  rsi+0x018 = 0x0000000006206ee0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000007da31bc
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000007da2a49
+  rcx+0x018 = 0x0000003800000013
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0x61e2640 (hit #19) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000071cdc18
+  rsi+0x018 = 0x000000000cf9c940
+  rdx = 0x3
+  rcx+0x000 = 0x0000000007d931c0
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x0000000007d92b91
+  rcx+0x018 = 0x0000000300000003
+      rcx+0x01c (u32) = 3
+
+=== HIT off=0x391510 this=0x6656820 (hit #20) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000006214ce8
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x00000000061d8a49
+  rsi+0x018 = 0x0000000007d90910
+  rdx = 0x3
+  rcx+0x000 = 0x00000000000000a0
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000721d4af
+  rcx+0x018 = 0x0000001c0000000c
+      rcx+0x01c (u32) = 28
+
+=== HIT off=0x391510 this=0x72364f0 (hit #21) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x00007fffdda7c658
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000721fc27
+  rsi+0x018 = 0x0000000007d91860
+      rsi+0x004 (u32) = 32767
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000110
+  rcx+0x008 = 0x0000000000000030
+  rcx+0x010 = 0x000000000721eee9
+  rcx+0x018 = 0x0000003800000038
+      rcx+0x01c (u32) = 56
+
+=== HIT off=0x391510 this=0xcfa94e0 (hit #22) ===
+  [read this failed: Argument 'count' should be greater than zero]
+  rsi+0x000 = 0x0000000000000000
+  rsi+0x008 = 0x0000000000000031
+  rsi+0x010 = 0x000000000cfa85f0
+  rsi+0x018 = 0x000000000cf9d2c0
+  rdx = 0x3
+  rcx+0x000 = 0x0000000000000000
+  rcx+0x008 = 0x0000000000000031
+  rcx+0x010 = 0x000000000cfad354
+  rcx+0x018 = 0x0000000e0000000e
+      rcx+0x01c (u32) = 14
+I rknn building done.
+
+
+
+
+
+
+
+[build_min] build OK  0.91s  onnx=resnet18.onnx
+[Thread 0x7fff790af6c0 (LWP 17522) exited]
+[Thread 0x7fffcabff6c0 (LWP 17495) exited]
+[Thread 0x7fffbfbff6c0 (LWP 17500) exited]
+[Thread 0x7fffbb1ff6c0 (LWP 17501) exited]
+[Thread 0x7fffc25ff6c0 (LWP 17499) exited]
+[Thread 0x7fffb5dff6c0 (LWP 17503) exited]
+[Thread 0x7fffb87ff6c0 (LWP 17502) exited]
+[Thread 0x7fffc4fff6c0 (LWP 17498) exited]
+[Thread 0x7fffc79fe6c0 (LWP 17497) exited]
+[Thread 0x7fffc81ff6c0 (LWP 17496) exited]
+[Thread 0x7fffcd5ff6c0 (LWP 17494) exited]
+[Thread 0x7fffd1ffe6c0 (LWP 17493) exited]
+[Thread 0x7fffd27ff6c0 (LWP 17492) exited]
+[Thread 0x7fffd51ff6c0 (LWP 17491) exited]
+[Thread 0x7fffd9bfe6c0 (LWP 17490) exited]
+[Thread 0x7fffda3ff6c0 (LWP 17489) exited]
+[Thread 0x7fff8b9fd6c0 (LWP 17507) exited]
+[Thread 0x7fff8a9fb6c0 (LWP 17509) exited]
+[Thread 0x7fff899f96c0 (LWP 17511) exited]
+[Thread 0x7fff8a1fa6c0 (LWP 17510) exited]
+[Thread 0x7fff891f86c0 (LWP 17512) exited]
+[Thread 0x7fff8b1fc6c0 (LWP 17508) exited]
+[Thread 0x7fff871f46c0 (LWP 17516) exited]
+[Thread 0x7fff879f56c0 (LWP 17515) exited]
+[Thread 0x7fff861f26c0 (LWP 17518) exited]
+[Thread 0x7fff881f66c0 (LWP 17514) exited]
+[Thread 0x7fff889f76c0 (LWP 17513) exited]
+[Thread 0x7fff8c1fe6c0 (LWP 17506) exited]
+[Thread 0x7fff859f16c0 (LWP 17519) exited]
+[Thread 0x7fff869f36c0 (LWP 17517) exited]
+[Thread 0x7fff8c9ff6c0 (LWP 17505) exited]
+[Inferior 1 (process 17486) exited normally]
+
+[probe] run finished

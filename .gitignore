@@ -5,3 +5,18 @@ deploy/rknn_tv/
 deploy/onnx_tv/
 __pycache__/
 *.pyc
+
+# ⚠️ 扩散模型的大产物：**绝不能进 git**
+#   踩过一次：deploy/diffusion/sweep/ 有 3.5 GB（每个 unet_*.onnx 552 MB），
+#   git push 直接卡死（SSH 认证成功但传不动数据）。
+#   这些都可以用 deploy/diffusion/*.py 重新生成。
+deploy/diffusion/sweep/*.onnx
+deploy/diffusion/sweep/*.rknn
+deploy/diffusion/ckpt/
+deploy/diffusion/onnx/
+deploy/diffusion/rknn/
+deploy/diffusion/out/
+deploy/diffusion/calib/
+# 但扫描的**结果表**要留下（小、且是结论）
+!deploy/diffusion/sweep/table.json
+!deploy/diffusion/sweep/bench.json

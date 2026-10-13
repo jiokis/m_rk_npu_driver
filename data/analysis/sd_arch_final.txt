@@ -1,0 +1,40 @@
+# ★★★★★ SD 架构（VAE 潜空间扩散）在 RK3588 NPU 上的最终结果
+
+## 产物
+  docs/img/sd32_final_npu.png     64 张（8x8），**板子 NPU 生成**，清晰的彩色形状
+  docs/img/sd32_final_torch.png   同种子笔记本 torch 参考
+  deploy/diffusion/rknn/sd32_unet.rknn   10.32 MB（w8a8）
+  deploy/diffusion/rknn/sd32_dec.rknn     0.37 MB
+
+## 数值一致性
+  50 步 DDIM 后 torch ↔ NPU **余弦相似度 0.9843**
+  （单次前向是 1.0000，见 docs/141；差距来自量化 + 多步累积）
+
+## 计时（50 步 DDIM + 一次 VAE 解码，64 张）
+
+| 后端 | 总耗时 | 每张 | 说明 |
+|---|---|---|---|
+| **板子 NPU**（UNet+Decoder 都在 NPU） | 12.03 s | **188 ms** | 逐张跑（RKNN batch 固定 1） |
+| 笔记本 CPU torch（16 核，batch 64） | 1.99 s | **31 ms** | 一次算 64 张 |
+
+### ★★★★★ 诚实的结论：**这个规模下 CPU 比 NPU 快 6 倍**
+
+原因（两条都成立）：
+1. **模型太小**（UNet 9.25M / 0.144 GFLOPs/步）⇒ NPU 的**每次提交约 80 µs 固定开销**占主导。
+   docs/140 的扫描已经量出：小模型上 NPU 只有 **0.13 TFLOP/s**（大模型能到 1.84）。
+2. **CPU 能一次批 64 张**，而 **RKNN 模型 batch 固定为 1** ⇒ NPU 只能逐张跑。
+
+**⇒ 判据（把 docs/140 的甜点表与这里的实测合起来）：**
+   * **模型够大**（≥ 数 GFLOPs/步）且**必须低延迟**时 → NPU 赢（512x512 甜点 1.63 s/张）
+   * **模型很小 + 能批处理**时 → 多核 CPU 更划算
+   * **NPU 的真正价值**：单张低延迟、功耗低、不占 CPU（板上 CPU 还要跑别的东西）
+
+## 训练成本（CPU 16 核，batch 64）
+  VAE(4×) base=16 0.318M    233 ms/step × 8000  = 30.4 min  → rec L1 0.0352（相对 8.2%）
+  潜空间 UNet base=64 9.254M 336 ms/step × 12000 = 75.2 min  → loss 0.1733
+
+## 整条链
+  程序化彩色数据集(60k, 32x32) → VAE(4× 下采样, 8x8x4 潜空间)
+    → 潜空间 DDPM UNet(9.25M, 时间步当张量喂)
+    → 导出 ONNX → w8a8 量化（多输入标定集：每行两个文件）
+    → 板上：潜空间 DDIM(纯 numpy) + UNet(NPU) + VAE 解码器(NPU) → PNG

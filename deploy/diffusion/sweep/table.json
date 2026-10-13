@@ -1,0 +1,178 @@
+{
+ "unet_64_b128": {
+  "res": 64,
+  "lat": 8,
+  "kind": "unet",
+  "base": 128,
+  "params": 36447620,
+  "macs": 286588928,
+  "gflops": 0.573177856,
+  "rknn_bytes": 37457263,
+  "build_ret": 0
+ },
+ "unet_64_b256": {
+  "res": 64,
+  "lat": 8,
+  "kind": "unet",
+  "base": 256,
+  "params": 144657156,
+  "macs": 1144127488,
+  "gflops": 2.288254976,
+  "rknn_bytes": 145824687,
+  "build_ret": 0
+ },
+ "unet_128_b128": {
+  "res": 128,
+  "lat": 16,
+  "kind": "unet",
+  "base": 128,
+  "params": 36447620,
+  "macs": 1144782848,
+  "gflops": 2.289565696,
+  "rknn_bytes": 37462195,
+  "build_ret": 0
+ },
+ "unet_128_b256": {
+  "res": 128,
+  "lat": 16,
+  "kind": "unet",
+  "base": 256,
+  "params": 144657156,
+  "macs": 4573364224,
+  "gflops": 9.146728448,
+  "rknn_bytes": 145836467,
+  "build_ret": 0
+ },
+ "unet_256_b128": {
+  "res": 256,
+  "lat": 32,
+  "kind": "unet",
+  "base": 128,
+  "params": 36447620,
+  "macs": 4577558528,
+  "gflops": 9.155117056,
+  "rknn_bytes": 37485491,
+  "build_ret": 0
+ },
+ "unet_256_b256": {
+  "res": 256,
+  "lat": 32,
+  "kind": "unet",
+  "base": 256,
+  "params": 144657156,
+  "macs": 18290311168,
+  "gflops": 36.580622336,
+  "rknn_bytes": 146026675,
+  "build_ret": 0
+ },
+ "unet_512_b128": {
+  "res": 512,
+  "lat": 64,
+  "kind": "unet",
+  "base": 128,
+  "params": 36447620,
+  "macs": 18308661248,
+  "gflops": 36.617322496,
+  "rknn_bytes": 37805555,
+  "build_ret": 0
+ },
+ "unet_512_b256": {
+  "res": 512,
+  "lat": 64,
+  "kind": "unet",
+  "base": 256,
+  "params": 144657156,
+  "macs": 73158098944,
+  "gflops": 146.316197888,
+  "rknn_bytes": 147035251,
+  "build_ret": 0
+ },
+ "dec_64_b32": {
+  "res": 64,
+  "lat": 8,
+  "kind": "dec",
+  "base": 32,
+  "params": 781955,
+  "macs": 117080064,
+  "gflops": 0.234160128,
+  "rknn_bytes": 999809,
+  "build_ret": 0
+ },
+ "dec_64_b64": {
+  "res": 64,
+  "lat": 8,
+  "kind": "dec",
+  "base": 64,
+  "params": 3112195,
+  "macs": 460652544,
+  "gflops": 0.921305088,
+  "rknn_bytes": 3353153,
+  "build_ret": 0
+ },
+ "dec_128_b32": {
+  "res": 128,
+  "lat": 16,
+  "kind": "dec",
+  "base": 32,
+  "params": 781955,
+  "macs": 468320256,
+  "gflops": 0.936640512,
+  "rknn_bytes": 999045,
+  "build_ret": 0
+ },
+ "dec_128_b64": {
+  "res": 128,
+  "lat": 16,
+  "kind": "dec",
+  "base": 64,
+  "params": 3112195,
+  "macs": 1842610176,
+  "gflops": 3.685220352,
+  "rknn_bytes": 3374277,
+  "build_ret": 0
+ },
+ "dec_256_b32": {
+  "res": 256,
+  "lat": 32,
+  "kind": "dec",
+  "base": 32,
+  "params": 781955,
+  "macs": 1873281024,
+  "gflops": 3.746562048,
+  "rknn_bytes": 1027717,
+  "build_ret": 0
+ },
+ "dec_256_b64": {
+  "res": 256,
+  "lat": 32,
+  "kind": "dec",
+  "base": 64,
+  "params": 3112195,
+  "macs": 7370440704,
+  "gflops": 14.740881408,
+  "rknn_bytes": 3506437,
+  "build_ret": 0
+ },
+ "dec_512_b32": {
+  "res": 512,
+  "lat": 64,
+  "kind": "dec",
+  "base": 32,
+  "params": 781955,
+  "macs": 7493124096,
+  "gflops": 14.986248192,
+  "rknn_bytes": 1176133,
+  "build_ret": 0
+ },
+ "dec_512_b64": {
+  "res": 512,
+  "lat": 64,
+  "kind": "dec",
+  "base": 64,
+  "params": 3112195,
+  "macs": 29481762816,
+  "gflops": 58.963525632,
+  "rknn_bytes": 4146181,
+  "build_ret": 0
+ }
+}

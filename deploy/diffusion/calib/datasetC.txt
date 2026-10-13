@@ -1,0 +1,8 @@
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_00.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_01.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_02.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_03.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_04.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_05.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_06.npz
+/home/dunaandone/orange pi/rk3588-npu-re/deploy/diffusion/calib/C_07.npz

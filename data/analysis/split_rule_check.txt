@@ -1,0 +1,25 @@
+# 算子拆分规则在 9 个真实模型上的对账（docs/129）
+#
+# 规则：编译器 Conv 算子数 = Σ over Conv nodes of
+#          group   若 1 < group < in_channels
+#          1       若 group == in_channels（depthwise）或 group == 1
+#       tiling-info 对象数 = 上式 + 2
+#
+# 实测对象数来自：tools/gdb/probe.py --off 0x391510 --onnx <onnx>
+# （0x391510 = RKNNOperatorTilingInfo 控制块的 _M_dispose；每次销毁 = 一个对象）
+#
+# model                Conv  Σ规则  +2  实测  结果
+regnet_x_400mf           71    429  431   431  精确 ✓   (group ∈ {1,2,4,10,25})
+resnet18                 20     20   22    22  精确 ✓
+densenet121             120    120  122   122  精确 ✓
+squeezenet1_0            26     26   28    28  精确 ✓
+mnasnet0_5               52     52   54    54  精确 ✓
+mobilenet_v2             52     52   54    54  精确 ✓
+googlenet                57     57   59    61  残差 +2   ← 未解释
+shufflenet_v2_x0_5       56     56   58    77  残差 +19  ← 未解释
+efficientnet_b0          81     81   83   113  残差 +30  ← 未解释
+# 命中 6/9。残差已钉进 src/sim/rknpu/tiling.py 的 self_check()（作为"应仍不命中"的对照）。
+#
+# 已证伪的解释：
+#   "depthwise 会多拆一个" —— shufflenet 残差 +19 恰好等于其 depthwise 数 19，
+#   但 mnasnet0_5 / mobilenet_v2 各有 17 个 depthwise、残差却是 0 ⇒ 否掉。

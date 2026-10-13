@@ -1,0 +1,30 @@
+# ★★★★★ 换 core_mask 重抓：**「3 次重复」与核数无关**（docs/136，修正 docs/134/135）
+#
+# 抓取（板子）：
+#   LD_PRELOAD=~/rknpu_capture.so RKNPU_DUMP_DIR=/tmp/tvcapN RKNPU_DUMP_BUFS_MAX=0 \
+#     python3 -c "RKNNLite: load resnet18.rknn; init_runtime(core_mask=...); inference 一次"
+#
+# ── 3 核（core_mask=0x7 / NPU_CORE_0_1_2）──
+#   5 个 submit，Σtask = 74；tasks_*.bin = 240+40+2400+40+240 = 2960 B
+#   submit 3 的 op_idx:  7..23 | 1..23 | 1..17      ← op_idx **两次从 1 重启**
+#   f14 取值：0 / 1024 / 2048
+#
+# ── 1 核（core_mask=0x1 / NPU_CORE_0）──
+#   **1 个 submit**，75 个 task；tasks_000.bin = 3000 B
+#   op_idx: 1,1,1,2,3,...,23 | 1,1,1,1,2,...,23 | 1,1,1,1,3,...,20
+#           ← op_idx **仍然两次从 1 重启** ⇒ 仍然是 3 遍！
+#   f14 取值：0（74 个）/ 512（1 个）
+#
+# ── ★★★ 结论（修正 docs/134/135）──
+#   ① 「3 遍算子序列」**在单核下依然存在** ⇒ **它不是 3 个核**！
+#      而是编译期就烘进模型的 **3 个 surface**（对应 pass 清单里的 RKNNMultiSurfacePass）。
+#      ⇒ docs/134/135 里「3 次重复 = 3 个核」的说法**错误**，现修正为「3 个 surface」。
+#   ② core_mask 改变的是**提交调度**，不是模型内容：
+#        1 核：1 个 submit / 75 个 task
+#        3 核：5 个 submit / 74 个 task
+#      ⇒ **提交数依赖 core_mask**，不是纯编译期量。
+#      ⇒ 这也说明 .rknn 是固定的，调度在 init_runtime(core_mask=...) 时决定。
+#   ③ f14 随 core_mask 变（3 核：0/1024/2048；1 核：0/512）
+#      ⇒ f14 与核数/缓冲布局有关，但**不是简单的「核序号」**（1 核时出现 512）。
+#   ④ 每份权重的 3 个副本 = 3 个 surface 各自的权重切片（docs/134 的地址证据仍然成立），
+#      但「每核一份」的解释**错了** —— 是**每个 surface 一份**。

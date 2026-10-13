@@ -1,15 +1,35 @@
-# 算子拆分规则在 9 个真实模型上的对账（docs/129）
+# 算子拆分规则 —— 受控实验边界 + 9 个真实模型对账（docs/129 / docs/130）
 #
-# 规则：编译器 Conv 算子数 = Σ over Conv nodes of
-#          group   若 1 < group < in_channels
-#          1       若 group == in_channels（depthwise）或 group == 1
-#       tiling-info 对象数 = 上式 + 2
+# ★ 规则（最终形式，docs/130）：
+#     拆分倍数 = group    若 group > 1 且 cin/group >= 8
+#                1        否则
+#   tiling-info 对象数 = Σ拆分倍数 + 2
+#   （depthwise 的 cin/group = 1 < 8，自动落在"不拆" —— 不需要特例）
 #
-# 实测对象数来自：tools/gdb/probe.py --off 0x391510 --onnx <onnx>
-# （0x391510 = RKNNOperatorTilingInfo 控制块的 _M_dispose；每次销毁 = 一个对象）
+# 实测手段：tools/gdb/probe.py --off 0x391510 --onnx <onnx> [--noquant]
+#   0x391510 = RKNNOperatorTilingInfo 控制块的 _M_dispose ⇒ 每次销毁 = 一个对象
 #
-# model                Conv  Σ规则  +2  实测  结果
-regnet_x_400mf           71    429  431   431  精确 ✓   (group ∈ {1,2,4,10,25})
+# ── 受控实验：边界（固定 cin 扫 group） ──
+#   cin  group  cin/group  实测对象数   拆?
+#   128     8      16          8        ✓
+#   128    16       8         16        ✓
+#   128    32       4          1        ✗
+#   128    64       2          1        ✗
+#   128   128       1          1        ✗  (depthwise)
+#    64     8       8          8        ✓
+#    64    16       4          1        ✗
+#    64    32       2          1        ✗
+#   ⇒ 分界线正好在 cin/group = 8
+#
+# ── 判别实验：条件在 cin 侧还是 cout 侧 ──
+#   cin cout group  cin/group cout/group 实测   判定
+#   128  16    16       8          1      17    拆  ← 多 1 个，未解释（docs/130 §5）
+#    16 128    16       1          8       1    不拆 ⇒ 条件在 cin/group
+#   128 128    16(k=1)  8          8      16    拆   ⇒ 与 kernel 无关
+#
+# ── 真实模型对账（6/9 精确，3 个残差未解释） ──
+#   model                Conv  Σ规则  +2  实测  结果
+regnet_x_400mf           71    429  431   431  精确 ✓   (分组卷积 cin/group 全 = 16)
 resnet18                 20     20   22    22  精确 ✓
 densenet121             120    120  122   122  精确 ✓
 squeezenet1_0            26     26   28    28  精确 ✓
@@ -18,8 +38,9 @@ mobilenet_v2             52     52   54    54  精确 ✓
 googlenet                57     57   59    61  残差 +2   ← 未解释
 shufflenet_v2_x0_5       56     56   58    77  残差 +19  ← 未解释
 efficientnet_b0          81     81   83   113  残差 +30  ← 未解释
-# 命中 6/9。残差已钉进 src/sim/rknpu/tiling.py 的 self_check()（作为"应仍不命中"的对照）。
 #
-# 已证伪的解释：
-#   "depthwise 会多拆一个" —— shufflenet 残差 +19 恰好等于其 depthwise 数 19，
-#   但 mnasnet0_5 / mobilenet_v2 各有 17 个 depthwise、残差却是 0 ⇒ 否掉。
+# ── 已被实验否掉的残差解释 ──
+#   ① "depthwise 会多拆一个"：shufflenet 残差 +19 恰等于其 depthwise 数 19，
+#      但 mnasnet0_5 / mobilenet_v2 各有 17 个 depthwise、残差 0 ⇒ 否掉
+#   ② "输出通道大就会被切"：合成 cin64 cout512/1024/2048 各只有 1 个对象 ⇒ 否掉
+#   ③ "cin/group < 8 也会拆"：见上表，4/2 一律不拆 ⇒ 否掉

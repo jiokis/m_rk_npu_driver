@@ -50,21 +50,31 @@ TILING_INFO_OVERHEAD = 2
 def split_factor(group: int, cin: int | None) -> int:
     """一个 Conv 会被拆成几个算子
 
-    规则（docs/129 §1，6/9 真实模型精确命中）：
+    **规则（docs/130，受控实验定的边界）**：
 
-        1 < group < cin   ⇒ 拆成 group 个（分组卷积按组展开）
-        group == cin      ⇒ 1 个（depthwise 不拆）
-        group == 1        ⇒ 1 个（普通卷积）
+        拆分倍数 = group    若 group > 1 且 cin/group >= 8
+                   1        否则
 
-    ⚠️ cin 未知时按 `group` 猜（老行为）；**这会在 depthwise 上错得很离谱**
-       （efficientnet 的 Σgroup=9025 而实测算子只有 111），所以尽量传 cin。
+    证据：
+      * cin/group = 16 / 8 ⇒ 拆成 group 个（s128_g8→8, s128_g16→16, s64_g8→8）
+      * cin/group = 4 / 2 / 1 ⇒ 不拆（s128_g32→1, s64_g16→1, s128_g128→1）
+      * 判别实验：`cout/group = 8` 而 `cin/group = 1` ⇒ **不拆** ⇒ 条件在 cin 侧
+      * 1×1 核照样拆 ⇒ 与 kernel 无关
+      * **depthwise（cin/group = 1）自动落在「不拆」，不需要特例**
+
+    ⚠️ cin 未知时无法判 `cin/group`，退化成「group > 1 就拆」——
+       **这在 depthwise 上会错得离谱**（efficientnet 的 Σgroup = 9025，实测算子只有 111）。
     """
     g = int(group or 1)
-    if g == 1:
+    if g <= 1:
         return 1
     if cin is None:
         return g
-    return g if g < int(cin) else 1
+    return g if (int(cin) // g) >= SPLIT_MIN_CIN_PER_GROUP else 1
+
+
+#: 分组卷积被拆开所需的最小 `cin/group`（实测分界，docs/130 §2）
+SPLIT_MIN_CIN_PER_GROUP = 8
 
 
 def split_conv_count(convs) -> int:
@@ -88,18 +98,30 @@ def tiling_info_count(convs) -> int:
     return split_conv_count(convs) + TILING_INFO_OVERHEAD
 
 
-#: ★ 真实模型对账（docs/129 §1）：(模型, ONNX Conv 数, Σ规则, 实测对象数)
-#: 前 6 个精确命中；后 3 个是**已知残差**（原因未查明，docs/129 §2）
+#: ★ 受控实验：分组卷积拆分边界（docs/130 §2/§3）—— (cin, group, 实测对象数)
+SPLIT_BOUNDARY: list[tuple[int, int, int]] = [
+    (128,   8,   8),   # cin/group = 16  ⇒ 拆
+    (128,  16,  16),   # cin/group =  8  ⇒ 拆
+    (128,  32,   1),   # cin/group =  4  ⇒ 不拆
+    (128,  64,   1),   # cin/group =  2  ⇒ 不拆
+    (128, 128,   1),   # cin/group =  1  ⇒ 不拆（depthwise）
+    (64,    8,   8),   # cin/group =  8  ⇒ 拆
+    (64,   16,   1),   # cin/group =  4  ⇒ 不拆
+    (64,   32,   1),   # cin/group =  2  ⇒ 不拆
+    (128,   8,   8),   # 1x1 核（k=1）同样拆 ⇒ 与 kernel 无关
+]
+
+#: ★ 真实模型对账（docs/129 §1 + docs/130 §4）：(模型, ONNX Conv 数, Σ规则, 实测对象数)
 REAL_MODEL_CHECK: list[tuple[str, int, int, int]] = [
-    ("regnet_x_400mf",    71, 429, 431),   # 含 group ∈ {1,2,4,10,25}
-    ("resnet18",          20,  20,  22),
-    ("densenet121",      120, 120, 122),
-    ("squeezenet1_0",     26,  26,  28),
-    ("mnasnet0_5",        52,  52,  54),
-    ("mobilenet_v2",      52,  52,  54),
-    ("googlenet",         57,  57,  61),   # 残差 +2  ← 未解释
-    ("shufflenet_v2_x0_5", 56, 56,  77),   # 残差 +19 ← 未解释（不是 depthwise，见 docs/129 §2）
-    ("efficientnet_b0",   81,  81, 113),   # 残差 +30 ← 未解释
+    ("regnet_x_400mf",     71, 429, 431),  # 分组卷积 cin/group 全 = 16 ⇒ 全拆
+    ("resnet18",           20,  20,  22),
+    ("densenet121",       120, 120, 122),
+    ("squeezenet1_0",      26,  26,  28),
+    ("mnasnet0_5",         52,  52,  54),
+    ("mobilenet_v2",       52,  52,  54),
+    ("googlenet",          57,  57,  61),  # 残差 +2  ← 未解释（docs/130 §4）
+    ("shufflenet_v2_x0_5", 56,  56,  77),  # 残差 +19 ← 未解释
+    ("efficientnet_b0",    81,  81, 113),  # 残差 +30 ← 未解释
 ]
 RESIDUAL_MODELS = {"googlenet", "shufflenet_v2_x0_5", "efficientnet_b0"}
 
@@ -148,12 +170,18 @@ def self_check() -> list[_Check]:
         got = split_conv_count([g])
         out.append(_Check(f"group={g} 拆分后算子数", got == g, f"期望 {g}，得 {got}"))
 
-    # ② ★ depthwise 与分组卷积必须**区别对待**（docs/129 §1）
-    #    同一个 group=32：cin=64 是分组卷积（拆 32 个），cin=32 是 depthwise（拆 1 个）
-    out.append(_Check("group=32 cin=64 ⇒ 32", split_factor(32, 64) == 32,
-                      f"得 {split_factor(32, 64)}"))
-    out.append(_Check("group=32 cin=32 ⇒ 1（depthwise）", split_factor(32, 32) == 1,
-                      f"得 {split_factor(32, 32)}"))
+    # ② ★ 分组卷积拆分边界（docs/130）—— 逐点复算受控实验
+    #    规则：group > 1 且 cin/group >= 8 ⇒ 拆成 group 个，否则 1 个
+    for cin, g, measured in SPLIT_BOUNDARY:
+        # 注意：最后一项是 1x1 核的重复点（同一个 (cin,g)），用集合去重意义不大
+        got = split_factor(g, cin)
+        out.append(_Check(f"cin={cin} group={g} ⇒ {measured}",
+                          got == measured, f"得 {got}，实测 {measured}"))
+    # ★ 判别实验：条件在 cin 侧而不是 cout 侧
+    out.append(_Check("cin/group=8 但 cout/group=1 ⇒ 仍拆",
+                      split_factor(16, 128) == 16, f"得 {split_factor(16, 128)}"))
+    out.append(_Check("cin/group=1 但 cout/group=8 ⇒ 不拆",
+                      split_factor(16, 16) == 1, f"得 {split_factor(16, 16)}"))
     out.append(_Check("group=1 ⇒ 1", split_factor(1, 64) == 1, f"得 {split_factor(1, 64)}"))
 
     # ③ 真实模型对账：**精确命中的 6 个必须一直命中；3 个残差必须一直"失败"**

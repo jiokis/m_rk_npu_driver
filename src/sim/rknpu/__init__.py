@@ -14,6 +14,7 @@ rknpu — RK3588 NPU 的 CPU 侧模拟开发环境
     tiling    **算子拆分与 tile 数模型**（从编译器内部实测回灌，见 docs/128）
     submits   **运行侧提交结构**的解析与两条已验证定律（docs/133）
     taskmap   把运行侧 task **映射回算子**（CNA.4136 = 空间尺寸，docs/134）
+    taskdesc  解析 40 字节 `rknpu_task` 描述符（op_idx / f14，docs/135/136）
     synth     合成命令流（造测试向量）
     cli       命令行入口
 
@@ -21,4 +22,4 @@ rknpu — RK3588 NPU 的 CPU 侧模拟开发环境
     PYTHONPATH=src/sim python3 -m rknpu.cli verify
 """
 __all__ = ["regcmd", "regmap", "machine", "loader", "weights", "exec",
-           "timing", "optimize", "tiling", "submits", "taskmap", "synth"]
+           "timing", "optimize", "tiling", "submits", "taskmap", "taskdesc", "synth"]

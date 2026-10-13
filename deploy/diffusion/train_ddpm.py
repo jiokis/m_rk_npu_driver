@@ -102,6 +102,8 @@ def main() -> int:
     ap.add_argument("--out", default=os.path.join(HERE, "ckpt", "ddpm.pt"))
     ap.add_argument("--log-every", type=int, default=100)
     ap.add_argument("--preview-every", type=int, default=0)
+    ap.add_argument("--save-every", type=int, default=0,
+                    help="每 N 步存一次中间 checkpoint（**踩过：不存就只能等全部跑完**）")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
 
@@ -143,6 +145,13 @@ def main() -> int:
             dt = time.time() - t0
             print(f"  step {step:6d}/{args.steps}  loss {np.mean(losses[-args.log_every:]):.4f}  "
                   f"{dt/step*1000:.0f} ms/step  已用 {dt/60:.1f} min", flush=True)
+        if args.save_every and step % args.save_every == 0:
+            ck = os.path.splitext(args.out)
+            mid = f"{ck[0]}_s{step}{ck[1]}"
+            torch.save({"model": model.state_dict(), "args": vars(args),
+                        "nparam": nparam, "loss_final": float(np.mean(losses[-200:])),
+                        "step": step}, mid)
+            print(f"  [ckpt] {mid}   loss {np.mean(losses[-200:]):.4f}", flush=True)
         if args.preview_every and step % args.preview_every == 0:
             model.eval()
             s = sample(model, args.T, alphas, abar, n=16, temb_dim=args.temb_dim, steps=100)

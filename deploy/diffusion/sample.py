@@ -189,6 +189,8 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="/tmp/ddpm_grid.png")
     ap.add_argument("--save-raw", default=None, help="把 [-1,1] 的原始张量存成 .npy（用于跨后端对比）")
+    ap.add_argument("--trajectory", default=None,
+                    help="存「去噪过程」图：同一张图在若干个 t 上的样子（很直观的交付物）")
     args = ap.parse_args()
 
     if args.backend == "torch":
@@ -204,8 +206,9 @@ def main() -> int:
     alphas, abar = make_schedule(T)
     print(f"[sample] backend={backend.name}  T={T}  steps={args.steps}  n={args.n}")
     t0 = time.time()
-    imgs, times, _ = sample(backend, T, alphas, abar, dim, args.n, size,
-                            steps=args.steps, seed=args.seed)
+    imgs, times, snaps = sample(backend, T, alphas, abar, dim, args.n, size,
+                                steps=args.steps, seed=args.seed,
+                                snapshots=bool(args.trajectory))
     dt = time.time() - t0
     print(f"[sample] {len(times)} 次 UNet 调用  总计 {dt:.2f} s  "
           f"每次 {times.mean()*1000:.1f} ms (中位 {np.median(times)*1000:.1f} ms)")
@@ -215,6 +218,14 @@ def main() -> int:
         np.save(args.save_raw, imgs)
         print(f"[raw] {args.save_raw}")
     save_png(to_grid(imgs, args.cols), args.out)
+    if args.trajectory and snaps:
+        # 每行 = 一个采样时刻；每列 = 同一张图（取前 8 张）
+        rows = []
+        for t_i, arr in snaps:
+            rows.append(arr[:8])
+        strip = np.concatenate(rows, 0)          # [k*8, 1, H, W]
+        save_png(to_grid(strip, cols=8), args.trajectory)
+        print(f"[traj] 去噪过程 {len(snaps)} 个时刻 × 8 张 → {args.trajectory}")
     if hasattr(backend, "release"):
         backend.release()
     return 0

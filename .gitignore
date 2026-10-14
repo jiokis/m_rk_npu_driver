@@ -20,3 +20,16 @@ deploy/diffusion/calib/
 # 但扫描的**结果表**要留下（小、且是结论）
 !deploy/diffusion/sweep/table.json
 !deploy/diffusion/sweep/bench.json
+
+# SD 相关的大产物（ONNX 189 MB / RKNN 190 MB）—— 都能用 deploy/sd/*.py 重建
+deploy/sd/rknn/
+deploy/sd/onnx/
+# 规模扫描的大 ONNX
+deploy/diffusion/pressure/*.onnx
+deploy/diffusion/pressure/*.rknn
+!deploy/diffusion/pressure/table.json
+
+# ★★★★★ GitHub 硬限制：单文件 > 100 MB 会被 pre-receive hook 拒绝
+#   （踩过：check*.onnx 各 189 MB，报 "exceeds GitHub's file size limit of 100.00 MB"）
+#   这些是早期 ONNX 研究的中间产物，可用脚本重建 ⇒ 不入库
+check*.onnx

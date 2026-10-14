@@ -44,18 +44,20 @@ CIFAR_DIR = os.path.join(DATA, "cifar-10-batches-py")
 
 
 SYNTH_NPZ = "/home/dunaandone/rknn-work/synth32.npz"
+SYNTH64_NPZ = "/home/dunaandone/rknn-work/synth64.npz"
 
 
-def load_data() -> torch.Tensor:
+def load_data(path: str | None = None) -> torch.Tensor:
     """数据源优先级：本地合成集 > CIFAR-10（后者实测被限速到 ~10 KB/s，基本拿不到）
 
     ⚠️ 实测：CIFAR-10 / STL-10 的源都只有 10~12 KB/s（170 MB 要 ~4.7 小时），
        HuggingFace 与 hf-mirror **完全不可达**。所以默认用本地程序化生成的数据集
        （见 synth_data.py），它完全可复现、结构清晰、能一眼看出生成是否有效。
     """
-    if os.path.exists(SYNTH_NPZ):
-        x = np.load(SYNTH_NPZ)["x"].astype(np.float32)
-        print(f"[data] 本地合成集 {SYNTH_NPZ}")
+    path = path or SYNTH_NPZ
+    if os.path.exists(path):
+        x = np.load(path)["x"].astype(np.float32)
+        print(f"[data] 本地合成集 {path}  {tuple(x.shape)}")
         return torch.from_numpy(x)
     import pickle
     if not os.path.isdir(CIFAR_DIR):
@@ -92,7 +94,8 @@ def sin_emb(t: torch.Tensor, dim: int) -> torch.Tensor:
 
 def train_vae(a, x):
     base = a.base
-    enc, dec = Encoder(base=base), Decoder(base=base)
+    enc = Encoder(base=base, downs=a.downs)
+    dec = Decoder(base=base, downs=a.downs)
     opt = torch.optim.AdamW(list(enc.parameters()) + list(dec.parameters()),
                             lr=a.lr, weight_decay=1e-5)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, a.steps)
@@ -143,11 +146,17 @@ def train_unet(a, x):
     v = torch.load(a.vae, map_location="cpu")
     va = v["args"]
     scale = v["latent_scale"]
-    enc = Encoder(base=va["base"]).eval()
+    enc = Encoder(base=va["base"], downs=va.get("downs", 2)).eval()
     enc.load_state_dict(v["enc"])
     for p in enc.parameters():
         p.requires_grad_(False)
+    lat = x.shape[-1] // (2 ** va.get("downs", 2))
+    print(f"[unet] 潜空间边长 {lat}")
     model = LatentUNet(latent_ch=4, base=a.base, mult=(1, 2, 4), temb_dim=a.temb_dim)
+    if a.init_unet and os.path.exists(a.init_unet):
+        old = torch.load(a.init_unet, map_location="cpu", weights_only=False)
+        model.load_state_dict(old["model"])
+        print(f"[unet] 微调自 {a.init_unet}（原 loss {old.get('loss_final', float('nan')):.4f}）")
     nparam = sum(p.numel() for p in model.parameters())
     print(f"[unet] base={a.base} 参数 {nparam/1e6:.3f} M  潜空间缩放 {scale:.4f}")
 
@@ -207,11 +216,15 @@ def main() -> int:
     ap.add_argument("--log-every", type=int, default=250)
     ap.add_argument("--save-every", type=int, default=2000)
     ap.add_argument("--subset", type=int, default=None)
+    ap.add_argument("--downs", type=int, default=2, help="VAE 下采样级数（2=4x, 3=8x）")
+    ap.add_argument("--data", default=None, help="数据集 .npz（缺省 synth32）")
+    ap.add_argument("--init-unet", default=None,
+                    help="用已有 UNet 权重做**微调**（换 VAE 后潜空间分布变了，微调比从零训快得多）")
     a = ap.parse_args()
 
     torch.manual_seed(0)
     torch.set_num_threads(max(1, os.cpu_count() or 4))
-    x = load_data()
+    x = load_data(a.data)
     if a.subset:
         x = x[:a.subset]
     print(f"[data] {tuple(x.shape)}  范围 [{x.min():.2f},{x.max():.2f}]")

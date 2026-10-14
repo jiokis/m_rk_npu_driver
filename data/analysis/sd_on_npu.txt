@@ -1,0 +1,51 @@
+# 把预训练 SD-Turbo 搬上 RK3588 NPU（进行中）—— ① VAE 解码器已通
+
+## ★★★★★ 环境真相（本轮最重要的发现）
+
+| 项 | 实测 | 影响 |
+|---|---|---|
+| **本机内存** | **只有 7 GB** | 5.2 GB 的 safetensors **绝不能整文件读入**；之前 CPU 训练卡顿也是它 |
+| **GPU** | **RTX 4060 Laptop 8 GB**（驱动 610.43 / CUDA 13.3） | **训练从此用 GPU，不再占 CPU** |
+| **conda** | `/home/dunaandone/miniconda3`，新建 **`sddiff`** 环境 | `torch 2.14.1+cu130`，`cuda True` |
+| **模型源** | **ModelScope 31 MB/s** ✅ | HuggingFace / hf-mirror **完全不可达**；`download.pytorch.org` 3.8 MB/s（只有 torchvision 权重） |
+| CIFAR-10 / STL-10 | 10~12 KB/s ❌ | 真实数据集仍不可用（已改用程序化合成集） |
+
+## ★★★★★ SD-Turbo 已拿到并解出组件
+
+`AI-ModelScope/sd-turbo` 的 `sd_turbo.safetensors`（**5214.56 MB 十进制 = 4972 MiB**，单文件）
+含四组：`conditioner`(294) / `denoiser`(1) / `first_stage_model`(248) / `model`(686)。
+
+**懒加载**（只读 `first_stage_model.*`，334.6 MB）→ `convert_ldm_vae_checkpoint` →
+`AutoencoderKL.load_state_dict` ⇒ **missing 0 / unexpected 0** ✅
+
+## ★★★★★ ① VAE 解码器 → RKNN：通过
+
+### 关键坑：attention 会让 RKNN 的融合规则报错
+
+`TypeError: only 0-dimensional arrays can be converted to Python scalars`，
+工具链自己提示 `You can add disable_rules=['fuse_mul_into_sdpa']` ⇒ 加上即可（踩过）。
+
+### 输入仍是 **NHWC**（再次确认，见 docs/141）
+
+### 结果（256×256 图 / 32×32 潜空间，板上 core_mask=0_1_2）
+
+| 版本 | 余弦相似度 | 相对误差 | 解码耗时 |
+|---|---|---|---|
+| **FP16**（不量化） | **1.0000** | **0.27%** | **1360 ms** |
+| **INT8**（w8a8） | **0.9764** | 28.3% | 1547 ms |
+
+* `.rknn`：FP16 188.9 MB / INT8 179.8 MB（ONNX 198.1 MB）
+* 模型内部内存 152 MB、权重内存 95 MB（工具链的 `RKNNMemStatisticsPass` 报的）
+
+### ★★★★★ 一个「怀疑错了一侧」的教训
+
+我第一次比对时得到余弦只有 0.30、std 差 9 倍，**先怀疑了 RKNN 量化**，
+换 FP16 后仍然 0.30 ⇒ 再怀疑输入布局，两种布局都不对
+⇒ **最后去查 ONNX 本身**，发现 **ONNX 与我的 torch 参考就不一致**。
+
+**真相：`diffusers` 的 `AutoencoderKL.decode()` **不**应用 `scaling_factor`（是 pipeline 除的），
+而我的 ONNX 把 `1/scaling_factor` 烘进了图里。**
+把参考改成 `decode(z / scaling_factor)` 后：**ONNX vs torch 余弦 = 1.0000**。
+
+**⇒ 教训：数值对不上时，「参考实现」和「被测实现」要**同等怀疑**。
+   我默认参考是对的，于是花了三轮在正确的一侧找问题。**

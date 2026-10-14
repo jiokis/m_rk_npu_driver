@@ -1,0 +1,41 @@
+# SD-Turbo 的 UNet：导出成功，但 **RKNN 转换被 7 GB 内存卡住**
+
+## ✅ 导出这一步已经打通（全是踩出来的）
+
+| 坑 | 症状 | 正解 |
+|---|---|---|
+| **键名前缀** | `convert_ldm_unet_checkpoint` 返回 **0 项** ⇒ `missing 686` ⇒ **ONNX 是随机权重** | 键是 `model.diffusion_model.*`，而**该函数自己会去掉这个前缀** ⇒ 必须把**带前缀的原始键**交给它 |
+| **配置套错** | `size mismatch ... current model is torch.Size([320,320,1,1])` | SD-Turbo 是 **SD2.1 系**（`attention_head_dim=[5,10,20,20]`、`use_linear_projection=True`）⇒ **必须用模型自带的 `unet/config.json`**，不能套 SD1.5 |
+| **opset 14** | `Assertion 'false' failed: No Previous Version of LayerNormalization exists` | `LayerNormalization` 是 opset 17 才有 ⇒ **opset 17** |
+| **dynamo 导出器** | RKNN build 报 `Node (node_Split_44) Op (Split) [ShapeInferenceError] Both 'split' input and 'num_outputs' attribute were given` | torch 2.14 默认走 dynamo 导出器；**换 `dynamo=False`（传统 TorchScript 导出器）** ⇒ 单文件 1652 MB ONNX |
+| **7 GB 内存** | 导出必须放 **GPU**（865 M 参数 fp32 两份就 6.9 GB） | 用 conda `sddiff` 环境 + `--device cuda` + fp16（显存 1.62 GB） |
+
+**结果**：`sdunet_l32_fp16.onnx` **1652 MB**，`missing 0 / unexpected 0` ✅
+（740 个 initializer / 1668 节点，含 self+cross-attention）
+
+## ❌ RKNN 转换：**OOM**
+
+```
+Out of memory: Killed process (pt_main_thread) total-vm:11303236kB anon-rss:6737652kB
+```
+* `optimization_level=3` 与 `=0` 都被杀（峰值 6.5~6.7 GB）
+* 本机 WSL 只有 **7 GB**（`sudo` 需密码，无法加 swap）
+* **rknn-toolkit2 是纯 CPU 工具链，不走 CUDA** ⇒ **GPU 帮不上这一步**
+  （GPU 只在 torch 侧有用：导出、参考、量化标定）
+
+### 试过但不可行的两条
+
+1. **把 3×3 卷积权重改成 int8** 压到 1192 MB ⇒ ONNX 报
+   `Type 'tensor(int8)' of input parameter (u.conv_in.weight) of operator (Conv) is invalid`
+   （ONNX 的 int8 卷积必须走 **QDQ 格式**，不能直接塞 int8 权重）
+2. `optimization_level=0` ⇒ 峰值只从 6.7 GB 降到 6.5 GB，仍然 OOM
+
+## 下一步（两条路）
+
+| # | 方案 | 说明 |
+|---|---|---|
+| **A** | **把 WSL 内存调大**（Windows 侧 `C:\Users\<你>\.wslconfig`：`[wsl2]` + `memory=20GB` + `swap=32GB`，然后 `wsl --shutdown`） | **最简单**，一行配置；而且后续**量化标定**（要跑多次前向）也需要内存 |
+| **B** | **把 UNet 拆成 down / mid / up 几段**分别导出、分别转 RKNN，运行时在板上串起来 | 全自动，但要自己管 12 条 skip 连接；每段 ~200 M 参数 ⇒ 峰值 ~2 GB |
+
+**⚠️ 拆分的代价**：段与段之间的中间张量要经 DDR 往返，会引入额外带宽开销；
+且 RKNN 的每次提交固定开销（实测 ~80 µs）会叠加到段数上。

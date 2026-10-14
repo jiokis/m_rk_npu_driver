@@ -37,13 +37,14 @@ def main() -> int:
     ap.add_argument("--name", default=None)
     ap.add_argument("--no-quant", action="store_true")
     ap.add_argument("--calib-n", type=int, default=4)
+    ap.add_argument("--onnx", default=None)
     ap.add_argument("--opt-level", type=int, default=3,
                     help="RKNN optimization_level。**本机只有 7 GB 内存**，"
                          "865 M 参数的 UNet 在 level=3 下会被 OOM kill（实测 anon-rss 6.7 GB）"
                          "⇒ 降到 0 可显著降低峰值")
     a = ap.parse_args()
     name = a.name or f"sdunet_l{a.latent}"
-    onnx_p = os.path.join(HERE, "rknn", f"sdunet_l{a.latent}_{a.dtype}.onnx")
+    onnx_p = a.onnx or os.path.join(HERE, "rknn", f"sdunet_l{a.latent}_{a.dtype}.onnx")
     rknn_p = os.path.join(HERE, "rknn", name + ".rknn")
     if not os.path.exists(onnx_p):
         raise SystemExit(f"缺 {onnx_p}（先跑 export_unet_gpu.py）")

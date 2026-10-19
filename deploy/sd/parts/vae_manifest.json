@@ -1,0 +1,25 @@
+{
+ "latent": 64,
+ "parts": [
+  {
+   "name": "vae512_v1",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/vae512_v1.onnx",
+   "inputs": [
+    "z"
+   ],
+   "outputs": [
+    "h"
+   ]
+  },
+  {
+   "name": "vae512_v2",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/vae512_v2.onnx",
+   "inputs": [
+    "h"
+   ],
+   "outputs": [
+    "img"
+   ]
+  }
+ ]
+}

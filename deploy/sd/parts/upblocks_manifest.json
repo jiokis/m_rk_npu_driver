@@ -1,0 +1,82 @@
+{
+ "latent": 64,
+ "dtype": "fp16",
+ "parts": [
+  {
+   "name": "unet_up0",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_up0.onnx",
+   "inputs": [
+    "h",
+    "emb",
+    "ehs",
+    "skip0",
+    "skip1",
+    "skip2"
+   ],
+   "outputs": [
+    "out"
+   ],
+   "skip_slice": [
+    9,
+    12
+   ]
+  },
+  {
+   "name": "unet_up1",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_up1.onnx",
+   "inputs": [
+    "h",
+    "emb",
+    "ehs",
+    "skip0",
+    "skip1",
+    "skip2"
+   ],
+   "outputs": [
+    "out"
+   ],
+   "skip_slice": [
+    6,
+    9
+   ]
+  },
+  {
+   "name": "unet_up2",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_up2.onnx",
+   "inputs": [
+    "h",
+    "emb",
+    "ehs",
+    "skip0",
+    "skip1",
+    "skip2"
+   ],
+   "outputs": [
+    "out"
+   ],
+   "skip_slice": [
+    3,
+    6
+   ]
+  },
+  {
+   "name": "unet_up3",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_up3.onnx",
+   "inputs": [
+    "h",
+    "emb",
+    "ehs",
+    "skip0",
+    "skip1",
+    "skip2"
+   ],
+   "outputs": [
+    "out"
+   ],
+   "skip_slice": [
+    0,
+    3
+   ]
+  }
+ ]
+}

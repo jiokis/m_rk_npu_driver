@@ -1,0 +1,5 @@
+{"layers": 24, "parts": [
+ {"name": "clip_p0", "onnx": "deploy/sd/parts/clip_p0.onnx", "layers": [0, 8], "inputs": ["x"], "outputs": ["y"]},
+ {"name": "clip_p1", "onnx": "deploy/sd/parts/clip_p1.onnx", "layers": [8, 16], "inputs": ["x"], "outputs": ["y"]},
+ {"name": "clip_p2", "onnx": "deploy/sd/parts/clip_p2.onnx", "layers": [16, 24], "inputs": ["x"], "outputs": ["y"]}
+]}

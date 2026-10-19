@@ -13,6 +13,14 @@ set -uo pipefail
 
 REPO="/home/dunaandone/orange pi/rk3588-npu-re"
 LOG_TAG="[$(date '+%F %T')]"
+
+# ── 单实例锁：上一次推送若仍在进行，直接跳过本次（防推包叠加打满机器）──
+LOCK="/tmp/m_rk_npu_driver.autopush.lock"
+exec 9>"$LOCK"
+if ! flock -n 9; then
+  echo "$LOG_TAG 上一次推送仍在进行，跳过本次"
+  exit 0
+fi
 BRANCH="main"
 
 cd "$REPO" || { echo "$LOG_TAG ❌ 仓库目录不存在: $REPO"; exit 1; }
@@ -48,7 +56,7 @@ $summary" || { echo "$LOG_TAG ⚠️ 提交失败"; exit 1; }
 fi
 
 # ── 推送 ──
-if git push -q origin "$BRANCH" 2>&1; then
+if timeout 600 nice -n 10 ionice -c2 -n7 git -c pack.threads=2 -c pack.windowMemory=128m push -q origin "$BRANCH" 2>&1; then
   echo "$LOG_TAG ✅ 已推送 → $(git rev-parse --short HEAD)"
 else
   echo "$LOG_TAG ⚠️ 推送失败（网络或认证问题），提交已留在本地，下次会重试"

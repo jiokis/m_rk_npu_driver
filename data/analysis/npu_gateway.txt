@@ -1,0 +1,995 @@
+# 提示词注入 → 出图 → NPU 利用率：网关（进行中）
+
+## ★★★★★ NPU 利用率接口（实测可用）
+
+```
+/sys/class/devfreq/fdab0000.npu/load   →  "100@1000000000Hz"（百分比 @ 频率）
+/sys/class/devfreq/fdab0000.npu/cur_freq →  1000000000
+```
+**⇒ 板子上直接读 sysfs 就能拿到 NPU 利用率**，不需要任何额外工具。
+
+## ★★★★★ 纯标准库的 CLIP 分词器（已写并**验证正确**）
+
+板上没有 `tokenizers`/`transformers`/`torch`（只有 PIL）⇒ 自己实现 CLIP 的 byte-level BPE：
+
+* `deploy/sd/clip_tokenizer.py`：只用 `json`/`re`/`gzip`
+* **验证**：`"a photo of a cat"` → `[49406, 320, 1125, 539, 320, 2368, 49407]`
+  —— 与 CLIP 公认分词结果**逐位一致** ✅
+* ⚠️ OpenAI 原版正则用 `\p{L}`/`\p{N}`（`regex` 模块语法），**标准库 `re` 不支持**
+  ⇒ 报 `bad escape \p`，已换成等价的 ASCII 版
+
+## ★★★★★ 网关已写好（`deploy/sd/gateway.py`）
+
+板上只有 PIL + rknnlite ⇒ **HTTP 用标准库 `http.server`**（多线程），不依赖 flask。
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/` | 极简 HTML 表单（**提示词注入**入口，含步数/尺寸选择） |
+| GET/POST | `/generate?prompt=…&steps=1&size=256` | 生成一张图，返回 PNG |
+| GET | `/npu` | NPU 利用率（当前 + 最近 30 s 的 max/mean） |
+| GET | `/health` | 各模型是否就位 |
+
+* 响应头带 `X-NPU-Load`（出图期间的利用率窗口）与 `X-Timings`（clip/unet/vae/total 各段耗时）
+* 后台线程按 50 ms 采 NPU 利用率 ⇒ **能看出出图时的峰值**
+* 推理用锁串行化（NPU 一次只能跑一个模型）
+
+## ❌ CLIP 文本塔的导出又被 7 GB 内存卡住
+
+`open_clip.create_model('ViT-H-14')` 会**同时建视觉塔**（600 M+ 参数），
+加上 safetensors 读取 ⇒ 峰值 6.74 GB ⇒ **OOM kill**（同一堵墙）。
+
+**已经确认可行的部分**（下次直接接上）：
+* `open_clip` 的参数名与检查点**逐字对应**（`transformer` / `token_embedding` /
+  `ln_final` / `positional_embedding` / `text_projection` / `logit_scale`）
+  ⇒ 不需要任何名字转换
+* SD 的 cross-attention 要的是 **`last_hidden_state` [1,77,1024]**，
+  **不是** `encode_text` 的池化投影 ⇒ forward 要手写到 `ln_final` 为止
+
+**绕开的办法**（与 UNet 同样的思路）：**只建文本塔**，不建视觉塔。
+`open_clip` 的 `CLIP` 类支持只传 `text_cfg`（不传 `vision_cfg`）⇒ 显存/内存减半。
+
+## 下一步
+
+1. **只建文本塔**导出 CLIP（`CLIP(text_cfg=...)` 不传 vision）⇒ 转 RKNN
+2. 板上跑网关：`SD_MODELS=/tmp SD_TOKENIZER=/tmp/clip_tok python3 gateway.py`
+3. 用提示词测端到端，并记录 NPU 利用率峰值
+
+---
+
+# ★★★★★ 本轮结果：网关跑通（提示词 → 出图 → NPU 利用率），但**出图质量还不对**
+
+## ③ CLIP 文本塔 → RKNN：完成（同样用「拆」的办法）
+
+整只文本塔（354 M 参数 / ONNX 1413 MB）转 RKNN 峰值 **6.59 GB** ⇒ 7 GB 上 OOM。
+**按层切成 3 段**（文本塔**没有 skip 连接**，接口就是 `[B,77,1024] → [B,77,1024]`，比 UNet 简单）：
+
+| 段 | 层 | ONNX | `.rknn` | build |
+|---|---|---|---|---|
+| P0 | 0–7（含词/位置嵌入） | 606 MB | **354 MB** | 35 s |
+| P1 | 8–15 | 403 MB | **257 MB** | 21 s |
+| P2 | 16–23（含 ln_final） | 403 MB | **257 MB** | 25 s |
+
+**踩的坑**：
+1. `open_clip.create_model('ViT-H-14')` 会**同时建视觉塔**（32 层×1280，~600 M）⇒ OOM
+   ⇒ 改用 `TextTransformer` **只建文本塔**
+2. `TextTransformer` **自带** `token_embedding`/`positional_embedding`/`ln_final`/`transformer`
+   ⇒ 外面再包一层会让名字对不上（`missing 293 / unexpected 288`）
+3. 必须 `output_tokens=True`，否则返回的是**池化**的 `[B,1024]`；
+   且它返回的是**元组 `(pooled, tokens)`** —— 要取**后者**
+4. 直接调 `resblocks` 会走 `aten::_native_multi_head_attention`，
+   **该算子无法导出 ONNX** ⇒ 必须 `torch.backends.mha.set_fastpath_enabled(False)`
+
+## ★★★★★ 网关：跑通了
+
+```
+curl "http://<board>:8088/generate?prompt=a%20photo%20of%20a%20cat&steps=1&size=256"
+→ HTTP 200   PNG 256×256
+X-Timings: {"clip_ms": 2850, "unet_ms": 1259, "vae_ms": 1992, "total_ms": 9150}
+```
+
+* `/` 提示词注入表单、`/generate`、`/npu`、`/health`
+* **NPU 利用率**：`/sys/class/devfreq/fdab0000.npu/load` → `100@1000000000Hz`
+  ⚠️ 实测**一直读 100**（governor 是 performance、频率钉在 1 GHz）⇒ 该值更像「频率档位」
+  而非瞬时占用，**要拿真实占用得换指标**（如 `cur_freq` 变化或 NPU 侧计数）
+* 每步耗时：**UNet ≈ 1.2–1.4 s/步**（2 步 3.24 s、4 步 5.34 s、8 步 10.97 s，线性）
+
+## ❌ 出图质量还不对：是**调度器**的问题，不是链路
+
+三张不同提示词出的都是**高频彩色噪声**（相邻像素差 2.8~4.6，std 32~48）。
+
+**根因（已定位）**：
+* 我最初写成 `z = z - eps/N` —— **那根本不是 DDIM**，几乎不改变 z
+* 改成真 DDIM 后仍然不对：**t=999 时 `1/sqrt(ᾱ) ≈ 15`，eps 的误差被放大 15 倍**
+  ⇒ RKNN 路径 1~3% 的误差 → `z0` 直接跑飞
+* **SD-Turbo 官方用的是 `EulerAncestralDiscreteScheduler` + `timestep_spacing="trailing"`
+  + `guidance_scale=0`**，不是 DDIM；而且它靠**蒸馏**让 1 步成立，
+  对 eps 精度极其敏感 ⇒ **量化路径下 1 步大概率不成立**
+
+## 下一步
+
+1. **换成 SD-Turbo 真正的调度器**（EulerAncestral + trailing + 无 CFG），
+   并让 `init_noise_sigma` 正确（我目前硬写 `×0.75`，应该是调度器给的）
+2. **给 UNet 三段做 w8a8 量化标定**（现在 FP16 虽然准，但 1.2 s/步太慢）
+3. **修 NPU 利用率的读法**（现在恒 100，没有区分度）
+4. 与 GPU 上的 diffusers 参考**逐张对比余弦**，确认是调度器而非模型的问题
+
+---
+
+# 本轮修复：采样器与缩放（网关已跑通，出图仍是抽象纹理）
+
+## ✅ 修掉的三处（都经 GPU 参考独立验证）
+
+| # | 错误 | 正解 | 依据 |
+|---|---|---|---|
+| ① | `z = randn × 0.75` 直接喂 UNet | **`init_noise_sigma = 14.61`**（EulerAncestral + trailing 实测值） | GPU 参考打印 `init_noise_sigma=14.6146` |
+| ② | 以为 latent 要乘 VAE 的 `0.18215` 才进 UNet | **不乘**；`0.18215` 只在**解码时除**（我的 VAE ONNX 已烘进 `1/scaling`） | diffusers 的 pipeline 逻辑 |
+| ③ | 用 **DDIM**（`z←z−eps/N`，后来改真 DDIM） | **`EulerAncestralDiscreteScheduler`** + `trailing` + `guidance_scale=0` | SD-Turbo 官方配置；1 步时 `z ← z − σ·eps`（σ=14.61） |
+
+**修复后 NPU 与 GPU 参考逐项对齐**：
+| | 均值 | std | 相邻差 |
+|---|---|---|---|
+| GPU 参考（EulerAncestral） | 119.5 | 104.9 | 17.5 |
+| **板子 NPU** | **120.7** | **104.2** | 38.9 |
+
+## ★★★★★ 排除了「链路问题」
+
+**三个不同提示词出的图各不相同**（两两余弦 0.575~0.588），
+且 **`an empty black void` 明显最暗（均值 113.3 vs 124.7/130.0）** —— **语义上说得通**。
+⇒ **CLIP 条件确实传到了 UNet，RKNN 链路是通的。**
+
+## ❌ 剩下的问题：出图是**抽象彩色纹理**，不是照片
+
+**最强假设：分辨率不对。**
+**SD-Turbo 是为 512×512（潜空间 64×64）蒸馏的**，而我一直在 **256×256（潜空间 32×32）** 上跑
+—— 对 UNet 来说是**分布外输入**，输出抽象纹理符合预期。
+
+**⇒ 验证办法**：把 UNet 三段与 VAE 解码器都改成 **latent 64×64 / 512×512** 重导重转
+（脚本已参数化：`--latent 64`、`--size 512`），然后比对。
+
+⚠️ 但 512 档的 VAE 解码器之前转 RKNN 时 **OOM**（`sdvae512.onnx` 198 MB，峰值 >6.5 GB）
+⇒ 需要**同样用「拆」的办法**把 VAE 解码器也切开。
+
+## ⚠️ 运维教训（用户反馈）
+
+**不要在用户这台 7 GB 的笔记本上跑 GPU/CPU 重活** —— 参考实现、模型导出这些
+应该尽量在**板子（16 GB）**上做；笔记本只做轻量的文件操作与 SSH。
+本轮已把所有笔记本侧的重进程杀掉（GPU 利用率回到 2%）。
+
+---
+
+# ★★★★★ 出图修好了：真凶是漏了 `scheduler.scale_model_input()`
+
+## 症状与定位过程
+
+出图一直是**抽象彩色纹理**。逐一排除：
+
+| 试过 | 结果 | 结论 |
+|---|---|---|
+| 换 512×512（以为分辨率不对） | 仍纹理 | ❌ 分辨率假设不成立 |
+| 加步数 2/4/8 | 仍纹理 | ❌ 不是步数 |
+| 换 EulerAncestral（对齐 SD-Turbo） | 仍纹理 | 但**必要**（见下） |
+| 查 CLIP 因果掩码 | 正常 | ❌ 不是条件 |
+| **看参考里 `z` 的 std** | **16.8**（应为 ~1） | ★ **找到了** |
+
+## ★★★★★ 真凶：**喂 UNet 之前必须调 `scheduler.scale_model_input()`**
+
+diffusers 的采样循环是：
+
+```python
+latent_model_input = scheduler.scale_model_input(latents, t)   # ← 我漏了这一步
+noise_pred = unet(latent_model_input, t, encoder_hidden_states=prompt_embeds).sample
+latents = scheduler.step(noise_pred, t, latents).prev_sample
+```
+
+EulerAncestral 的 `scale_model_input` 就是 **`sample / sqrt(σ² + 1)`**。
+σ_max = 14.61 ⇒ **除数 14.65**。
+
+**我原来把 std≈14.6 的 latent 直接喂进 UNet ⇒ UNet 看到的输入大了 14.65 倍
+⇒ 预测的 eps 全是垃圾 ⇒ 输出抽象纹理。**
+
+### 修复效果（GPU 参考，512×512）
+
+| | 采样后 `z` 的 std | 图像 std | 相邻差 |
+|---|---|---|---|
+| 修复前 | **16.8** | 93.5 | 20.8 |
+| **修复后** | **1.37** ✅ | 93.5 | 20.8 |
+| **修复后 + 4 步** | **0.63** ✅ | **34.4** | **5.0** |
+
+**修复后出的是真实连贯画面**（米色纸页 + 上面的图形），不再是噪声。
+
+## 板上实测（256×256，NPU）
+
+| 步数 | 均值 | std | 相邻差 |
+|---|---|---|---|
+| 1 | 117.8 | 37.5 | **3.5** |
+| 4 | 114.4 | 42.8 | 22.2 |
+
+**⇒ NPU 出图与 GPU 参考风格一致（米色底 + 纹理），核心 bug 已解决。**
+
+## 现在网关里正确的完整采样链
+
+```python
+z = randn * SIGMA_MAX                                  # 14.61（init_noise_sigma）
+for i, t in enumerate(timesteps):
+    zi = z / sqrt(sigma[i]**2 + 1)                     # ★ scale_model_input
+    eps = unet3parts(zi, t, ehs)                       # CLIP 条件
+    z = euler_ancestral_step(eps, i, sigmas, z)        # z ← z − σ·eps（1 步时）
+img = vae_decode(z)                                    # ONNX 里已烘 1/scaling_factor
+```
+
+## 仍待改进
+
+* 出图内容偏「背景」，提示词贴合度弱 —— 最可能仍是 **256×256（潜空间 32×32）** 对
+  SD-Turbo（为 512 蒸馏）**偏小**；512 档需要重导 UNet 三段 + VAE 解码器（后者要再拆）
+* UNet 三段目前是 FP16（1.2 s/步）；改 w8a8 可提速
+* NPU 利用率读数恒 100，没有区分度
+
+---
+
+# 512 档：模型都转好了，卡在 **NPU 连续内存**
+
+## ✅ 已完成
+
+| 项 | 结果 |
+|---|---|
+| UNet@latent64 | 拆成 **4 段**（P3 的 1029 MB ONNX 转换 OOM ⇒ 再拆 p3a/p3b）：129+616+872+237 MB，**拼接余弦 0.999023** |
+| VAE 解码器@512 | 拆成 2 段：131+229 MB（⚠️ 两段 vs 整只余弦只有 **0.465**，待查） |
+| **板子 CMA** | **128M → 2048M**（见下） |
+
+## ★★★★★ 板子的硬限制：`cma=128M`
+
+```
+RKNPU: failed to allocate IOVA: -12
+RKNPU fdab0000.npu: rknpu_gem_get_pages: dma map 869076992 fail     ← 单次要 869 MB！
+```
+`/proc/cmdline` 里 `extraargs=cma=128M` ⇒ **NPU 分不到连续 DMA 内存**。
+256 档能跑是因为激活小得多。
+
+**处理**：改 `/boot/orangepiEnv.txt` 的 `extraargs=cma=2048M`（已备份原文件）并重启。
+重启后 `CmaTotal: 2097152 kB` ✓，六个模型**单独 init 全部成功**。
+
+## ❌ 仍卡住：512 档推理时 NPU 内存不够
+
+* 同时驻留 p1+p2+p3a+p3b ⇒ `init 失败`
+  ⇒ 改成**逐段加载→跑→释放**（任何时刻只驻留一个）
+* 但 `unet_p3a` 的 **`inference` 返回 None**（init 成功、推理失败）
+  ⇒ 512 档 up_blocks 在 256×256 上有 512 通道，**中间激活极大**
+  ⇒ 869 MB 那笔分配仍然过不去
+
+**⇒ 结论：512 档需要把 P3a 再拆细（按 up_block 逐个拆），
+   或者接受 256 档（那个是能出图的）。**
+
+## 顺带修的
+
+* `run()` 现在会**明确报错**（输入个数/形状 + 提示看 dmesg），不再只是 `NoneType`
+* skip 的分配搞清楚了（latent=64 实测）：
+  `up[0]`←skip[9..11] `up[1]`←skip[6..8] `up[2]`←skip[3..5] `up[3]`←skip[0..2]
+  ⇒ P3a 吃后 6 条、**P3b 必须拿前 6 条**（给错了会报 `Expected size 32 but got size 8`）
+
+---
+
+# 512 档：端到端**跑通了**（但出图仍是纹理）
+
+## ✅ 本轮靠逆向成果直接解决的问题
+
+### ① 用 `RKNNMemStatisticsPass` 定位内存黑洞
+
+编译 `unet_p3a` 时工具链自己打印（逆向时发现的 pass）：
+
+```
+Total Internal Memory Size: 17046.8KB     ← 激活只有 17 MB
+Total Weight Memory Size:  825668KB       ← **权重 825 MB**
+```
+
+**⇒ 那笔失败的 869 MB 分配是「权重」而不是激活 ⇒ 按参数量拆就能解决。**
+⇒ 把 `up_blocks` **逐个拆开**（up0/up1/up2/up3），最大一段 540 MB：
+332 + 540 + 164 + 73 MB，**拼接余弦 0.999023**。
+
+### ② 板子的硬限制：`cma=128M`
+
+```
+RKNPU: failed to allocate IOVA: -12
+RKNPU fdab0000.npu: rknpu_gem_get_pages: dma map 869076992 fail
+```
+⇒ 改 `/boot/orangepiEnv.txt` 的 `extraargs=cma=2048M`（原文件已备份）并重启。
+
+## 修掉的两个真 bug
+
+| bug | 症状 | 正解 |
+|---|---|---|
+| **VAE 拆分漏了收尾层** | 两段拼起来余弦只有 **0.465** | diffusers 的 `Decoder.forward` 收尾是 `up_blocks → **conv_norm_out** → **conv_act** → conv_out`，我只写了 conv_out ⇒ 补上后 **0.999976** |
+| **`up_blocks[0]` 没有 cross-attention** | `Query tensor attribute of input node(s) failed` | SD 配置是 `up_block_types=["UpBlock2D","CrossAttnUpBlock2D",…]` ⇒ 导出器把没用到的 `ehs` **剪掉**，up0 只有 5 个输入；硬传 6 个就报错 |
+
+## 现状：512 端到端 HTTP 200，但出图仍是纹理
+
+```
+X-Timings: {"clip_ms": 2834, "unet_ms": 38212, "vae_ms": 11130, "total_ms": 52281}
+→ 512×512 PNG ✓
+```
+
+* **UNet 38 s**：4 步 × 6 段 = **24 次模型加载**（每段用完就释放，因为 CMA 装不下多段）
+* **VAE 11 s**：两段加载
+
+**⇒ 出图仍是高频彩色纹理**，而 **GPU 参考（同算法、4 步、512）出的是真实画面**
+⇒ **差异在 NPU 路径内部**，需逐段比对定位。
+
+## 下一步（最有价值的）
+
+**逐步比对 NPU 与 GPU 的中间量**：给定同一输入，比较
+① `ehs`（CLIP）② 第 0 步的 `eps` ③ 第 0 步后的 `z` ④ VAE 的 `h`
+⇒ 找出第一处不一致的环节。（UNet 各段单独验证过余弦 0.999，所以嫌疑在**段间接口**
+—— 尤其是 RKNN 的 NHWC 收发约定与多输入顺序。）
+
+---
+
+# ★★★★★ 逐段对比：**核心链路是对的**，问题在采样循环
+
+## 方法
+
+GPU 上导出每一步的中间量（`deploy/sd/dump_ref64.py` → `/tmp/ref64.npz`），
+板上用**同一输入**跑各段 RKNN（`/tmp/cmp_seg.py`），逐个算余弦。
+
+## 结果（latent 64 / 512 档）
+
+| 环节 | 余弦 | 判读 |
+|---|---|---|
+| ① CLIP `ehs` | 通过（>0.99） | ✅ |
+| ② `p1.feat` / `p1.emb` | 通过 | ✅ |
+| ③ `p2.mid` | 通过 | ✅ |
+| skip4–11 | 0.81 → **0.31** | ⚠️ 但索引可能错位（见下） |
+| ④ `up0` / `up1` / `up2` | 0.596 / 0.148 / 0.297 | ⚠️ |
+| **⑤ `eps`（最终输出）** | **0.9993** | ✅ **UNet 输出正确！** |
+| **⑥ `vae_h`** | **1.0000** | ✅ **VAE 解码正确！** |
+
+参考侧的健康值：`eps` 均值 0.0003、**std 0.9670**；NPU 侧 **0.9740**（一致）。
+
+## ★★★★★ 结论
+
+**UNet 的最终输出和 VAE 解码都正确**（0.9993 / 1.0000）
+⇒ **纹理不是「模型/转换」的问题，而是「采样循环」的问题。**
+
+⚠️ 中间 skip 的余弦低（0.31~0.81）**很可能是我的索引对不上**：
+RKNN 会把**同一个张量去重**（`feat` 与 `skip1_6` 是同一个），
+而参考里 `sk = o1[2:] + o2[1:]`、板上是 `o1[1:8] + o2[1:]`
+⇒ **两边的序号不是一一对应的**（这一点在 docs/141 已经踩过一次）。
+
+**但最终 eps 对得上，说明这些中间量即便有出入也没有破坏结果**
+（或者说：我比对的是错位的张量对）。
+
+## 下一步：只查采样循环
+
+既然 eps 与 VAE 都正确，单步结果就应该正确。**⇒ 重点查：**
+
+1. **gateway 的 `steps` 循环**：`euler_ancestral_schedule(4)` 给的
+   `timesteps` 与 `sigmas` 是否与 diffusers 的 `set_timesteps(4)` 一致
+   （尤其 `timestep_spacing="trailing"` 的取整方式）
+2. **`scale_model_input` 用的 σ**：第 i 步应该用 `sigmas[i]`（我用对了），
+   但**第 0 步**参考里是 `SIGMA_MAX`，而 `sigmas[0]` 是否等于它要核对
+3. **多步之间的 `z` 是否与参考一致**（参考只导了第 0 步，需要扩到多步）
+
+---
+
+# ★★★★★ 真凶找到了：**内层循环覆盖了采样步序号**
+
+## bug
+
+```python
+for i, t in enumerate(tlist):        # ← 采样步
+    ...
+    for i in range(4):               # ← 内层复用 i，把采样步序号**覆盖成 3**！
+        h = run(f"unet_up{i}.rknn", ...)
+    z = euler_ancestral_step(eps, i, tlist, siglist, z, rng)   # ← i 已经是 3 了
+```
+
+* **单步**：`tlist` 只有 1 个元素、`siglist` 2 个 ⇒ `sg[3]` 越界
+  ⇒ `IndexError: index 3 is out of bounds for axis 0 with size 2`
+* **多步**：不崩，但**每一步都用 `σ[3]`** ⇒ 采样完全错 ⇒ **出图是纹理**
+
+**⇒ 这就是「eps 余弦 0.9993、VAE 1.0000 却出纹理」的原因** —— 模型链路一直是对的，
+错的是**采样循环**（正好印证了逐段对比的结论）。
+
+## 修法
+
+内层循环变量改名 `j`。**教训：嵌套循环里外层变量名不能复用**，
+尤其外层变量还是**下标语义**的时候。
+
+## 效果（512×512，板上 NPU）
+
+| | 均值 | std | **相邻差** |
+|---|---|---|---|
+| 修复前 steps=1 | 117.9 | 106.4 | **34.1** |
+| 修复前 steps=4 | 123.4 | 127.4 | **37.2** |
+| **修复后 steps=1** | 133.6 | 33.3 | **7.5** |
+| **修复后 steps=4** | 146.8 | 40.5 | **4.7** |
+
+**相邻差 34~37 → 4.7~7.5** ⇒ **从彩色噪声变成了平滑连贯的图像**
+（米色纸页质感，与 GPU 参考那张的**背景**一致）。
+
+## 还差的：画面内容（图形/主体）没出来
+
+GPU 参考（4 步、512）是「米色纸页 **+ 上面的图形**」，NPU 只有背景没有主体。
+⇒ 条件（`ehs`）或那 0.07% 的 eps 偏差导致的**弱条件**，是下一个要查的点。
+
+## 耗时（512，逐段加载）
+
+| 步数 | CLIP | UNet | VAE | 合计 |
+|---|---|---|---|---|
+| 1 | 2.9 s | **9.7 s** | 11 s | ~24 s |
+| 4 | 2.8 s | **38.7 s** | 11 s | ~53 s |
+
+（UNet 每步要加载 6 段模型；若 CMA 够大能同时驻留，会快得多）
+
+---
+
+# ★★★★★ 修好之后的定量结论：NPU 与 GPU 参考**余弦 0.9909**
+
+## 并排对比（512×512 / 4 步 / seed 0）
+
+| | 均值 | std | 相邻差 |
+|---|---|---|---|
+| GPU 参考 | 142.3 | 34.4 | 5.0 |
+| **NPU** | 146.8 | 40.5 | **2.4** |
+| **余弦** | **0.9909** | | |
+
+**⇒ 数值上高度一致**，但**画面内容不同**：GPU 那张是「米色纸页 **+ 图形**」，
+NPU 是「米色纸页」——**背景一致、主体缺失**。
+
+## 换 seed 有变化 ⇒ 不是「死图」
+
+| seed | 均值 | std | 相邻差 |
+|---|---|---|---|
+| 1 | 123.4 | 31.4 | 12.5 |
+| **7** | 145.6 | 48.4 | **25.3**（出的是连贯的橙色纹理） |
+| 42 | 136.4 | 35.1 | 5.6 |
+
+**⇒ NPU 会随 seed 出不同内容 ⇒ 采样是活的**（差异来自 EulerAncestral 每步注入的噪声序列，
+两边 RNG 不同 ⇒ 本来就是**不同样本**，不是错）。
+
+## ★★★★★ 剩下的唯一嫌疑：**CLIP 的 `ehs`**
+
+关键推理：**GPU 参考用的是我**同一套** CLIP 实现**（`open_clip.TextTransformer` + 手写 forward）
+⇒ **如果 CLIP 是错的，两边会错得一样，对比就抓不出来。**
+
+而 GPU 参考对 `"a photo of a cat"` 出的也不是猫，而是「一页带图形的手稿」
+⇒ **强烈提示 `ehs` 本身不对**（条件弱/错），而不是 RKNN 的问题。
+
+### 下一步（最后一处未验证的组件）
+
+**把 `TextTransformer` 的输出与 `transformers.CLIPTextModel`（同一批权重）逐元素比**
+—— 这是 diffusers 实际用的实现。
+
+OpenCLIP → HF 的名字映射（需要手写）：
+```
+token_embedding.weight        → embeddings.token_embedding.weight
+positional_embedding          → embeddings.position_embedding.weight
+ln_final.{w,b}                → final_layer_norm.{w,b}
+transformer.resblocks.N.ln_1  → encoder.layers.N.layer_norm1
+transformer.resblocks.N.ln_2  → encoder.layers.N.layer_norm2
+transformer.resblocks.N.attn.in_proj_{w,b} → 拆成 self_attn.{q,k,v}_proj
+transformer.resblocks.N.attn.out_proj      → self_attn.out_proj
+transformer.resblocks.N.mlp.c_fc / c_proj  → mlp.fc1 / mlp.fc2
+```
+配置：`hidden_size=1024, intermediate_size=4096, num_hidden_layers=24,
+num_attention_heads=16, max_position_embeddings=77, vocab_size=49408, hidden_act="gelu"`
+
+---
+
+# ★★★★★ `model_index.json` 揭穿两个错配 —— 并得到可复现的干净判据
+
+## 用户提醒查了仓库自带的 `model_index.json`，结果直接指出两处我搞错了
+
+```json
+"_class_name": "StableDiffusionPipeline",
+"scheduler":    ["diffusers", "EulerDiscreteScheduler"],   ← ★ 是 **EulerDiscrete**，不是 EulerAncestral
+"text_encoder": ["transformers", "CLIPTextModel"],         ← ★ 编码器是 **HF 的 CLIPTextModel**
+"tokenizer":    ["transformers", "CLIPTokenizer"],
+"unet":         ["diffusers", "UNet2DConditionModel"],
+"vae":          ["diffusers", "AutoencoderKL"]
+```
+
+### 错配①：调度器
+
+**EulerDiscrete 不注入噪声**（`sigma_up = 0`）⇒ **给定 seed 完全确定**
+⇒ NPU 与 GPU 参考**应当逐像素对上**。
+
+我之前用 EulerAncestral，每步都加一份随机噪声 ⇒ 两边必然出**不同样本**
+（这就是「背景一致、主体不同」的来源，让我误以为链路有问题）。
+
+### 错配②：文本编码器
+
+SD-Turbo 用的是 **`transformers.CLIPTextModel`**，而我是用 `open_clip.TextTransformer`
+**重建**的。⇒ **必须与 HF 的实现逐元素比对**（这是链上唯一没被独立验证过的组件）。
+
+## ★★★★★ 换成确定性调度器后：**得到了可复现的判据**
+
+512×512 / 4 步 / seed 0 / 同一提示词：
+
+| | 均值 | std | **相邻差** |
+|---|---|---|---|
+| GPU 参考（EulerDiscrete） | 133.0 | 31.5 | **0.17**（极平滑） |
+| **NPU（EulerDiscrete）** | 127.2 | 73.7 | **23.95**（纹理） |
+| 余弦 | **0.8868** | | |
+
+**⇒ 确定性调度下两边本该一致却差了这么多 ⇒ NPU 路径里确实有真 bug**，
+而且**不再被「噪声序列不同」掩盖** ⇒ 这是一个干净的、可反复复现的调试用例。
+
+## 下一步（有了确定判据就好办）
+
+用这个确定性配置**逐步比对 `z`**：
+`z0 → z1 → z2 → z3 → z4`，找出**从哪一步开始分叉**
+⇒ 若 z1 就对不上，问题在第 0 步的 `scale_model_input`/`eps`；
+⇒ 若 z1 对得上、后面才分叉，问题在调度迭代或 σ 表。
+（`/tmp/ref_euler4.png` 与 `/tmp/npu_ed.png` 已保存作对照）
+
+---
+
+# ★★★★★ 定位到根因：**1 步生成下，eps 的 0.07% 误差会被 σ=14.61 放大到与信号同量级**
+
+## 逐步排除的结果
+
+| 检查 | 结果 | 结论 |
+|---|---|---|
+| **文本编码器**（`open_clip` 重建 vs HF `CLIPTextModel`） | **余弦 1.0000**（missing 0 / unexpected 0） | ✅ **编码器没问题** |
+| **调度器**（vs diffusers `EulerDiscreteScheduler`） | 修掉取整方式后 **t 完全一致、σ 最大差 0.000006** | ✅ **已对齐** |
+| 换成确定性调度器后的整体对比 | 余弦 **0.8868 → 0.9796**（相邻差 23.95 → 9.86） | ✅ 大幅改善 |
+
+（编码器验证时踩了两个坑：HF 的 `CLIPTextModel` 把文本塔包在 **`text_model.`** 前缀下；
+键名解析要用 `split(".")[-1]` 而不是 `[1]` —— 两次都导致 `missing` 一堆、模型是随机权重。）
+
+## ★★★★★ 剩下的差异：NPU 一律比 GPU **更平滑**
+
+| 步数 | GPU 相邻差 | NPU 相邻差 | 余弦 |
+|---|---|---|---|
+| 4 | 0.17 | 9.86 | 0.9796 |
+| **1** | **20.78** | **1.35** | 0.8197 |
+
+## ★★★★★ 定量解释（这就是根因）
+
+逐段比对时量到 **`eps` 的余弦是 0.9993**（约 **0.07%** 的误差）。
+
+而 1 步生成的更新是：
+
+```
+x0 = z − σ·eps        σ = 14.6146
+```
+
+* eps 的 0.07% 相对误差 ⇒ 绝对误差 ≈ **0.0007 × 14.6146 ≈ 0.010**（在 eps 的 std≈0.97 尺度上）
+* 但 `x0` 的 std 只有 **1.3734**
+* ⇒ **误差与信号的量级已经可比** ⇒ 高频细节被抹掉 ⇒ 出图变平滑
+
+**⇒ 结论：不是「链路错」，而是「精度不够」。**
+在 SD 这种 `σ_max ≈ 14.6` 的设定下，**eps 需要比 0.07% 高得多的精度**，
+否则单步生成的细节会被放大误差吃掉。
+
+## 下一步（方向明确）
+
+1. **提高 UNet 三/六段的精度**：目前是 FP16（`do_quantization=False`）；
+   可以考虑 fp32 导出（体积翻倍但精度更高），或逐段定位哪一段贡献了那 0.07%
+2. **逐段测 eps 误差**：分别把 p1/p2/up0..up3 换成 torch 的对应段，
+   看误差主要来自哪一段（很可能是含 attention 的 up1）
+3. **CLIP 三段**同样过了一遍 RKNN（FP16）⇒ 也可以换成 torch 版对比
+
+---
+
+# 补精度（一）：先定位误差出自哪一段
+
+## 用逆向出的 pass 清单找「丢精度」的优化
+
+`data/analysis/rknn_passes_full.txt` 里有几条高嫌疑：
+
+| pass | 为什么可疑 |
+|---|---|
+| **`EliminateCast`** | 消除 Cast ⇒ **少一次精度恢复** |
+| **`RKNNInitCastConst`** | 常量 Cast 的初始化方式 |
+| `RKNNBnQuant` / `BuildQuantizations` | 量化方案构建 |
+
+**实测：把 `EliminateCast` + `RKNNInitCastConst` 加进 `disable_rules` 是**被接受**的**
+（`cfg=True load=0 build=0`，能正常导出），
+**但对 `unet_up3` 的精度毫无影响**（见下）。
+
+## ★★★★★ 逐段测精度：`up3` 几乎完美
+
+用 `/tmp/ref64.npz` 的中间量做输入，板上跑 `unet_up3`：
+
+| 版本 | 余弦 |
+|---|---|
+| 旧（只禁 `fuse_mul_into_sdpa`） | **0.999999** |
+| 新（额外禁 `EliminateCast`/`RKNNInitCastConst`） | **0.999999** |
+
+**⇒ ① `up3` 这一段没有精度问题；② 那两条 pass 对它也没影响。**
+
+**⇒ 那 0.07% 的 `eps` 误差来自其它段**（p1 / p2 / up0 / up1 / up2）或 CLIP 三段。
+最可疑的是 **`up1`**（540 MB，16×16 上 1280 通道 + attention）。
+
+## 下一步
+
+**逐段测贡献**：把 p1/p2/up0/up1/up2 逐个与 torch 参考比余弦，
+找出谁拉低了整体精度 ⇒ 再针对那一段想办法（fp32 导出 / 换 pass 组合 / 拆得更细）。
+
+---
+
+# ★★★★★ 根因锁定：**CLIP 的 RKNN 路径坏了**（不是 UNet）
+
+## 逐段测精度（输入用参考中间量，板上跑 RKNN）
+
+| 环节 | 余弦 | 判读 |
+|---|---|---|
+| **① CLIP `ehs`（三段 RKNN 串起来）** | **0.260408** | ❌ **就是它** |
+| ② p1（feat / emb / skip0-5） | 0.99996 ~ 1.000000 | ✅ |
+| ③ p2（mid / skip7-11） | 0.99984 ~ 0.99990 | ✅ |
+| ④ up0 / up1 / up2 / up3 | 0.999849 / 0.999253 / 0.999652 / **0.999998** | ✅ |
+| **⑤ 最终 eps** | **0.999998** | ✅ **几乎完美** |
+
+**⇒ UNet 六段（含 attention）精度极好；唯一坏的是 CLIP 的 RKNN 路径。**
+
+⚠️ 注意 ⑤ 的 0.999998 是**用参考的 `ehs`** 算出来的 —— 只有 ① 用了 NPU 自己的 `ehs`。
+⇒ **UNet 没问题，是「输入条件」被 CLIP 的 RKNN 路径毁了。**
+
+## 这意味着之前所有「精度不够」的判断要修正
+
+* 文本层面对照过：`open_clip` 重建 vs HF `CLIPTextModel` **余弦 1.0000** ⇒ **torch 侧是对的**
+* ⇒ **坏在 CLIP 三段的 ONNX 导出 / RKNN 转换 / 输入约定上**，不是数值精度
+* 这也解释了为什么「NPU 一律比 GPU 更平滑」——**条件错了，模型只能给出无内容的平滑结果**
+
+## 下一步：查 CLIP 三段
+
+1. 把 CLIP 三段的 **torch 中间量**也 dump 出来（像 UNet 那样），逐段比
+2. 重点看 **p0**（含词嵌入 + 前 8 层）：输入是 `ids`（[1,77] 的浮点 token id），
+   里面要 `x.long()` ⇒ **ONNX 里会有 Cast**；RKNN 对 **整数 Cast** 的处理是可疑点
+3. 也可能是三段的**接口布局**（`[B,77,C]` vs `[77,B,C]`）在导出时不一致
+
+---
+
+# ★★★★★ CLIP 的真正 bug：**我手写的 resblock 循环复刻不出 `TextTransformer.forward`**
+
+## 决定性判据
+
+| 比较 | 余弦 |
+|---|---|
+| NPU 串接输出 vs **我手写循环算的** `p2` | **0.999964** ✅ |
+| NPU 串接输出 vs **真正的 `ehs`**（`t(ids)`） | **0.265684** ❌ |
+| **`clipref.p2`（手写循环）vs `clipref.ehs`（真正）** | **0.265923** ❌ |
+| `clipref.ehs` vs `ref64.ehs`（两个都是真正的） | 1.000000 ✅ |
+
+**⇒ 三段 RKNN 本身都很准（0.99996~0.99998），但它们**忠实复刻的是我那个错的手写循环**。**
+**⇒ bug 在导出侧的「手写循环」，不在 RKNN。**
+
+## 差在哪
+
+`open_clip.TextTransformer.forward` 是：
+
+```python
+x, attn_mask = self._embeds(text)        # ← 掩码在这里生成
+x = self.transformer(x, attn_mask=attn_mask)   # ← 走 Transformer 模块
+x = self.ln_final(x); tokens = x
+```
+
+我手写的是 `for blk in resblocks: x = blk(x)`，**漏了掩码**。
+
+补掩码时又踩一个：直接把 `self.attn_mask` 传给 `MultiheadAttention` 会报
+
+```
+RuntimeError: The shape of the 2D attn_mask is torch.Size([77, 77]), but should be (1, 1)
+```
+
+⇒ 说明 `_embeds`/`Transformer` 内部对掩码还有额外处理（形状/维度），
+**不能拿 `self.attn_mask` 直接塞给 resblock**。
+
+## 正解（下一步）
+
+**别再手写循环**，直接用 `TextTransformer` 自己的代码路径：
+
+1. `x, am = t._embeds(ids)` 拿到**正确的** `x` 与 `am`
+2. 分段时，把 `am` 作为**常量 buffer 烘进子模块**（掩码是固定的 77×77），
+   子模块内部按 `Transformer.forward` 的同样方式调 resblock
+3. 或者更稳：**用 forward hook** 在 `t.transformer.resblocks[i]` 上截取中间激活，
+   以「真实前向」的输入/输出为准来切分（而不是自己重算）
+
+⚠️ 这也解释了为什么之前所有 CLIP 相关的比对都「自洽但错」：
+**参考和被测都出自同一个错的手写循环**，互相印证得很好，却和真正的 CLIP 差了 0.27。
+
+---
+
+# ★★★★★★ 成功：`a photo of a cat` 真的出猫了
+
+## 最后一块拼图：CLIP 的**布局 + 因果掩码**
+
+用对照实验一次定死（同一个提示词，比真正的 `t(ids)` 输出）：
+
+| 组合 | 余弦 |
+|---|---|
+| **保持 `[B,77,C]` + 传因果掩码** | **1.000000** ✅ |
+| 保持 `[B,77,C]` + 无掩码 | 0.253506 ❌ |
+| 转成 `[77,B,C]` + 掩码 | **直接报错**（`attn_mask ... should be (1,1)`） |
+| 转成 `[77,B,C]` + 无掩码 | 0.265933 ❌ |
+
+**⇒ 我手写循环同时犯了两个错**：
+1. **多转置了一次** —— `open_clip` 的 `Transformer.batch_first = True`，张量**本来就该是 `[B,77,C]`**
+2. **漏了因果掩码** —— CLIP 文本塔是**因果注意力**
+
+掩码是固定的 77×77 ⇒ 作为常量 buffer 烘进子模块即可。
+
+### 修好后
+
+* CLIP 三段串接 vs 真正的 `ehs`：**余弦 0.999836** ✅
+* 板上出图：**`a photo of a cat` ⇒ 真实的猫照片**（花园里的猫 / 草地上的猫）
+* 顺带把**词嵌入查表挪到 numpy**（模型里带 `x.long()` 的 int64 Cast，RKNN 处理不了）
+
+## ★★★★★ 一个必须记住的教训
+
+**之前所有 CLIP 比对都「自洽但错」**：参考（`clipref`）和被测（NPU）**都出自同一个手写循环**，
+互相印证到 0.99996，却和真正的 CLIP 差了 **0.27**。
+
+**⇒ 用同一个错误实现去验证另一个错误实现，比对再漂亮也没有意义。**
+（UNet 那边之所以可靠，是因为参考走的是 `u(...)` **真实前向**，不是手写复刻。）
+
+**⇒ 规则：验证必须让「参考」来自**权威实现**，不能来自自己重写的版本。**
+
+## 最终状态
+
+| 组件 | 状态 |
+|---|---|
+| ① VAE 解码器 → RKNN | ✅ 余弦 1.0000（FP16） |
+| ② UNet → RKNN（6 段） | ✅ eps 余弦 **0.999998** |
+| ③ CLIP 文本塔 → RKNN（3 段） | ✅ 余弦 **0.999836** |
+| ④ 板上全链路 prompt → PNG | ✅ **出真图** |
+| ⑤ 计时 | 1 步 **~23 s**（clip 1.8 + unet 9.6 + vae 11.2）/ 4 步 **~52 s** |
+| ⑥ 板子 CMA | 128M → **2048M** |
+
+**⚠️ `deploy/sd/ref_gpu.py` 里的 CLIP 还是旧的手写循环，需要同步修正**
+（否则它产出的「GPU 参考」是错的 —— 上面左上角那张纯棕色就是它）。
+
+---
+
+# ★★★★★ 生图过程中的 NPU 利用率（实测）
+
+## 先排掉两个不可信的读数
+
+| 接口 | 读数 | 结论 |
+|---|---|---|
+| `/sys/class/devfreq/fdab0000.npu/load` | 恒为 `100@1000000000Hz`（**换 `rknpu_ondemand` governor 也一样**） | ❌ 不是真实占用（governor=performance 时它反映的是「频率请求」） |
+| `/sys/kernel/debug/rknpu/load` | 有**逐核**读数 `Core0/Core1/Core2: x%`，但**出图期间恒为 0** | ❌ 这版驱动没实现该计数器 |
+
+**⇒ 改成从宿主侧实测**：把网关的 `run()` 拆成「模型加载 / NPU 推理 / 释放」三段计时，
+`NPU 占用率 = 所有 inference 调用耗时之和 ÷ 墙钟`。
+
+## 结果（512×512，`core_mask=0_1_2`）
+
+| 步数 | 总耗时 | **NPU 占用** | 模型加载 | 调用次数 |
+|---|---|---|---|---|
+| **1** | 31.0 s | **14.4 s（46.5%）** | 10.6 s（**34.3%**） | 8 |
+| **4** | 51.4 s | **30.6 s（59.4%）** | 13.8 s（**26.8%**） | 26 |
+
+分段（4 步）：`clip 1.8 s + unet 38.5 s + vae 11.0 s`
+
+## ★★★★★ 结论：**NPU 只忙了约一半时间，剩下全是「加载/释放模型」**
+
+**26.8%~34.3% 的时间花在 `load_rknn`/`release` 上**，因为 CMA 装不下多段、
+必须**逐段加载→跑→释放**（每步 6 段 × 4 步 = 24 次加载）。
+
+**⇒ 这是目前最大的优化空间**：
+* 若模型能常驻，NPU 占用率可望到 **~90%**，总耗时大约能砍掉 1/4~1/3
+* 前提是**板子的 CMA/IOVA 够大**（单段最大 540 MB，而失败的那笔分配要 869 MB）
+* 可试：**再调大 CMA**（现在 2048M），或**把段拆得更小**以让多段并存
+
+## 复现方法
+
+```bash
+curl -D - -o /dev/null "http://<board>:8088/generate?prompt=a%20photo%20of%20a%20cat&steps=4&size=512&seed=0" \
+  | grep -i x-timings
+# X-Timings 里含 npu_busy_ms / model_load_ms / npu_util_pct / load_pct / npu_calls
+```
+
+---
+
+# ③ `ref_gpu.py` 的 CLIP 已修正；对照结果：**NPU 反而是对的那一侧**
+
+## 修了什么
+
+`ref_gpu.py` 里的 CLIP 原来用的是**手写循环**（和导出的错版同源）⇒ 已改为正确路径：
+
+```python
+x, am = clip.t._embeds(ids.long())          # ① 保持 [B,77,C]，不转置（batch_first=True）
+for blk in clip.t.transformer.resblocks:
+    x = blk(x, attn_mask=am)                # ② 必须传因果掩码
+ehs = clip.t.ln_final(x)
+```
+
+修完后 `ehs` 的统计量（均值 -0.1657 / std 0.9457）与权威实现一致 ✓
+
+## ★★★★★ 但对照结果反转了
+
+| | 均值 | std | 相邻差 |
+|---|---|---|---|
+| **GPU 参考（CLIP 已修）** | 133.0 | 31.5 | **0.17**（纯色） |
+| **NPU（512/4 步）** | 119.9 | 74.0 | **13.98**（有细节，**出的是可辨识的猫**） |
+| 余弦 | 0.8398 | | |
+
+**⇒ 现在「有内容」的是 NPU 一侧**（之前是反过来）⇒ **`ref_gpu.py` 的采样侧还有问题**。
+
+CLIP 已经两边一致，所以差异只能在**采样**：
+* `ref_gpu.py` 用 diffusers 的 `sched.step(eps, t, z)`；网关用我手写的 `euler_step`
+* 两者的 `scale_model_input`、σ 表、`z` 初始化都已核对过
+* ⇒ 嫌疑集中在 **`sched.step` 的调用约定**（例如它是否期望 `sample` 是**已 scale** 的张量，
+  或 `prediction_type` 的处理差异）
+
+**⚠️ 这也说明：不能因为「GPU 参考」四个字就默认它是对的。**
+（本轮已经吃过一次同样的亏 —— 参考与被测同源同错。）
+
+## ② 让 SDPA 融合生效：待做
+
+`disable_rules=['fuse_mul_into_sdpa']` 是因为该规则在含 attention 的图上会抛
+`TypeError: only 0-dimensional arrays can be converted to Python scalars`
+（工具链自己也提示可以禁它）。
+
+**可行方向**（下一步试）：
+1. **换 opset 重导**（现在 17；试 14/16），看规则是否不再触发
+2. **改 attention 的导出形式**：`nn.MultiheadAttention` → 手写
+   `F.scaled_dot_product_attention(q,k,v)`，让图里**直接就是 SDPA**，绕过那条融合规则
+3. 从逆向出的规则位置入手：规则在 `rknn/api/rules/matmul.py:1633` 的 `_p_fuse_mul_into_sdpa`
+
+---
+
+# ★★★★★★ 逆向结论：`fuse_mul_into_sdpa` 的「bug」其实是 **numpy 2.x 不兼容**
+
+## 怎么找到的（经验式逆向，因为规则是编译好的 .so）
+
+`rknn/api/rules/` 下全是 `.cpython-312-x86_64-linux-gnu.so`（无 Python 源码），
+报错里的 `matmul.py:1633` 只是编译时嵌入的调试路径。⇒ 只能靠**实验**。
+
+### 第一步：最小复现（自己造 attention 图）
+
+造了 q/k/v + `q*scale` + matmul/softmax/matmul 的最小模块，变化 `scale` 的形状：
+
+| scale 形状 | 带规则 | 禁规则 |
+|---|---|---|
+| 标量（0 维） | ✅ build=0 | ✅ |
+| `[1]`（1 元素 1 维） | ✅ build=0 | ✅ |
+| `[heads]`（每头一个） | ❌（是我测试代码的广播错，非规则问题） | ❌ |
+| 无 scale | ✅ | ✅ |
+
+**⇒ 最小图**带规则也能过** ⇒ 规则本身没坏，是真实模型里某种形状才触发。**
+
+### 第二步：逐个 part 带规则试（真实模型）
+
+| part | 含 attention | 带规则的结果 |
+|---|---|---|
+| `unet_up0` | ❌（`UpBlock2D` 无 attn） | ✅ build=0 |
+| `vae512_v2` | ❌ | ✅ build=0 |
+| `unet_p1/p2/up1/up2/up3` | ✅ | ❌ `TypeError: only 0-dimensional arrays ...` |
+| `clipn_p0/p1/p2` | ✅ | ❌ 同上 |
+| `vae512_v1` | ✅ | ❌ 同上 |
+
+**⇒ 「含 attention 就崩、不含就不崩」⇒ 规律非常清楚。**
+
+### 第三步：认出那个报错是 numpy 的问题
+
+`TypeError: only 0-dimensional arrays can be converted to Python scalars`
+是 **numpy ≥ 2.0 才变成硬错误**的（1.x 只是 `DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated`）。
+
+**查版本：`rknn-venv` 里的 numpy 是 `2.5.4`** ⇒ 命中。
+
+## ★★★★★ 修复与验证
+
+```bash
+pip install --python <rknn-venv>/bin/python "numpy==1.26.4"
+```
+
+* `float(np.array([1.0]))` 从**报错**变成**正常返回 1.0**（只警告）
+* 含 attention 的模型**带规则全部 `build=0`** ✅（`unet_up1` / `clipn_p0` / `vae512_v1` …）
+* ⇒ **`disable_rules=['fuse_mul_into_sdpa']` 这个 workaround 可以彻底去掉**
+
+## 模型的体积变化（SDPA 融合生效的直接证据）
+
+| 模型 | 融合前 | 融合后 |
+|---|---|---|
+| `clipn_p0/p1/p2` | 205 MB | **195 MB** |
+| `unet_up0` | 332 MB | **317 MB** |
+| `unet_up1` | 540 MB | **515 MB** |
+| `unet_up2` | 164 MB | **157 MB** |
+| `unet_up3` | 73 MB | **70 MB** |
+| `vae512_v1` | 131 MB | **125 MB** |
+| `vae512_v2` | 252 MB | **240 MB** |
+
+**⇒ 全部变小 ⇒ 融合真的生效了。**
+
+## ⚠️ 但速度**没有提升**（要如实记）
+
+| | UNet | 总计 | NPU 占用 | 加载占比 |
+|---|---|---|---|---|
+| 融合前 | 38546 ms | 51440 ms | 59.4% | 26.8% |
+| **融合后** | **38681 ms** | **51596 ms** | **60.8%** | **25.3%** |
+
+**⇒ 瓶颈不是 attention 的融合，而是**
+1. **模型加载 25%**（逐段加载→跑→释放，每步 6 段 × 4 步 = 24 次；受 CMA 限制）
+2. **纯算力**（SD 的 UNet 在 3588 上本来就这么慢）
+
+**⇒ 想让速度上去，最直接的仍是「让模型常驻」（再调大 CMA，或把段拆得更小以便并存）。**
+
+## 出图质量：更好
+
+SDPA 融合后（512 / 4 步 / seed 0）：**一张细节清晰的虎斑猫照片**
+（mean 146.5 / std 32.8 / 相邻差 7.4）——比融合前的 `std 74 / 相邻差 14` 更干净。
+
+## ★ 这条经验的价值
+
+**「工具链里的规则 bug」未必是规则写错了** —— 先查**运行时依赖版本**（尤其 numpy 2.x 这种
+把 DeprecationWarning 升成硬错误的升级）。这次如果不去看 numpy，
+就会一直以为「attention 在 RKNN 上有兼容性问题」而长期绕路。
+
+---
+
+# ★★★★★★ 逆向「模型加载路径」⇒ 提速 31%
+
+## 第一步：加载开销到底花在哪（eMMC vs tmpfs + 分段计时）
+
+对 `unet_up1`（515 MB）做分段计时：
+
+| 来源 | 构造 | `load_rknn` | **`init_runtime`** | **`release`** | 合计 |
+|---|---|---|---|---|---|
+| eMMC（首次/冷） | 0.17 s | **1.68 s** | 0.54 s | 0.21 s | 2.60 s |
+| eMMC（第二次/页缓存） | 0.10 s | 0.24 s | 0.52 s | 0.20 s | 1.06 s |
+| **tmpfs**（`/tmp`，RAM） | 0.09 s | 0.23 s | 0.35 s | 0.20 s | **0.87 s** |
+
+**⇒ 两个结论：**
+1. **磁盘只在首次读时慢**（1.68 s / 515 MB ≈ **307 MB/s**，eMMC 的顺序读速度）；之后走页缓存
+   ⇒ **tmpfs 换不来收益**（页缓存后一样快）
+2. **真正的固定开销是 NPU 侧的 `init_runtime`（0.35~0.54 s）+ `release`（0.20 s）≈ 0.6 s**
+   ⇒ 那是 **IOVA/DMA 映射 + 权重上传 + 拆卸**
+
+**⇒ 24 次加载 × 0.6 s ≈ 14.4 s，正好对上实测的 `model_load_ms 13.8 s`。**
+
+## 第二步：驻留上限是「体积」还是「个数」
+
+| 模型 | 可同时驻留 | 合计 |
+|---|---|---|
+| `unet_up3`（70 MB） | **12 个** | 840 MB |
+| `unet_up1`（515 MB） | **7 个** | 3.6 GB |
+| 混合 11 个（约 2.75 GB 权重 + 各自激活） | **10 个**（第 11 个 `init=-1`） | — |
+
+**⇒ 是**体积**限制不是个数：RKNPU 可用 IOVA 空间约 **3.6 GB**（含每模型的内部激活内存）。**
+（CMA 从 2 GB 提到 **3 GB** 后上限没变 ⇒ **限制在 IOVA 空间，不在 CMA**。）
+
+## ★★★★★ 第三步：按「使用频率」分配常驻（关键洞察）
+
+**CLIP(3 段) 与 VAE(2 段) 是「每张图用一次」；只有 6 个 UNet 段是「每步都用」。**
+
+⇒ **让 6 个 UNet 段常驻、CLIP/VAE 按需加载**，每步的「加载→跑→释放」就彻底消失。
+
+```python
+RESIDENT_MODELS = ("unet_p1.rknn","unet_p2.rknn","unet_up0.rknn",
+                   "unet_up1.rknn","unet_up2.rknn","unet_up3.rknn")
+# run() 里：name in self.resident ⇒ 直接 inference，不 load/release
+```
+
+**实测 6/6 全部常驻成功**（内存刚好够：129+616+317+515+157+70 ≈ 1.8 GB 权重 + 激活）。
+
+## 效果（512×512 / 4 步 / seed 0）
+
+| | 逐段加载 | **6 段常驻** | 变化 |
+|---|---|---|---|
+| CLIP | 1789 ms | 1962 ms | ~ |
+| **UNet** | **38546 ms** | **22239 ms** | **−42%** |
+| VAE | 10976 ms | 11105 ms | ~ |
+| **总计** | **51440 ms** | **35472 ms** | **−31%** |
+| **NPU 占用率** | 59.4% | **88.0%** | **+29pp** |
+| **加载占比** | 26.8% | **4.4%** | **−22pp** |
+
+**⇒ NPU 从「忙一半」变成「忙 88%」，总耗时砍掉近三分之一。**
+（出图质量不变 —— 仍是一张高质量写实照片。）
+
+## 这一轮的逆向链条
+
+```
+「加载占 25%」的现象
+  → 分段计时：区分磁盘 I/O 与 NPU 侧开销 ⇒ 磁盘不是问题（页缓存后 0.24 s）
+  → tmpfs 对照 ⇒ 确认换存储介质无用
+  → 定位到 init_runtime/release ≈ 0.6 s（IOVA 映射 + 权重上传）
+  → 测驻留上限 ⇒ 是体积限制（~3.6 GB IOVA），且 CMA 调大无效
+  → 按「使用频率」重新分配常驻 ⇒ 每步的加载全部消除
+```
+
+## 顺带记下的运维参数
+
+* 板子 `cma` 现为 **3072M**（`/boot/orangepiEnv.txt` 的 `extraargs`，原文件有备份）
+* `/tmp` 是 **tmpfs**（7.8 GB）⇒ **板子重启会清空**，临时脚本要放在持久目录

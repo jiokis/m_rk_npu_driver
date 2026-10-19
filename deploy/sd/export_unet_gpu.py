@@ -134,9 +134,14 @@ def main() -> int:
     #      Both 'split' input and 'num_outputs' attribute were given`
     #   （那个 `node_Split_44` 是 RKNN 内部重导出的名字；ONNX 本身的 Split 节点是合法的）
     #   ⇒ 换传统导出器（踩过）
+    # ★ 用**外部数据格式**（use_external_data_format=True）：
+    #   onnxruntime 可以对 `.onnx.data` 做 mmap，而不是把 1.65 GB 全读进内存。
+    #   本机只有 7 GB，RKNN 转 865 M 参数的 UNet 时峰值 ~6.5 GB ⇒ 被 OOM kill。
+    #   （dynamo 导出器默认就会外置，但它产的图会让 RKNN build 失败，所以这里
+    #     用**传统导出器 + 显式外置**的组合。）
     torch.onnx.export(m, (s, t, e), out, input_names=["sample", "timestep", "ehs"],
                       output_names=["out"], opset_version=17, do_constant_folding=True,
-                      dynamo=False)
+                      dynamo=False, use_external_data_format=True)
     print(f"[onnx] {out}  {os.path.getsize(out)/1e6:.0f} MB")
     json.dump({"latent": a.latent, "dtype": a.dtype,
                "params": sum(p.numel() for p in u.parameters())}, open(out + ".json", "w"))

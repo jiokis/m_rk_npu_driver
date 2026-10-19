@@ -33,3 +33,16 @@ deploy/diffusion/pressure/*.rknn
 #   （踩过：check*.onnx 各 189 MB，报 "exceeds GitHub's file size limit of 100.00 MB"）
 #   这些是早期 ONNX 研究的中间产物，可用脚本重建 ⇒ 不入库
 check*.onnx
+
+# ★★★★★ SD 中间产物：ONNX/NPY 单文件几百 MB，累计 ~6.5 GB
+#   ⇒ git push 直接卡死（不是在传数据，是在传几 GB）
+#   且 GitHub 单文件 >100 MB 会被 pre-receive hook 拒绝
+#   这些都能用 deploy/sd/*.py 重新生成
+deploy/sd/parts/*.onnx
+deploy/sd/parts/*.npy
+deploy/sd/parts/*.rknn
+deploy/sd/rknn/*.onnx
+deploy/sd/rknn/*.rknn
+deploy/sd/onnx/
+# 但清单/小文件要留
+!deploy/sd/parts/*manifest*.json

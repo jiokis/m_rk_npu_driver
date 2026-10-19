@@ -1,0 +1,35 @@
+{
+ "parts": [
+  {
+   "name": "clipn_p0",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/clipn_p0.onnx",
+   "inputs": [
+    "x"
+   ],
+   "outputs": [
+    "y"
+   ]
+  },
+  {
+   "name": "clipn_p1",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/clipn_p1.onnx",
+   "inputs": [
+    "x"
+   ],
+   "outputs": [
+    "y"
+   ]
+  },
+  {
+   "name": "clipn_p2",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/clipn_p2.onnx",
+   "inputs": [
+    "x"
+   ],
+   "outputs": [
+    "y"
+   ]
+  }
+ ],
+ "layers": 24
+}

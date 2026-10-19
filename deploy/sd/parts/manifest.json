@@ -1,0 +1,145 @@
+{
+ "latent": 64,
+ "dtype": "fp16",
+ "parts": [
+  {
+   "name": "unet_p1",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_p1.onnx",
+   "inputs": [
+    "sample",
+    "timestep",
+    "ehs"
+   ],
+   "outputs": [
+    "feat",
+    "emb",
+    "skip1_0",
+    "skip1_1",
+    "skip1_2",
+    "skip1_3",
+    "skip1_4",
+    "skip1_5",
+    "skip1_6"
+   ]
+  },
+  {
+   "name": "unet_p2",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_p2.onnx",
+   "inputs": [
+    "feat",
+    "emb",
+    "ehs"
+   ],
+   "outputs": [
+    "mid",
+    "skip2_0",
+    "skip2_1",
+    "skip2_2",
+    "skip2_3",
+    "skip2_4"
+   ]
+  },
+  {
+   "name": "unet_p3",
+   "onnx": "/home/dunaandone/orange pi/rk3588-npu-re/deploy/sd/parts/unet_p3.onnx",
+   "inputs": [
+    "mid",
+    "emb",
+    "ehs",
+    "skip0",
+    "skip1",
+    "skip2",
+    "skip3",
+    "skip4",
+    "skip5",
+    "skip6",
+    "skip7",
+    "skip8",
+    "skip9",
+    "skip10",
+    "skip11"
+   ],
+   "outputs": [
+    "out"
+   ]
+  }
+ ],
+ "skip_shapes": [
+  [
+   [
+    1,
+    320,
+    64,
+    64
+   ],
+   [
+    1,
+    320,
+    64,
+    64
+   ],
+   [
+    1,
+    320,
+    64,
+    64
+   ],
+   [
+    1,
+    320,
+    32,
+    32
+   ],
+   [
+    1,
+    640,
+    32,
+    32
+   ],
+   [
+    1,
+    640,
+    32,
+    32
+   ],
+   [
+    1,
+    640,
+    16,
+    16
+   ]
+  ],
+  [
+   [
+    1,
+    1280,
+    16,
+    16
+   ],
+   [
+    1,
+    1280,
+    16,
+    16
+   ],
+   [
+    1,
+    1280,
+    8,
+    8
+   ],
+   [
+    1,
+    1280,
+    8,
+    8
+   ],
+   [
+    1,
+    1280,
+    8,
+    8
+   ]
+  ]
+ ]
+}

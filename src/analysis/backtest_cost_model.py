@@ -53,8 +53,15 @@ def rows_of(path: str):
         if tgt != "NPU":
             continue
         el = lambda s: int(np.prod([int(x) for x in s.split(",") if x.strip()])) if s.strip() else 0
-        in_el = sum(el(mm.group(1)) for mm in re.finditer(r"\(([\d,\s]+)\)", ins))
-        out_el = sum(el(mm.group(1)) for mm in re.finditer(r"\(([\d,\s]+)\)", outs))
+        # ★★★★★ **只算第 1 个输入（激活）与输出**，不算权重/bias！
+        #   IR 表的 InputShape 里**包含权重和 bias**：
+        #     `Conv (1,640,64,64),(640,640,3,3),(640) → (1,640,64,64)`
+        #   一个 3×3 Conv 的权重是 3.7 M 元素，比激活(2.62 M)还大
+        #   ⇒ 全算进去会把元素数高估约 1.7 倍，整段预测系统性偏高（这就是 C3 失败的主因）
+        in_shapes = [mm.group(1) for mm in re.finditer(r"\(([\d,\s]+)\)", ins)]
+        out_shapes = [mm.group(1) for mm in re.finditer(r"\(([\d,\s]+)\)", outs)]
+        in_el = el(in_shapes[0]) if in_shapes else 0
+        out_el = sum(el(x) for x in out_shapes)
         out.append({"op_type": op, "target": "NPU", "in_el": in_el, "out_el": out_el})
     return out
 

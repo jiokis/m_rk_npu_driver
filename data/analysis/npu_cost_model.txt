@@ -495,3 +495,45 @@ IR 算子数校验：`attn_1` = **1 SDPA + 4 Conv + 6 Reshape**、`attn_16` = **
 ⇒ 说明 `up3` 里的注意力**比我这套测试便宜**（head dim 可能不同：SD 配置是 `[5,10,20,20]`，
 我这套用了 8 heads / d=80）。
 **⇒ 记录为待定项：SD 真实 head dim 下的注意力成本需单独测。**
+
+---
+
+# 十三、★ C2：成本模型已实现进 `src/sim/rknpu/timing.py`
+
+## 新增接口
+
+```python
+A_FIXED_MS = 50.0                    # 每次 inference() 的固定开销（A2 实测）
+COST_NS_PER_ELEM = {                 # 各类算子的边际成本，ns/(in+out)
+    "exSDPAttention": 93.6,          # ← 最贵
+    "Conv"/"ConvAdd": 6.30,
+    "exNorm"/"BatchNormalization": 3.30,
+    "Mul"/"Add"/"Reshape"/…: 0.168,  # ← 最便宜
+}
+def predict_part_ops(ir_rows) -> dict
+    # 返回 t_total_ms / t_fixed_ms / t_ops_ms / share_by_class / ms_by_class / ops_by_class
+```
+
+**旧的 `predict(submits, tile_macs, …)`（MAC 周期 + 提交地板）保留不动**，向后兼容。
+
+## ★★ 踩到的单位错误（记下来）
+
+第一版常数按「**单个张量的元素数**」折算（Conv 12.55 ns），
+而公式里用的是 `in_el + out_el`（**两个**张量）⇒ 整段预测**偏高 1.86 倍**（4600 ms vs 2475 ms）。
+
+**修正后**（除以 2，即 ns/(in+out)）：`up3` 预测 **1897 ms** vs 实测 **2475 ms** ⇒ **−23.4%**（在 ±30% 目标内）。
+
+## ⚠️ 这个自检是**近似**的，不是严格回测
+
+自检里把「每个算子的元素数」统一按 `729.9M / 172 ≈ 4.24 M` 估（up3 的总元素数除以算子数），
+**没有用真实的逐算子形状**。真实回测需要 IR 日志（`/tmp` 已被清空，需重建）。
+
+⇒ **记为待办**：重建 8 段的 IR 日志 → 用 `predict_part_ops()` 做**严格**的逐段回测。
+
+## 已知边界（写进代码注释里了）
+
+1. 类成本只在 **640ch×64×64** 一档标定；**跨尺寸线性性未验证**
+2. `exSDPAttention` 的成本强烈依赖 **head 维度**：实测用 8 heads（d=80）得 187 ns/元素，
+   而 SD 真实配置是 `attention_head_dim=[5,10,20,20]`（up3 那层 ⇒ **32 heads**）。
+   **32-head 版本在本机（7 GB 内存）导出两次都失败**（N=16 与 N=8 均无报错地消失，大概率 OOM）
+   ⇒ **用本模型预测 SD 的注意力段会偏高**。

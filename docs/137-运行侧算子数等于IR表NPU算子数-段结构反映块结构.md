@@ -133,6 +133,11 @@
 * `efficientnet_b0` 为什么只 1 遍
 * `f08`/`f0c`/`f18` 的语义
 
+> **✅ 已结案（[docs/146](146-task描述符三个字段结案.md)）**：`f08/f0c/f18` 不是寄存器，是
+> 40 字节 task 描述符里的 `enable_mask` / `int_mask` / `regcfg_amount`。
+> `enable_mask` 与流内实际流水级 **983/983** 一致；`int_mask` 指向「最后一个非 PPU_RDMA 的级」，也 **983/983**。
+
+
 ---
 
 ## 5. 下一步（可检验）

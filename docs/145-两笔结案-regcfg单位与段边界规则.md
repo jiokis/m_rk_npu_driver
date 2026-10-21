@@ -51,7 +51,7 @@
 
 ### 1.3 重抓之后的四重验证
 
-用板上的修正版 `.so` 重抓（resnet18 / mobilenet_v2 / shufflenet / mnasnet，共 4 个模型、**1057 条命令流**）：
+用板上的修正版 `.so` 重抓（resnet18 / mobilenet_v2 / shufflenet / mnasnet，共 4 个模型、**983 条命令流**）：
 
 | 检验 | 结果 |
 |---|---|
@@ -193,7 +193,7 @@ LD_PRELOAD=/home/orangepi/rknpu_capture.so RKNPU_DUMP_DIR=/out \
 RKNPU_DUMPS=data/dumps3/cm7 python3 src/analysis/regcmd_disasm.py regmap
 ```
 
-本次新增数据：`data/dumps3/`（4 个模型、5 组、1057 条**完整**命令流，4.6 MB）。
+本次新增数据：`data/dumps3/`（4 个模型、5 组、**983 条**完整命令流，4.6 MB）。
 
 ---
 

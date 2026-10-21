@@ -1,0 +1,1559 @@
+# 缓冲区镜像 dump: mode=0 单缓冲区上限=33554432
+# rknpu_capture 启动
+# pid=40509 dump_dir=/home/orangepi/dumps3/shufflenet_v2_x0_5
+# sizeof(rknpu_task)=40 sizeof(rknpu_submit)=104 sizeof(rknpu_mem_create)=48
+# ioctl 编号: ACTION=0xc0086440 SUBMIT=0xc0686441 (低16位=0x6441)
+[ACTION] GET_HW_VERSION (flags=0) value=0x46495245 ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] POWER_ON (flags=20) value=0 ret=-1
+[ACTION] SET_PROC_NICE (flags=19) value=0xffffffed ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=1 flags=0x40b size=40960 obj_addr=0xffffff812a2ff400 dma_addr=0x6be87000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=1 → offset=0x19416f000
+[mmap64] handle=1 offset=0x19416f000 → cpu=0x7fabbf6000 len=39400  ⇒ dma_addr=0x6be87000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812a2ff400 offset=0 size=39400
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=2 flags=0x403 size=2412544 obj_addr=0xffffff812a2fe400 dma_addr=0x6bc3a000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=2 → offset=0x194179000
+[mmap64] handle=2 offset=0x194179000 → cpu=0x7fa7423000 len=2412224  ⇒ dma_addr=0x6bc3a000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812a2fe400 offset=0 size=2412224
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812a2fe400 offset=0 size=2412224
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812a2ff400 offset=0 size=39400
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=3 flags=0x403 size=552960 obj_addr=0xffffff812a2fa000 dma_addr=0x6bbb3000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=3 → offset=0x1943c6000
+[mmap64] handle=3 offset=0x1943c6000 → cpu=0x7fa739c000 len=551936  ⇒ dma_addr=0x6bbb3000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812a2fa000 offset=0 size=551936
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=4 flags=0x403 size=151552 obj_addr=0xffffff812a2f9c00 dma_addr=0x6bb8e000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=4 → offset=0x19444d000
+[mmap64] handle=4 offset=0x19444d000 → cpu=0x7fa7377000 len=150528  ⇒ dma_addr=0x6bb8e000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812a2f9c00 offset=0 size=150528
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=5 flags=0x403 size=4096 obj_addr=0xffffff812a2fd800 dma_addr=0x6bb8d000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=5 → offset=0x194472000
+[mmap64] handle=5 offset=0x194472000 → cpu=0x7fabc46000 len=1024  ⇒ dma_addr=0x6bb8d000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff812a2fd800 offset=0 size=1024
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812a2fe400 offset=1694592 size=678208
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812a2f9c00 offset=0 size=150528
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812a2fe400 offset=1694592 size=678208
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=486 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=486 number=2
+           subcore[1]: start=673 number=2
+           subcore[2]: start=486 number=2
+           subcore[3]: start=673 number=2
+           subcore[4]: start=829 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_000.bin (240 字节)
+           task[486] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2c4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_000_task486.bin
+           task[487] flags=0 op_idx=1 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be2c8c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_000_task487.bin
+           task[488] flags=0 op_idx=2 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6bdd8640
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_000_task488.bin
+           task[489] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2c9c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_000_task489.bin
+           task[490] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2cdc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_000_task490.bin
+           task[491] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2d1c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_000_task491.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=492 task_number=1 task_counter=1 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=488 number=1
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_001.bin (40 字节)
+           task[492] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2d5c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_001_task492.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=493 task_number=18 task_counter=18 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=489 number=6
+           subcore[1]: start=675 number=6
+           subcore[2]: start=489 number=6
+           subcore[3]: start=675 number=6
+           subcore[4]: start=831 number=6
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_002.bin (720 字节)
+           task[493] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2d9c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task493.bin
+           task[494] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be2ddc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task494.bin
+           task[495] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be2dec0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task495.bin
+           task[496] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be2e140
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task496.bin
+           task[497] flags=0 op_idx=8 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2e3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task497.bin
+           task[498] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be2e7c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task498.bin
+           task[499] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2e8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task499.bin
+           task[500] flags=0 op_idx=9 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be2ecc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task500.bin
+           task[501] flags=0 op_idx=10 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdda880
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task501.bin
+           task[502] flags=0 op_idx=10 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bddab00
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task502.bin
+           task[503] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=76 regcfg_offset=0 regcmd_addr=0x6bddad80
+             ★ regcmd 608 字节 (regcfg=76+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task503.bin
+           task[504] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2edc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task504.bin
+           task[505] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2f1c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task505.bin
+           task[506] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2f5c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task506.bin
+           task[507] flags=0 op_idx=13 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be2f9c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task507.bin
+           task[508] flags=0 op_idx=14 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be2fac0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task508.bin
+           task[509] flags=0 op_idx=14 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be2fd40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task509.bin
+           task[510] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be2ffc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_002_task510.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=511 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=495 number=4
+           subcore[1]: start=681 number=4
+           subcore[2]: start=495 number=4
+           subcore[3]: start=681 number=4
+           subcore[4]: start=837 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_003.bin (480 字节)
+           task[511] flags=0 op_idx=14 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be303c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task511.bin
+           task[512] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be304c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task512.bin
+           task[513] flags=0 op_idx=15 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be308c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task513.bin
+           task[514] flags=0 op_idx=16 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bddc8c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task514.bin
+           task[515] flags=0 op_idx=16 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bddcb40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task515.bin
+           task[516] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=76 regcfg_offset=0 regcmd_addr=0x6bddcdc0
+             ★ regcmd 608 字节 (regcfg=76+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task516.bin
+           task[517] flags=0 op_idx=17 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be309c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task517.bin
+           task[518] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be30dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task518.bin
+           task[519] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be311c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task519.bin
+           task[520] flags=0 op_idx=19 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be315c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task520.bin
+           task[521] flags=0 op_idx=20 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be316c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task521.bin
+           task[522] flags=0 op_idx=20 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be31940
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_003_task522.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=523 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=499 number=2
+           subcore[1]: start=685 number=2
+           subcore[2]: start=499 number=2
+           subcore[3]: start=685 number=2
+           subcore[4]: start=841 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_004.bin (240 字节)
+           task[523] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be31bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_004_task523.bin
+           task[524] flags=0 op_idx=20 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be31fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_004_task524.bin
+           task[525] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be320c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_004_task525.bin
+           task[526] flags=0 op_idx=21 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be324c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_004_task526.bin
+           task[527] flags=0 op_idx=22 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdde900
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_004_task527.bin
+           task[528] flags=0 op_idx=22 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bddeb80
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_004_task528.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=529 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=501 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_005.bin (120 字节)
+           task[529] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=76 regcfg_offset=0 regcmd_addr=0x6bddee00
+             ★ regcmd 608 字节 (regcfg=76+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_005_task529.bin
+           task[530] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be325c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_005_task530.bin
+           task[531] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be329c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_005_task531.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=532 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=504 number=4
+           subcore[1]: start=687 number=4
+           subcore[2]: start=504 number=4
+           subcore[3]: start=687 number=4
+           subcore[4]: start=843 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_006.bin (480 字节)
+           task[532] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be32dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task532.bin
+           task[533] flags=0 op_idx=25 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be331c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task533.bin
+           task[534] flags=0 op_idx=26 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be332c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task534.bin
+           task[535] flags=0 op_idx=26 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be33540
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task535.bin
+           task[536] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be337c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task536.bin
+           task[537] flags=0 op_idx=26 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be33bc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task537.bin
+           task[538] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be33cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task538.bin
+           task[539] flags=0 op_idx=28 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be340c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task539.bin
+           task[540] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be344c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task540.bin
+           task[541] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be348c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task541.bin
+           task[542] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be34cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task542.bin
+           task[543] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be350c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_006_task543.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=544 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=508 number=4
+           subcore[1]: start=691 number=4
+           subcore[2]: start=508 number=4
+           subcore[3]: start=691 number=4
+           subcore[4]: start=847 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_007.bin (480 字节)
+           task[544] flags=0 op_idx=32 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be354c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task544.bin
+           task[545] flags=0 op_idx=33 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be355c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task545.bin
+           task[546] flags=0 op_idx=33 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be35840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task546.bin
+           task[547] flags=0 op_idx=33 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be35ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task547.bin
+           task[548] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be35bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task548.bin
+           task[549] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be35fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task549.bin
+           task[550] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde27c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task550.bin
+           task[551] flags=0 op_idx=35 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde2a40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task551.bin
+           task[552] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be360c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task552.bin
+           task[553] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be364c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task553.bin
+           task[554] flags=0 op_idx=38 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be368c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task554.bin
+           task[555] flags=0 op_idx=38 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be36cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_007_task555.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=556 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=512 number=2
+           subcore[1]: start=695 number=2
+           subcore[2]: start=512 number=2
+           subcore[3]: start=695 number=2
+           subcore[4]: start=851 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_008.bin (240 字节)
+           task[556] flags=0 op_idx=39 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be36dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_008_task556.bin
+           task[557] flags=0 op_idx=39 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be37040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_008_task557.bin
+           task[558] flags=0 op_idx=39 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be372c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_008_task558.bin
+           task[559] flags=0 op_idx=40 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be373c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_008_task559.bin
+           task[560] flags=0 op_idx=40 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be377c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_008_task560.bin
+           task[561] flags=0 op_idx=41 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde42c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_008_task561.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=562 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=514 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_009.bin (120 字节)
+           task[562] flags=0 op_idx=41 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde4540
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_009_task562.bin
+           task[563] flags=0 op_idx=42 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be378c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_009_task563.bin
+           task[564] flags=0 op_idx=43 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be37cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_009_task564.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=565 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=517 number=4
+           subcore[1]: start=697 number=4
+           subcore[2]: start=517 number=4
+           subcore[3]: start=697 number=4
+           subcore[4]: start=853 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_010.bin (480 字节)
+           task[565] flags=0 op_idx=44 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be380c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task565.bin
+           task[566] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be384c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task566.bin
+           task[567] flags=0 op_idx=45 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be385c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task567.bin
+           task[568] flags=0 op_idx=45 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be38840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task568.bin
+           task[569] flags=0 op_idx=45 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be38ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task569.bin
+           task[570] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be38bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task570.bin
+           task[571] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be38fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task571.bin
+           task[572] flags=0 op_idx=47 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde5dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task572.bin
+           task[573] flags=0 op_idx=47 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde6040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task573.bin
+           task[574] flags=0 op_idx=48 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be390c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task574.bin
+           task[575] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be394c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task575.bin
+           task[576] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be398c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_010_task576.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=577 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=521 number=4
+           subcore[1]: start=701 number=4
+           subcore[2]: start=521 number=4
+           subcore[3]: start=701 number=4
+           subcore[4]: start=857 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_011.bin (480 字节)
+           task[577] flags=0 op_idx=50 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be39cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task577.bin
+           task[578] flags=0 op_idx=51 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be39dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task578.bin
+           task[579] flags=0 op_idx=51 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3a040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task579.bin
+           task[580] flags=0 op_idx=51 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3a2c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task580.bin
+           task[581] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3a3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task581.bin
+           task[582] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3a7c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task582.bin
+           task[583] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde78c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task583.bin
+           task[584] flags=0 op_idx=53 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde7b40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task584.bin
+           task[585] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3a8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task585.bin
+           task[586] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3acc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task586.bin
+           task[587] flags=0 op_idx=56 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3b0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task587.bin
+           task[588] flags=0 op_idx=56 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3b4c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_011_task588.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=589 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=525 number=2
+           subcore[1]: start=705 number=2
+           subcore[2]: start=525 number=2
+           subcore[3]: start=705 number=2
+           subcore[4]: start=861 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_012.bin (240 字节)
+           task[589] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3b5c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_012_task589.bin
+           task[590] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3b840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_012_task590.bin
+           task[591] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3bac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_012_task591.bin
+           task[592] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3bbc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_012_task592.bin
+           task[593] flags=0 op_idx=58 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3bfc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_012_task593.bin
+           task[594] flags=0 op_idx=59 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde93c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_012_task594.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=595 task_number=3 task_counter=3 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=527 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_013.bin (120 字节)
+           task[595] flags=0 op_idx=59 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bde9640
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_013_task595.bin
+           task[596] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3c0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_013_task596.bin
+           task[597] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3c4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_013_task597.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=598 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=530 number=4
+           subcore[1]: start=707 number=4
+           subcore[2]: start=530 number=4
+           subcore[3]: start=707 number=4
+           subcore[4]: start=863 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_014.bin (480 字节)
+           task[598] flags=0 op_idx=62 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3c8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task598.bin
+           task[599] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3ccc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task599.bin
+           task[600] flags=0 op_idx=63 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3cdc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task600.bin
+           task[601] flags=0 op_idx=63 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3d040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task601.bin
+           task[602] flags=0 op_idx=63 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3d2c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task602.bin
+           task[603] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3d3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task603.bin
+           task[604] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3d7c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task604.bin
+           task[605] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdeaec0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task605.bin
+           task[606] flags=0 op_idx=65 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdeb140
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task606.bin
+           task[607] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3d8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task607.bin
+           task[608] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3dcc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task608.bin
+           task[609] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3e0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_014_task609.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=610 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=534 number=4
+           subcore[1]: start=711 number=4
+           subcore[2]: start=534 number=4
+           subcore[3]: start=711 number=4
+           subcore[4]: start=867 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_015.bin (480 字节)
+           task[610] flags=0 op_idx=68 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3e4c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task610.bin
+           task[611] flags=0 op_idx=69 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3e5c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task611.bin
+           task[612] flags=0 op_idx=69 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3e840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task612.bin
+           task[613] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3eac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task613.bin
+           task[614] flags=0 op_idx=70 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3ebc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task614.bin
+           task[615] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3efc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task615.bin
+           task[616] flags=0 op_idx=71 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdec9c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task616.bin
+           task[617] flags=0 op_idx=71 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdecc40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task617.bin
+           task[618] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3f0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task618.bin
+           task[619] flags=0 op_idx=73 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3f4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task619.bin
+           task[620] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be3f8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task620.bin
+           task[621] flags=0 op_idx=74 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be3fcc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_015_task621.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=622 task_number=21 task_counter=21 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=538 number=7
+           subcore[1]: start=715 number=7
+           subcore[2]: start=538 number=7
+           subcore[3]: start=715 number=7
+           subcore[4]: start=871 number=7
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_016.bin (840 字节)
+           task[622] flags=0 op_idx=75 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be3fdc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task622.bin
+           task[623] flags=0 op_idx=75 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be40040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task623.bin
+           task[624] flags=0 op_idx=75 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be402c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task624.bin
+           task[625] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be403c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task625.bin
+           task[626] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be407c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task626.bin
+           task[627] flags=0 op_idx=78 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be40bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task627.bin
+           task[628] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be40fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task628.bin
+           task[629] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be413c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task629.bin
+           task[630] flags=0 op_idx=81 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be417c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task630.bin
+           task[631] flags=0 op_idx=81 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be41bc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task631.bin
+           task[632] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be41cc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task632.bin
+           task[633] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be41f40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task633.bin
+           task[634] flags=0 op_idx=82 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be421c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task634.bin
+           task[635] flags=0 op_idx=83 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be422c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task635.bin
+           task[636] flags=0 op_idx=83 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be426c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task636.bin
+           task[637] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdf0340
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task637.bin
+           task[638] flags=0 op_idx=84 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdf05c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task638.bin
+           task[639] flags=0 op_idx=85 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be427c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task639.bin
+           task[640] flags=0 op_idx=86 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be42bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task640.bin
+           task[641] flags=0 op_idx=87 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be42fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task641.bin
+           task[642] flags=0 op_idx=87 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be433c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_016_task642.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=643 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=545 number=3
+           subcore[1]: start=722 number=3
+           subcore[2]: start=545 number=3
+           subcore[3]: start=722 number=3
+           subcore[4]: start=878 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_017.bin (360 字节)
+           task[643] flags=0 op_idx=88 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be434c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task643.bin
+           task[644] flags=0 op_idx=88 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be43740
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task644.bin
+           task[645] flags=0 op_idx=88 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be439c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task645.bin
+           task[646] flags=0 op_idx=89 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be43ac0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task646.bin
+           task[647] flags=0 op_idx=89 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be43ec0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task647.bin
+           task[648] flags=0 op_idx=90 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdf1e40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task648.bin
+           task[649] flags=0 op_idx=90 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdf20c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task649.bin
+           task[650] flags=0 op_idx=91 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be43fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task650.bin
+           task[651] flags=0 op_idx=92 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be443c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_017_task651.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=652 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=548 number=2
+           subcore[1]: start=725 number=2
+           subcore[2]: start=548 number=2
+           subcore[3]: start=725 number=2
+           subcore[4]: start=881 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_018.bin (240 字节)
+           task[652] flags=0 op_idx=93 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be447c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_018_task652.bin
+           task[653] flags=0 op_idx=93 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be44bc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_018_task653.bin
+           task[654] flags=0 op_idx=94 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be44cc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_018_task654.bin
+           task[655] flags=0 op_idx=94 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be44f40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_018_task655.bin
+           task[656] flags=0 op_idx=94 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be451c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_018_task656.bin
+           task[657] flags=0 op_idx=95 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be452c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_018_task657.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=658 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=550 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_019.bin (80 字节)
+           task[658] flags=0 op_idx=95 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be456c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_019_task658.bin
+           task[659] flags=0 op_idx=96 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdf3940
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_019_task659.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=660 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=552 number=4
+           subcore[1]: start=727 number=4
+           subcore[2]: start=552 number=4
+           subcore[3]: start=727 number=4
+           subcore[4]: start=883 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_020.bin (480 字节)
+           task[660] flags=0 op_idx=96 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6bdf3bc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task660.bin
+           task[661] flags=0 op_idx=97 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be457c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task661.bin
+           task[662] flags=0 op_idx=98 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be45bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task662.bin
+           task[663] flags=0 op_idx=99 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be45fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task663.bin
+           task[664] flags=0 op_idx=99 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be463c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task664.bin
+           task[665] flags=0 op_idx=100 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be464c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task665.bin
+           task[666] flags=0 op_idx=100 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be46740
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task666.bin
+           task[667] flags=0 op_idx=100 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be469c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task667.bin
+           task[668] flags=0 op_idx=101 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be46ac0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task668.bin
+           task[669] flags=0 op_idx=101 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be46ec0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task669.bin
+           task[670] flags=0 op_idx=102 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6bdf5440
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task670.bin
+           task[671] flags=0 op_idx=103 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be46fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_020_task671.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=672 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=556 number=3
+           subcore[1]: start=731 number=3
+           subcore[2]: start=556 number=3
+           subcore[3]: start=731 number=3
+           subcore[4]: start=887 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_021.bin (360 字节)
+           task[672] flags=0 op_idx=103 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be473c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task672.bin
+           task[673] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be474c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task673.bin
+           task[674] flags=0 op_idx=1 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be478c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task674.bin
+           task[675] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be479c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task675.bin
+           task[676] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be47dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task676.bin
+           task[677] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be481c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task677.bin
+           task[678] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be485c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task678.bin
+           task[679] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be489c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task679.bin
+           task[680] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be48dc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_021_task680.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=681 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=559 number=2
+           subcore[1]: start=734 number=2
+           subcore[2]: start=559 number=2
+           subcore[3]: start=734 number=2
+           subcore[4]: start=890 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_022.bin (240 字节)
+           task[681] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be48ec0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_022_task681.bin
+           task[682] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be49140
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_022_task682.bin
+           task[683] flags=0 op_idx=8 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be493c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_022_task683.bin
+           task[684] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be497c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_022_task684.bin
+           task[685] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be498c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_022_task685.bin
+           task[686] flags=0 op_idx=9 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be49cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_022_task686.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=687 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=561 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_023.bin (80 字节)
+           task[687] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be49dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_023_task687.bin
+           task[688] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4a1c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_023_task688.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=689 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=563 number=4
+           subcore[1]: start=736 number=4
+           subcore[2]: start=563 number=4
+           subcore[3]: start=736 number=4
+           subcore[4]: start=892 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_024.bin (480 字节)
+           task[689] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4a5c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task689.bin
+           task[690] flags=0 op_idx=13 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4a9c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task690.bin
+           task[691] flags=0 op_idx=14 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be4aac0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task691.bin
+           task[692] flags=0 op_idx=14 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be4ad40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task692.bin
+           task[693] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4afc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task693.bin
+           task[694] flags=0 op_idx=14 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4b3c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task694.bin
+           task[695] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4b4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task695.bin
+           task[696] flags=0 op_idx=15 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4b8c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task696.bin
+           task[697] flags=0 op_idx=17 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4b9c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task697.bin
+           task[698] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4bdc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task698.bin
+           task[699] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4c1c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task699.bin
+           task[700] flags=0 op_idx=19 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4c5c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_024_task700.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=701 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=567 number=3
+           subcore[1]: start=740 number=3
+           subcore[2]: start=567 number=3
+           subcore[3]: start=740 number=3
+           subcore[4]: start=896 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_025.bin (360 字节)
+           task[701] flags=0 op_idx=20 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be4c6c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task701.bin
+           task[702] flags=0 op_idx=20 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be4c940
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task702.bin
+           task[703] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4cbc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task703.bin
+           task[704] flags=0 op_idx=20 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4cfc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task704.bin
+           task[705] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4d0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task705.bin
+           task[706] flags=0 op_idx=21 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4d4c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task706.bin
+           task[707] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4d5c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task707.bin
+           task[708] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4d9c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task708.bin
+           task[709] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4ddc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_025_task709.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=710 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=570 number=2
+           subcore[1]: start=743 number=2
+           subcore[2]: start=570 number=2
+           subcore[3]: start=743 number=2
+           subcore[4]: start=899 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_026.bin (240 字节)
+           task[710] flags=0 op_idx=25 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4e1c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_026_task710.bin
+           task[711] flags=0 op_idx=26 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be4e2c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_026_task711.bin
+           task[712] flags=0 op_idx=26 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be4e540
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_026_task712.bin
+           task[713] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4e7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_026_task713.bin
+           task[714] flags=0 op_idx=26 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be4ebc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_026_task714.bin
+           task[715] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4ecc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_026_task715.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=716 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=572 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_027.bin (80 字节)
+           task[716] flags=0 op_idx=28 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4f0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_027_task716.bin
+           task[717] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4f4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_027_task717.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=718 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=574 number=4
+           subcore[1]: start=745 number=4
+           subcore[2]: start=574 number=4
+           subcore[3]: start=745 number=4
+           subcore[4]: start=901 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_028.bin (480 字节)
+           task[718] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4f8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task718.bin
+           task[719] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be4fcc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task719.bin
+           task[720] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be500c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task720.bin
+           task[721] flags=0 op_idx=32 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be504c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task721.bin
+           task[722] flags=0 op_idx=33 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be505c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task722.bin
+           task[723] flags=0 op_idx=33 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be50840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task723.bin
+           task[724] flags=0 op_idx=33 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be50ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task724.bin
+           task[725] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be50bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task725.bin
+           task[726] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be50fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task726.bin
+           task[727] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be510c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task727.bin
+           task[728] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be514c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task728.bin
+           task[729] flags=0 op_idx=38 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be518c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_028_task729.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=730 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=578 number=3
+           subcore[1]: start=749 number=3
+           subcore[2]: start=578 number=3
+           subcore[3]: start=749 number=3
+           subcore[4]: start=905 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_029.bin (360 字节)
+           task[730] flags=0 op_idx=38 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be51cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task730.bin
+           task[731] flags=0 op_idx=39 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be51dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task731.bin
+           task[732] flags=0 op_idx=39 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be52040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task732.bin
+           task[733] flags=0 op_idx=39 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be522c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task733.bin
+           task[734] flags=0 op_idx=40 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be523c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task734.bin
+           task[735] flags=0 op_idx=40 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be527c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task735.bin
+           task[736] flags=0 op_idx=42 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be528c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task736.bin
+           task[737] flags=0 op_idx=43 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be52cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task737.bin
+           task[738] flags=0 op_idx=44 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be530c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_029_task738.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=739 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=581 number=2
+           subcore[1]: start=752 number=2
+           subcore[2]: start=581 number=2
+           subcore[3]: start=752 number=2
+           subcore[4]: start=908 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_030.bin (240 字节)
+           task[739] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be534c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_030_task739.bin
+           task[740] flags=0 op_idx=45 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be535c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_030_task740.bin
+           task[741] flags=0 op_idx=45 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be53840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_030_task741.bin
+           task[742] flags=0 op_idx=45 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be53ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_030_task742.bin
+           task[743] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be53bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_030_task743.bin
+           task[744] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be53fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_030_task744.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=745 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=583 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_031.bin (80 字节)
+           task[745] flags=0 op_idx=48 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be540c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_031_task745.bin
+           task[746] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be544c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_031_task746.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=747 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=585 number=4
+           subcore[1]: start=754 number=4
+           subcore[2]: start=585 number=4
+           subcore[3]: start=754 number=4
+           subcore[4]: start=910 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_032.bin (480 字节)
+           task[747] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be548c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task747.bin
+           task[748] flags=0 op_idx=50 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be54cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task748.bin
+           task[749] flags=0 op_idx=51 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be54dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task749.bin
+           task[750] flags=0 op_idx=51 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be55040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task750.bin
+           task[751] flags=0 op_idx=51 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be552c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task751.bin
+           task[752] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be553c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task752.bin
+           task[753] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be557c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task753.bin
+           task[754] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be558c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task754.bin
+           task[755] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be55cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task755.bin
+           task[756] flags=0 op_idx=56 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be560c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task756.bin
+           task[757] flags=0 op_idx=56 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be564c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task757.bin
+           task[758] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be565c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_032_task758.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=759 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=589 number=3
+           subcore[1]: start=758 number=3
+           subcore[2]: start=589 number=3
+           subcore[3]: start=758 number=3
+           subcore[4]: start=914 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_033.bin (360 字节)
+           task[759] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be56840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task759.bin
+           task[760] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be56ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task760.bin
+           task[761] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be56bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task761.bin
+           task[762] flags=0 op_idx=58 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be56fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task762.bin
+           task[763] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be570c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task763.bin
+           task[764] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be574c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task764.bin
+           task[765] flags=0 op_idx=62 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be578c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task765.bin
+           task[766] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be57cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task766.bin
+           task[767] flags=0 op_idx=63 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be57dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_033_task767.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=768 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=592 number=2
+           subcore[1]: start=761 number=2
+           subcore[2]: start=592 number=2
+           subcore[3]: start=761 number=2
+           subcore[4]: start=917 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_034.bin (240 字节)
+           task[768] flags=0 op_idx=63 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be58040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_034_task768.bin
+           task[769] flags=0 op_idx=63 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be582c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_034_task769.bin
+           task[770] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be583c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_034_task770.bin
+           task[771] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be587c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_034_task771.bin
+           task[772] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be588c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_034_task772.bin
+           task[773] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be58cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_034_task773.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=774 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=594 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_035.bin (80 字节)
+           task[774] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be590c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_035_task774.bin
+           task[775] flags=0 op_idx=68 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be594c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_035_task775.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=776 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=596 number=4
+           subcore[1]: start=763 number=4
+           subcore[2]: start=596 number=4
+           subcore[3]: start=763 number=4
+           subcore[4]: start=919 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_036.bin (480 字节)
+           task[776] flags=0 op_idx=69 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be595c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task776.bin
+           task[777] flags=0 op_idx=69 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be59840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task777.bin
+           task[778] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be59ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task778.bin
+           task[779] flags=0 op_idx=70 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be59bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task779.bin
+           task[780] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be59fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task780.bin
+           task[781] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5a0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task781.bin
+           task[782] flags=0 op_idx=73 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5a4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task782.bin
+           task[783] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5a8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task783.bin
+           task[784] flags=0 op_idx=74 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5acc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task784.bin
+           task[785] flags=0 op_idx=75 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5adc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task785.bin
+           task[786] flags=0 op_idx=75 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5b040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task786.bin
+           task[787] flags=0 op_idx=75 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5b2c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_036_task787.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=788 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=600 number=3
+           subcore[1]: start=767 number=3
+           subcore[2]: start=600 number=3
+           subcore[3]: start=767 number=3
+           subcore[4]: start=923 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_037.bin (360 字节)
+           task[788] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5b3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task788.bin
+           task[789] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5b7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task789.bin
+           task[790] flags=0 op_idx=78 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5bbc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task790.bin
+           task[791] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5bfc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task791.bin
+           task[792] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5c3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task792.bin
+           task[793] flags=0 op_idx=81 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5c7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task793.bin
+           task[794] flags=0 op_idx=81 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5cbc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task794.bin
+           task[795] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5ccc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task795.bin
+           task[796] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5cf40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_037_task796.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=797 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=603 number=2
+           subcore[1]: start=770 number=2
+           subcore[2]: start=603 number=2
+           subcore[3]: start=770 number=2
+           subcore[4]: start=926 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_038.bin (240 字节)
+           task[797] flags=0 op_idx=82 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5d1c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_038_task797.bin
+           task[798] flags=0 op_idx=83 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5d2c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_038_task798.bin
+           task[799] flags=0 op_idx=83 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5d6c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_038_task799.bin
+           task[800] flags=0 op_idx=85 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5d7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_038_task800.bin
+           task[801] flags=0 op_idx=86 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5dbc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_038_task801.bin
+           task[802] flags=0 op_idx=87 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5dfc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_038_task802.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=803 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=605 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_039.bin (80 字节)
+           task[803] flags=0 op_idx=87 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5e3c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_039_task803.bin
+           task[804] flags=0 op_idx=88 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5e4c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_039_task804.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=805 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=607 number=4
+           subcore[1]: start=772 number=4
+           subcore[2]: start=607 number=4
+           subcore[3]: start=772 number=4
+           subcore[4]: start=928 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_040.bin (480 字节)
+           task[805] flags=0 op_idx=88 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5e740
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task805.bin
+           task[806] flags=0 op_idx=88 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5e9c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task806.bin
+           task[807] flags=0 op_idx=89 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5eac0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task807.bin
+           task[808] flags=0 op_idx=89 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5eec0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task808.bin
+           task[809] flags=0 op_idx=91 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5efc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task809.bin
+           task[810] flags=0 op_idx=92 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5f3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task810.bin
+           task[811] flags=0 op_idx=93 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be5f7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task811.bin
+           task[812] flags=0 op_idx=93 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be5fbc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task812.bin
+           task[813] flags=0 op_idx=94 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5fcc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task813.bin
+           task[814] flags=0 op_idx=94 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be5ff40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task814.bin
+           task[815] flags=0 op_idx=94 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be601c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task815.bin
+           task[816] flags=0 op_idx=95 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be602c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_040_task816.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=817 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=611 number=3
+           subcore[1]: start=776 number=3
+           subcore[2]: start=611 number=3
+           subcore[3]: start=776 number=3
+           subcore[4]: start=932 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_041.bin (360 字节)
+           task[817] flags=0 op_idx=95 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be606c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task817.bin
+           task[818] flags=0 op_idx=97 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be607c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task818.bin
+           task[819] flags=0 op_idx=98 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be60bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task819.bin
+           task[820] flags=0 op_idx=99 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be60fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task820.bin
+           task[821] flags=0 op_idx=99 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be613c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task821.bin
+           task[822] flags=0 op_idx=100 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be614c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task822.bin
+           task[823] flags=0 op_idx=100 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be61740
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task823.bin
+           task[824] flags=0 op_idx=100 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be619c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task824.bin
+           task[825] flags=0 op_idx=101 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be61ac0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_041_task825.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=826 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=614 number=2
+           subcore[1]: start=779 number=2
+           subcore[2]: start=614 number=2
+           subcore[3]: start=779 number=2
+           subcore[4]: start=935 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_042.bin (240 字节)
+           task[826] flags=0 op_idx=101 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be61ec0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_042_task826.bin
+           task[827] flags=0 op_idx=103 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be61fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_042_task827.bin
+           task[828] flags=0 op_idx=103 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be623c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_042_task828.bin
+           task[829] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be624c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_042_task829.bin
+           task[830] flags=0 op_idx=1 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be628c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_042_task830.bin
+           task[831] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be629c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_042_task831.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=832 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=616 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_043.bin (80 字节)
+           task[832] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be62dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_043_task832.bin
+           task[833] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be631c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_043_task833.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=834 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=618 number=4
+           subcore[1]: start=781 number=4
+           subcore[2]: start=618 number=4
+           subcore[3]: start=781 number=4
+           subcore[4]: start=937 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_044.bin (480 字节)
+           task[834] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be635c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task834.bin
+           task[835] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be639c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task835.bin
+           task[836] flags=0 op_idx=7 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be63dc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task836.bin
+           task[837] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be63ec0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task837.bin
+           task[838] flags=0 op_idx=8 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be64140
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task838.bin
+           task[839] flags=0 op_idx=8 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be643c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task839.bin
+           task[840] flags=0 op_idx=8 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be647c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task840.bin
+           task[841] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be648c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task841.bin
+           task[842] flags=0 op_idx=9 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be64cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task842.bin
+           task[843] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be64dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task843.bin
+           task[844] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be651c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task844.bin
+           task[845] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be655c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_044_task845.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=846 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=622 number=3
+           subcore[1]: start=785 number=3
+           subcore[2]: start=622 number=3
+           subcore[3]: start=785 number=3
+           subcore[4]: start=941 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_045.bin (360 字节)
+           task[846] flags=0 op_idx=13 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be659c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task846.bin
+           task[847] flags=0 op_idx=14 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be65ac0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task847.bin
+           task[848] flags=0 op_idx=14 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be65d40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task848.bin
+           task[849] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be65fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task849.bin
+           task[850] flags=0 op_idx=14 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be663c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task850.bin
+           task[851] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be664c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task851.bin
+           task[852] flags=0 op_idx=15 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be668c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task852.bin
+           task[853] flags=0 op_idx=17 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be669c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task853.bin
+           task[854] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be66dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_045_task854.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=855 task_number=21 task_counter=21 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=625 number=7
+           subcore[1]: start=788 number=7
+           subcore[2]: start=625 number=7
+           subcore[3]: start=788 number=7
+           subcore[4]: start=944 number=7
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_046.bin (840 字节)
+           task[855] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be671c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task855.bin
+           task[856] flags=0 op_idx=19 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be675c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task856.bin
+           task[857] flags=0 op_idx=20 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be676c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task857.bin
+           task[858] flags=0 op_idx=20 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be67940
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task858.bin
+           task[859] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be67bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task859.bin
+           task[860] flags=0 op_idx=20 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be67fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task860.bin
+           task[861] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be680c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task861.bin
+           task[862] flags=0 op_idx=21 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be684c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task862.bin
+           task[863] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be685c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task863.bin
+           task[864] flags=0 op_idx=24 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be689c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task864.bin
+           task[865] flags=0 op_idx=25 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be68dc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task865.bin
+           task[866] flags=0 op_idx=25 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be691c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task866.bin
+           task[867] flags=0 op_idx=26 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be692c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task867.bin
+           task[868] flags=0 op_idx=26 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be69540
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task868.bin
+           task[869] flags=0 op_idx=26 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be697c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task869.bin
+           task[870] flags=0 op_idx=26 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be69bc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task870.bin
+           task[871] flags=0 op_idx=27 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be69cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task871.bin
+           task[872] flags=0 op_idx=28 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6a0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task872.bin
+           task[873] flags=0 op_idx=29 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6a4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task873.bin
+           task[874] flags=0 op_idx=30 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6a8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task874.bin
+           task[875] flags=0 op_idx=31 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6acc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_046_task875.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=876 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=632 number=3
+           subcore[1]: start=795 number=3
+           subcore[2]: start=632 number=3
+           subcore[3]: start=795 number=3
+           subcore[4]: start=951 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_047.bin (360 字节)
+           task[876] flags=0 op_idx=32 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6b0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task876.bin
+           task[877] flags=0 op_idx=32 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6b4c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task877.bin
+           task[878] flags=0 op_idx=33 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6b5c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task878.bin
+           task[879] flags=0 op_idx=33 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6b840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task879.bin
+           task[880] flags=0 op_idx=33 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6bac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task880.bin
+           task[881] flags=0 op_idx=34 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6bbc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task881.bin
+           task[882] flags=0 op_idx=34 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6bfc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task882.bin
+           task[883] flags=0 op_idx=36 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6c0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task883.bin
+           task[884] flags=0 op_idx=37 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6c4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_047_task884.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=885 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=635 number=2
+           subcore[1]: start=798 number=2
+           subcore[2]: start=635 number=2
+           subcore[3]: start=798 number=2
+           subcore[4]: start=954 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_048.bin (240 字节)
+           task[885] flags=0 op_idx=38 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6c8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_048_task885.bin
+           task[886] flags=0 op_idx=38 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6ccc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_048_task886.bin
+           task[887] flags=0 op_idx=39 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6cdc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_048_task887.bin
+           task[888] flags=0 op_idx=39 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6d040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_048_task888.bin
+           task[889] flags=0 op_idx=39 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6d2c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_048_task889.bin
+           task[890] flags=0 op_idx=40 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6d3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_048_task890.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=891 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=637 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_049.bin (80 字节)
+           task[891] flags=0 op_idx=40 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6d7c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_049_task891.bin
+           task[892] flags=0 op_idx=42 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6d8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_049_task892.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=893 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=639 number=4
+           subcore[1]: start=800 number=4
+           subcore[2]: start=639 number=4
+           subcore[3]: start=800 number=4
+           subcore[4]: start=956 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_050.bin (480 字节)
+           task[893] flags=0 op_idx=43 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6dcc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task893.bin
+           task[894] flags=0 op_idx=44 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6e0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task894.bin
+           task[895] flags=0 op_idx=44 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6e4c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task895.bin
+           task[896] flags=0 op_idx=45 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6e5c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task896.bin
+           task[897] flags=0 op_idx=45 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6e840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task897.bin
+           task[898] flags=0 op_idx=45 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6eac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task898.bin
+           task[899] flags=0 op_idx=46 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6ebc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task899.bin
+           task[900] flags=0 op_idx=46 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6efc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task900.bin
+           task[901] flags=0 op_idx=48 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6f0c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task901.bin
+           task[902] flags=0 op_idx=49 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6f4c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task902.bin
+           task[903] flags=0 op_idx=50 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be6f8c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task903.bin
+           task[904] flags=0 op_idx=50 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6fcc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_050_task904.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=905 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=643 number=3
+           subcore[1]: start=804 number=3
+           subcore[2]: start=643 number=3
+           subcore[3]: start=804 number=3
+           subcore[4]: start=960 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_051.bin (360 字节)
+           task[905] flags=0 op_idx=51 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be6fdc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task905.bin
+           task[906] flags=0 op_idx=51 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be70040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task906.bin
+           task[907] flags=0 op_idx=51 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be702c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task907.bin
+           task[908] flags=0 op_idx=52 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be703c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task908.bin
+           task[909] flags=0 op_idx=52 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be707c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task909.bin
+           task[910] flags=0 op_idx=54 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be708c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task910.bin
+           task[911] flags=0 op_idx=55 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be70cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task911.bin
+           task[912] flags=0 op_idx=56 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be710c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task912.bin
+           task[913] flags=0 op_idx=56 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be714c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_051_task913.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=914 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=646 number=2
+           subcore[1]: start=807 number=2
+           subcore[2]: start=646 number=2
+           subcore[3]: start=807 number=2
+           subcore[4]: start=963 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_052.bin (240 字节)
+           task[914] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be715c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_052_task914.bin
+           task[915] flags=0 op_idx=57 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be71840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_052_task915.bin
+           task[916] flags=0 op_idx=57 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be71ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_052_task916.bin
+           task[917] flags=0 op_idx=58 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be71bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_052_task917.bin
+           task[918] flags=0 op_idx=58 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be71fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_052_task918.bin
+           task[919] flags=0 op_idx=60 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be720c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_052_task919.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=920 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=648 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_053.bin (80 字节)
+           task[920] flags=0 op_idx=61 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be724c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_053_task920.bin
+           task[921] flags=0 op_idx=62 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be728c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_053_task921.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=922 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=650 number=4
+           subcore[1]: start=809 number=4
+           subcore[2]: start=650 number=4
+           subcore[3]: start=809 number=4
+           subcore[4]: start=965 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_054.bin (480 字节)
+           task[922] flags=0 op_idx=62 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be72cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task922.bin
+           task[923] flags=0 op_idx=63 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be72dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task923.bin
+           task[924] flags=0 op_idx=63 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be73040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task924.bin
+           task[925] flags=0 op_idx=63 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be732c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task925.bin
+           task[926] flags=0 op_idx=64 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be733c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task926.bin
+           task[927] flags=0 op_idx=64 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be737c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task927.bin
+           task[928] flags=0 op_idx=66 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be738c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task928.bin
+           task[929] flags=0 op_idx=67 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be73cc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task929.bin
+           task[930] flags=0 op_idx=68 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be740c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task930.bin
+           task[931] flags=0 op_idx=68 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be744c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task931.bin
+           task[932] flags=0 op_idx=69 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be745c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task932.bin
+           task[933] flags=0 op_idx=69 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be74840
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_054_task933.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=934 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=654 number=3
+           subcore[1]: start=813 number=3
+           subcore[2]: start=654 number=3
+           subcore[3]: start=813 number=3
+           subcore[4]: start=969 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_055.bin (360 字节)
+           task[934] flags=0 op_idx=69 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be74ac0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task934.bin
+           task[935] flags=0 op_idx=70 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be74bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task935.bin
+           task[936] flags=0 op_idx=70 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be74fc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task936.bin
+           task[937] flags=0 op_idx=72 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be750c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task937.bin
+           task[938] flags=0 op_idx=73 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be754c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task938.bin
+           task[939] flags=0 op_idx=74 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be758c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task939.bin
+           task[940] flags=0 op_idx=74 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be75cc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task940.bin
+           task[941] flags=0 op_idx=75 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be75dc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task941.bin
+           task[942] flags=0 op_idx=75 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be76040
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_055_task942.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=943 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=657 number=2
+           subcore[1]: start=816 number=2
+           subcore[2]: start=657 number=2
+           subcore[3]: start=816 number=2
+           subcore[4]: start=972 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_056.bin (240 字节)
+           task[943] flags=0 op_idx=75 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be762c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_056_task943.bin
+           task[944] flags=0 op_idx=76 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be763c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_056_task944.bin
+           task[945] flags=0 op_idx=77 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be767c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_056_task945.bin
+           task[946] flags=0 op_idx=78 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be76bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_056_task946.bin
+           task[947] flags=0 op_idx=79 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be76fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_056_task947.bin
+           task[948] flags=0 op_idx=80 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be773c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_056_task948.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=949 task_number=2 task_counter=2 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=659 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_057.bin (80 字节)
+           task[949] flags=0 op_idx=81 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be777c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_057_task949.bin
+           task[950] flags=0 op_idx=81 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be77bc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_057_task950.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=951 task_number=12 task_counter=12 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=661 number=4
+           subcore[1]: start=818 number=4
+           subcore[2]: start=661 number=4
+           subcore[3]: start=818 number=4
+           subcore[4]: start=974 number=4
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_058.bin (480 字节)
+           task[951] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be77cc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task951.bin
+           task[952] flags=0 op_idx=82 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be77f40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task952.bin
+           task[953] flags=0 op_idx=82 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be781c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task953.bin
+           task[954] flags=0 op_idx=83 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be782c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task954.bin
+           task[955] flags=0 op_idx=83 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be786c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task955.bin
+           task[956] flags=0 op_idx=85 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be787c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task956.bin
+           task[957] flags=0 op_idx=86 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be78bc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task957.bin
+           task[958] flags=0 op_idx=87 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be78fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task958.bin
+           task[959] flags=0 op_idx=87 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be793c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task959.bin
+           task[960] flags=0 op_idx=88 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be794c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task960.bin
+           task[961] flags=0 op_idx=88 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be79740
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task961.bin
+           task[962] flags=0 op_idx=88 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be799c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_058_task962.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=963 task_number=9 task_counter=9 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=665 number=3
+           subcore[1]: start=822 number=3
+           subcore[2]: start=665 number=3
+           subcore[3]: start=822 number=3
+           subcore[4]: start=978 number=3
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_059.bin (360 字节)
+           task[963] flags=0 op_idx=89 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be79ac0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task963.bin
+           task[964] flags=0 op_idx=89 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be79ec0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task964.bin
+           task[965] flags=0 op_idx=91 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be79fc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task965.bin
+           task[966] flags=0 op_idx=92 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7a3c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task966.bin
+           task[967] flags=0 op_idx=93 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7a7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task967.bin
+           task[968] flags=0 op_idx=93 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7abc0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task968.bin
+           task[969] flags=0 op_idx=94 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be7acc0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task969.bin
+           task[970] flags=0 op_idx=94 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be7af40
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task970.bin
+           task[971] flags=0 op_idx=94 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7b1c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_059_task971.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=972 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=668 number=2
+           subcore[1]: start=825 number=2
+           subcore[2]: start=668 number=2
+           subcore[3]: start=825 number=2
+           subcore[4]: start=981 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_060.bin (240 字节)
+           task[972] flags=0 op_idx=95 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7b2c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_060_task972.bin
+           task[973] flags=0 op_idx=95 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7b6c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_060_task973.bin
+           task[974] flags=0 op_idx=97 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7b7c0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_060_task974.bin
+           task[975] flags=0 op_idx=98 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7bbc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_060_task975.bin
+           task[976] flags=0 op_idx=99 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7bfc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_060_task976.bin
+           task[977] flags=0 op_idx=99 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7c3c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_060_task977.bin
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=978 task_number=1 task_counter=1 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=670 number=1
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_061.bin (40 字节)
+           task[978] flags=0 op_idx=100 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be7c4c0
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_061_task978.bin
+
+[SUBMIT] flags=0x5 core_mask=0x7 timeout=6000 task_start=979 task_number=6 task_counter=6 priority=0 task_obj_addr=0xffffff812a2ff400 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=671 number=2
+           subcore[1]: start=827 number=2
+           subcore[2]: start=671 number=2
+           subcore[3]: start=827 number=2
+           subcore[4]: start=983 number=2
+           task 数组: cpu=0x7fabbf6000 size=40960
+           → 原始 task 数组已存 /home/orangepi/dumps3/shufflenet_v2_x0_5/tasks_062.bin (240 字节)
+           task[979] flags=0 op_idx=100 enable_mask=0x18 int_mask=0x300 int_clear=0x1ffff regcfg_amount=69 regcfg_offset=0 regcmd_addr=0x6be7c740
+             ★ regcmd 552 字节 (regcfg=69+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_062_task979.bin
+           task[980] flags=0 op_idx=100 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7c9c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_062_task980.bin
+           task[981] flags=0 op_idx=101 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7cac0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_062_task981.bin
+           task[982] flags=0 op_idx=101 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7cec0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_062_task982.bin
+           task[983] flags=0 op_idx=103 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7cfc0
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_062_task983.bin
+           task[984] flags=0 op_idx=103 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be7d3c0
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/shufflenet_v2_x0_5/regcmd_062_task984.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812a2fa000 offset=1024 size=1024
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812a2fe400 offset=1467328 size=16
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812a2fa000 offset=0 size=1
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff812a2fd800 offset=0 size=1024
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812a2fd800 offset=0 size=1024
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff812a2fd800 offset=0 size=1024
+[ACTION] POWER_OFF (flags=21) value=0 ret=-1
+[MEM_DESTROY] handle=3 obj_addr=0xffffff812a2fa000 size=552960
+[MEM_DESTROY] handle=2 obj_addr=0xffffff812a2fe400 size=2412544
+[MEM_DESTROY] handle=1 obj_addr=0xffffff812a2ff400 size=40960
+[MEM_DESTROY] handle=4 obj_addr=0xffffff812a2f9c00 size=151552
+[MEM_DESTROY] handle=5 obj_addr=0xffffff812a2fd800 size=4096

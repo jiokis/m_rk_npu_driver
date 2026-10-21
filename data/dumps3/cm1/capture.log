@@ -1,0 +1,211 @@
+# 缓冲区镜像 dump: mode=0 单缓冲区上限=33554432
+# rknpu_capture 启动
+# pid=39867 dump_dir=/home/orangepi/dumps3/cm1
+# sizeof(rknpu_task)=40 sizeof(rknpu_submit)=104 sizeof(rknpu_mem_create)=48
+# ioctl 编号: ACTION=0xc0086440 SUBMIT=0xc0686441 (低16位=0x6441)
+[ACTION] GET_HW_VERSION (flags=0) value=0x46495245 ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] POWER_ON (flags=20) value=0 ret=-1
+[ACTION] SET_PROC_NICE (flags=19) value=0xffffffed ret=0
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=1 flags=0x40b size=8192 obj_addr=0xffffff84e6489800 dma_addr=0x6be8f000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=1 → offset=0x19416f000
+[mmap64] handle=1 offset=0x19416f000 → cpu=0x7fadbc8000 len=6120  ⇒ dma_addr=0x6be8f000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff84e6489800 offset=0 size=6120
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=2 flags=0x403 size=11948032 obj_addr=0xffffff84e6489400 dma_addr=0x6b32a000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=2 → offset=0x194171000
+[mmap64] handle=2 offset=0x194171000 → cpu=0x7fa81bb000 len=11945024  ⇒ dma_addr=0x6b32a000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff84e6489400 offset=0 size=11945024
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff84e6489400 offset=0 size=11945024
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff84e6489800 offset=0 size=6120
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=3 flags=0x403 size=1155072 obj_addr=0xffffff84e648f800 dma_addr=0x6b210000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=3 → offset=0x194cd6000
+[mmap64] handle=3 offset=0x194cd6000 → cpu=0x7fa80a1000 len=1154048  ⇒ dma_addr=0x6b210000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff84e648f800 offset=0 size=1154048
+[ACTION] GET_DRV_VERSION (flags=1) value=0x38c ret=0
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=4 flags=0x403 size=151552 obj_addr=0xffffff84e648e400 dma_addr=0x6b1eb000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=4 → offset=0x194df0000
+[mmap64] handle=4 offset=0x194df0000 → cpu=0x7fa807c000 len=150528  ⇒ dma_addr=0x6b1eb000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff84e648e400 offset=0 size=150528
+[ACTION] GET_IOMMU_EN (flags=18) value=0x1 ret=0
+[MEM_CREATE] handle=5 flags=0x403 size=4096 obj_addr=0xffffff84e648e800 dma_addr=0x6b1ea000 sram_size=0 core_mask=0x1
+[MEM_MAP] handle=5 → offset=0x194e15000
+[mmap64] handle=5 offset=0x194e15000 → cpu=0x7fadbf5000 len=1024  ⇒ dma_addr=0x6b1ea000 现在可从用户态读写
+[MEM_SYNC] flags=0x3 obj_addr=0xffffff84e648e800 offset=0 size=1024
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff84e6489400 offset=11797568 size=141312
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff84e648e400 offset=0 size=150528
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff84e6489400 offset=11797568 size=141312
+
+[SUBMIT] flags=0x5 core_mask=0x1 timeout=6000 task_start=0 task_number=75 task_counter=75 priority=0 task_obj_addr=0xffffff84e6489800 task_base_addr=0 iommu_dom=0 fence_fd=-1 ret=0
+           subcore[0]: start=0 number=25
+           subcore[1]: start=0 number=25
+           subcore[2]: start=0 number=25
+           task 数组: cpu=0x7fadbc8000 size=8192
+           → 原始 task 数组已存 /home/orangepi/dumps3/cm1/tasks_000.bin (3000 字节)
+           task[0] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6a440
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task0.bin
+           task[1] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6a880
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task1.bin
+           task[2] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=64 regcfg_offset=0 regcmd_addr=0x6be6acc0
+             ★ regcmd 512 字节 (regcfg=64+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task2.bin
+           task[3] flags=0 op_idx=2 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6af00
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task3.bin
+           task[4] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6b000
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task4.bin
+           task[5] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6b440
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task5.bin
+           task[6] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6b880
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task6.bin
+           task[7] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6bcc0
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task7.bin
+           task[8] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6c100
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task8.bin
+           task[9] flags=0 op_idx=8 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6c540
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task9.bin
+           task[10] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6c980
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task10.bin
+           task[11] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6cdc0
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task11.bin
+           task[12] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6d200
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task12.bin
+           task[13] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6d640
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task13.bin
+           task[14] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6da80
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task14.bin
+           task[15] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6dec0
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task15.bin
+           task[16] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6e300
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task16.bin
+           task[17] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6e740
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task17.bin
+           task[18] flags=0 op_idx=17 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6eb80
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task18.bin
+           task[19] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6efc0
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task19.bin
+           task[20] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6f400
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task20.bin
+           task[21] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6f840
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task21.bin
+           task[22] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be6fc80
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task22.bin
+           task[23] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be700c0
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task23.bin
+           task[24] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be70500
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task24.bin
+           task[25] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be70940
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task25.bin
+           task[26] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be70d40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task26.bin
+           task[27] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be71140
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task27.bin
+           task[28] flags=0 op_idx=1 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be71540
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task28.bin
+           task[29] flags=0 op_idx=2 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be6af00
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task29.bin
+           task[30] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be71640
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task30.bin
+           task[31] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be71a40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task31.bin
+           task[32] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be71e40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task32.bin
+           task[33] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be72240
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task33.bin
+           task[34] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be72640
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task34.bin
+           task[35] flags=0 op_idx=8 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be72a40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task35.bin
+           task[36] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be72e40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task36.bin
+           task[37] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be73240
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task37.bin
+           task[38] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be73640
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task38.bin
+           task[39] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be73a40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task39.bin
+           task[40] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be73e40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task40.bin
+           task[41] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be74240
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task41.bin
+           task[42] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be74640
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task42.bin
+           task[43] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be74a40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task43.bin
+           task[44] flags=0 op_idx=17 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be74e40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task44.bin
+           task[45] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be75240
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task45.bin
+           task[46] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be75640
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task46.bin
+           task[47] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be75a40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task47.bin
+           task[48] flags=0 op_idx=21 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be75e40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task48.bin
+           task[49] flags=0 op_idx=21 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be76240
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task49.bin
+           task[50] flags=0 op_idx=22 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=126 regcfg_offset=0 regcmd_addr=0x6be700c0
+             ★ regcmd 1008 字节 (regcfg=126+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task50.bin
+           task[51] flags=0 op_idx=23 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be76340
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task51.bin
+           task[52] flags=0 op_idx=23 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be76740
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task52.bin
+           task[53] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be76840
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task53.bin
+           task[54] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be76c40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task54.bin
+           task[55] flags=0 op_idx=1 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be77040
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task55.bin
+           task[56] flags=0 op_idx=1 enable_mask=0x60 int_mask=0xc00 int_clear=0x1ffff regcfg_amount=26 regcfg_offset=0 regcmd_addr=0x6be77440
+             ★ regcmd 208 字节 (regcfg=26+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task56.bin
+           task[57] flags=0 op_idx=3 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be77540
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task57.bin
+           task[58] flags=0 op_idx=4 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be77940
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task58.bin
+           task[59] flags=0 op_idx=5 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be77d40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task59.bin
+           task[60] flags=0 op_idx=6 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be78140
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task60.bin
+           task[61] flags=0 op_idx=7 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be78540
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task61.bin
+           task[62] flags=0 op_idx=8 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be78940
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task62.bin
+           task[63] flags=0 op_idx=9 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be78d40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task63.bin
+           task[64] flags=0 op_idx=10 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be79140
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task64.bin
+           task[65] flags=0 op_idx=11 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be79540
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task65.bin
+           task[66] flags=0 op_idx=12 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be79940
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task66.bin
+           task[67] flags=0 op_idx=13 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be79d40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task67.bin
+           task[68] flags=0 op_idx=14 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7a140
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task68.bin
+           task[69] flags=0 op_idx=15 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7a540
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task69.bin
+           task[70] flags=0 op_idx=16 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7a940
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task70.bin
+           task[71] flags=0 op_idx=17 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7ad40
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task71.bin
+           task[72] flags=0 op_idx=18 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7b140
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task72.bin
+           task[73] flags=0 op_idx=19 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7b540
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task73.bin
+           task[74] flags=0 op_idx=20 enable_mask=0x1d int_mask=0x300 int_clear=0x1ffff regcfg_amount=122 regcfg_offset=0 regcmd_addr=0x6be7b940
+             ★ regcmd 976 字节 (regcfg=122+slack=0) → /home/orangepi/dumps3/cm1/regcmd_000_task74.bin
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff84e648f800 offset=512 size=1024
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff84e6489400 offset=11795456 size=16
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff84e648f800 offset=0 size=1
+[MEM_SYNC] flags=0x1 obj_addr=0xffffff84e648e800 offset=0 size=1024
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff84e648e800 offset=0 size=1024
+[MEM_SYNC] flags=0x2 obj_addr=0xffffff84e648e800 offset=0 size=1024
+[ACTION] POWER_OFF (flags=21) value=0 ret=-1
+[MEM_DESTROY] handle=3 obj_addr=0xffffff84e648f800 size=1155072
+[MEM_DESTROY] handle=2 obj_addr=0xffffff84e6489400 size=11948032
+[MEM_DESTROY] handle=1 obj_addr=0xffffff84e6489800 size=8192
+[MEM_DESTROY] handle=4 obj_addr=0xffffff84e648e400 size=151552
+[MEM_DESTROY] handle=5 obj_addr=0xffffff84e648e800 size=4096

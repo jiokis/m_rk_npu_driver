@@ -46,3 +46,17 @@ deploy/sd/rknn/*.rknn
 deploy/sd/onnx/
 # 但清单/小文件要留
 !deploy/sd/parts/*manifest*.json
+
+# ★ 大目录软链化之后（搬到 D 盘、原位置留 symlink）：
+#   上面那些**带尾斜杠**的规则只匹配目录，而 symlink 不是目录 ⇒ 会逃出忽略、
+#   在 `git status` 里冒出来（踩过）。同一批路径再写一遍**不带尾斜杠**的形式。
+deploy/rknn
+deploy/rknn_tv
+deploy/onnx_tv
+deploy/sd/rknn
+deploy/sd/onnx
+deploy/diffusion/ckpt
+deploy/diffusion/onnx
+deploy/diffusion/rknn
+deploy/diffusion/out
+deploy/diffusion/pressure

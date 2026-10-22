@@ -51,7 +51,8 @@ def dfl_candidates(logits, cls, anchor, stride, conf=CONF):
         d[g] = AR16.ravel() @ e
     a = anchor[:, :, idx]; st = stride[:, idx]
     x1 = a - d[None, 0:2]; x2 = a + d[None, 2:4]
-    box = np.concatenate([(x1 + x2) * 0.5, x2 - x1], 1) * st
+    # ★ 输出 xyxy（不是 cx,cy,w,h）—— 与 C 版一致，NMS 直接可用
+    box = np.concatenate([x1, x2], 1) * st
     cl = cls[0][:, idx].max(0)[None]
     cls_id = cls[0][:, idx].argmax(0)[None].astype(np.float32)
     return np.concatenate([box[0].T, cl.T, cls_id.T], 1)   # (k,6)
@@ -86,6 +87,9 @@ class Pipeline:
         self.pending = {}
         self.lock = threading.Lock()
         self.cv = threading.Condition(self.lock)
+        self.t_inf = 0.0
+        self.t_post = 0.0
+        self.n_tile = 0
         self.ths = [threading.Thread(target=self._work, args=(i,), daemon=True) for i in range(nworkers)]
         for t in self.ths:
             t.start()
@@ -97,15 +101,21 @@ class Pipeline:
             if job is None:
                 self.q.task_done(); return
             fid, tid, tile = job
-            rgb = tile[:, :, ::-1]           # ★ 模型按 RGB 标定，cv2 读进来是 BGR
+            _t0 = time.perf_counter()
+            rgb = tile[:, :, ::-1]
             a = r.inference(inputs=[np.ascontiguousarray(rgb)[None]])
+            _t1 = time.perf_counter()
             lg = cl = None
             for t in a:
                 t = np.asarray(t)
                 if t.ndim == 3 and t.shape[1] == 64: lg = t
                 elif t.ndim == 3 and t.shape[1] == 80: cl = t
             b = dfl_candidates(lg, cl, self.anchor, self.stride)
+            _t2 = time.perf_counter()
             with self.cv:
+                self.t_inf += _t1 - _t0
+                self.t_post += _t2 - _t1
+                self.n_tile += 1
                 if len(b): self.res.setdefault(fid, []).append((tid, b))
                 self.pending[fid] = self.pending.get(fid, 1) - 1
                 if self.pending[fid] <= 0: self.cv.notify_all()
@@ -184,6 +194,9 @@ def main():
     print(f"  {N} 帧 / {wall:.2f}s = {N/wall:.2f} FPS")
     print(f"  单帧延迟: 中位 {statistics.median(lat):.2f} ms  p90 {lat[int(N*0.9)]:.2f} ms")
     print(f"  检出合计 {dets}（平均 {dets/N:.1f}/帧）")
+    if p.n_tile:
+        print(f"  每 tile: 推理 {p.t_inf/p.n_tile*1000:.2f} ms   DFL {p.t_post/p.n_tile*1000:.2f} ms")
+        print(f"  tile 总数 {p.n_tile}  ⇒ 推理合计 {p.t_inf*1000:.0f} ms / 后处理合计 {p.t_post*1000:.0f} ms")
 
 
 if __name__ == "__main__":

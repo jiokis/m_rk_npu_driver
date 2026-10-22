@@ -140,8 +140,13 @@ int main(int argc, char **argv) {
         rknn_tensor_attr in;
         memset(&in, 0, sizeof(in)); in.index = 0;
         rknn_query(ctx, RKNN_QUERY_INPUT_ATTR, &in, sizeof(in));
-        printf("  input: n_dims=%u dims=[%u,%u,%u,%u] size=%u fmt=%d\n",
-               in.n_dims, in.dims[0], in.dims[1], in.dims[2], in.dims[3], in.size, in.fmt);
+        printf("  input: n_dims=%u dims=[%u,%u,%u,%u] size=%u fmt=%d type=%d qnt=%d\n",
+               in.n_dims, in.dims[0], in.dims[1], in.dims[2], in.dims[3], in.size,
+               in.fmt, in.type, in.qnt_type);
+        rknn_tensor_attr oa; memset(&oa,0,sizeof(oa)); oa.index=0;
+        rknn_query(ctx, RKNN_QUERY_OUTPUT_ATTR, &oa, sizeof(oa));
+        printf("  output0: dims=[%u,%u,%u,%u] size=%u fmt=%d\n",
+               oa.dims[0], oa.dims[1], oa.dims[2], oa.dims[3], oa.size, oa.fmt);
 
         worker_t w; memset(&w, 0, sizeof(w));
         w.ctx = ctx; w.n_out = io_num.n_output;
@@ -172,8 +177,9 @@ int main(int argc, char **argv) {
                 inputs[0].size = in.size;
                 inputs[0].fmt = RKNN_TENSOR_NHWC;
                 inputs[0].buf = in_mem->virt_addr;
-                rknn_inputs_set(ctx, 1, inputs);
-                rknn_run(ctx, NULL);
+                int rs = rknn_inputs_set(ctx, 1, inputs);
+                int rr = rknn_run(ctx, NULL);
+                if (i == 0) printf("  [check] inputs_set=%d run=%d\n", rs, rr);
                 rknn_output outputs[8];
                 memset(outputs, 0, sizeof(outputs));
                 for (uint32_t k = 0; k < io_num.n_output; k++) {

@@ -32,7 +32,7 @@ static unsigned char *read_file(const char *p, int *sz) {
     fclose(f); *sz=(int)n; return b;
 }
 
-typedef struct { float x1,y1,x2,y2,score; int cls; } box_t;
+typedef struct { float x1,y1,x2,y2,score; int cls; int frame; } box_t;
 
 static float g_anchor[2*NA];   // (2,NA)
 static float g_stride[NA];
@@ -49,9 +49,12 @@ typedef struct {
 static volatile int g_next = 0, g_total = 0;
 static pthread_mutex_t g_mu = PTHREAD_MUTEX_INITIALIZER;
 static unsigned char *g_tile = NULL;
-static unsigned char *g_tiles4 = NULL;   // 4 个真实 tile 连续存放（可选）
-static box_t *g_boxes[2];    // 双缓冲：按 tile 顺序写
-static int g_nbox[2];
+static unsigned char *g_tiles4 = NULL;   // 多帧 tile 连续存放（可选）
+static int g_nframes_file = 1;           // tile 文件里有多少帧
+#define MAXPF 2048
+static box_t *g_fb = NULL;        // 按帧分桶：frame*MAXPF
+static int    *g_fbn = NULL;
+static int     g_nframes = 0;
 
 static void dfl_decode(const float *lg, const float *cl, int tid, box_t *outbox, int *nout) {
     int k = 0;
@@ -100,7 +103,9 @@ static void *worker(void *arg) {
         if (idx >= g_total) break;
         int tid = idx % 4;
 
-        const unsigned char *src_tile = g_tiles4 ? (g_tiles4 + (size_t)tid*TILE*TILE*3) : g_tile;
+        int fid_file = g_tiles4 ? (idx/4) % g_nframes_file : 0;
+        const unsigned char *src_tile = g_tiles4
+            ? (g_tiles4 + ((size_t)fid_file*4 + tid)*TILE*TILE*3) : g_tile;
         memcpy(w->in_mem->virt_addr, src_tile, TILE*TILE*3);
         rknn_input in; memset(&in,0,sizeof(in));
         in.index=0; in.type=RKNN_TENSOR_UINT8; in.size=w->in_attr.size;
@@ -124,14 +129,49 @@ static void *worker(void *arg) {
         if (lg && cl) dfl_decode(lg, cl, tid, tmp, &nb);
         rknn_outputs_release(w->ctx,w->n_out,outs);
 
+        int frame = idx / 4;
         pthread_mutex_lock(&g_mu);
-        int cap = MAXBOX - g_nbox[0];
-        int n = nb < cap ? nb : cap;
-        memcpy(g_boxes[0]+g_nbox[0], tmp, sizeof(box_t)*n);
-        g_nbox[0] += n;
+        if (frame < g_nframes) {
+            int cap = MAXPF - g_fbn[frame];
+            int n = nb < cap ? nb : cap;
+            memcpy(g_fb + (size_t)frame*MAXPF + g_fbn[frame], tmp, sizeof(box_t)*n);
+            g_fbn[frame] += n;
+        }
         pthread_mutex_unlock(&g_mu);
     }
     return NULL;
+}
+
+
+static float iou(const box_t*a, const box_t*b){
+    float x1=fmaxf(a->x1,b->x1), y1=fmaxf(a->y1,b->y1);
+    float x2=fminf(a->x2,b->x2), y2=fminf(a->y2,b->y2);
+    float w=x2-x1, h=y2-y1;
+    if(w<=0||h<=0) return 0.f;
+    float inter=w*h;
+    float aa=(a->x2-a->x1)*(a->y2-a->y1), bb=(b->x2-b->x1)*(b->y2-b->y1);
+    return inter/(aa+bb-inter+1e-9f);
+}
+static int cmp_score(const void*pa,const void*pb){
+    float x=((const box_t*)pa)->score, y=((const box_t*)pb)->score;
+    return (x<y)-(x>y);
+}
+// 贪心 NMS：按分数降序，同类别且 IoU>thr 的抑制
+static int nms_greedy(box_t *in, int n, box_t *out, float thr){
+    qsort(in, n, sizeof(box_t), cmp_score);
+    char *sup = (char*)calloc(n,1);
+    int m=0;
+    for(int i=0;i<n;i++){
+        if(sup[i]) continue;
+        out[m++]=in[i];
+        for(int j=i+1;j<n;j++){
+            if(sup[j]) continue;
+            if(in[j].cls != in[i].cls) continue;
+            if(iou(&in[i],&in[j])>thr) sup[j]=1;
+        }
+    }
+    free(sup);
+    return m;
 }
 
 int main(int argc,char**argv){
@@ -154,10 +194,18 @@ int main(int argc,char**argv){
     g_tile = malloc(TILE*TILE*3); memset(g_tile,128,TILE*TILE*3);
     if (argc > 6) {
         int tsz=0; unsigned char *t4 = read_file(argv[6], &tsz);
-        if (t4 && tsz >= 4*TILE*TILE*3) { g_tiles4 = t4; printf("载入真实 tile: %s (%d bytes)\n", argv[6], tsz); }
+        if (argc > 7) g_nframes_file = atoi(argv[7]);
+        if (g_nframes_file < 1) g_nframes_file = 1;
+        if (t4 && tsz >= (long)g_nframes_file*4*TILE*TILE*3) {
+            g_tiles4 = t4;
+            printf("载入真实 tile: %s (%d bytes, %d 帧)\n", argv[6], tsz, g_nframes_file);
+        }
         else if (t4) printf("tile 文件太小: %d\n", tsz);
     }
-    g_boxes[0]=malloc(sizeof(box_t)*MAXBOX);
+    g_nframes = frames;
+    g_fb  = calloc((size_t)frames*MAXPF, sizeof(box_t));
+    g_fbn = calloc(frames, sizeof(int));
+    if (!g_fb || !g_fbn) { printf("alloc fail\n"); return 1; }
 
     rknn_context ctx[NWMAX]; wk_t w[NWMAX];
     for(int i=0;i<nw;i++){
@@ -175,20 +223,38 @@ int main(int argc,char**argv){
     printf("workers=%d  n_out=%u  input=%u bytes\n",nw,w[0].n_out,w[0].in_attr.size);
 
     // 预热
-    g_total = 4; g_next = 0; g_nbox[0]=0;
+    g_total = 4; g_next = 0; memset(g_fbn,0,sizeof(int)*g_nframes);
     pthread_t th[NWMAX];
     for(int i=0;i<nw;i++) pthread_create(&th[i],NULL,worker,&w[i]);
     for(int i=0;i<nw;i++) pthread_join(th[i],NULL);
-    printf("预热完成，单帧框数 %d\n", g_nbox[0]);
+    printf("预热完成，单帧原始框数 %d\n", g_fbn[0]);
 
-    g_total = frames*4; g_next=0; g_nbox[0]=0;
+    g_total = frames*4; g_next=0; memset(g_fbn,0,sizeof(int)*g_nframes);
     double t0=now_ms();
     for(int i=0;i<nw;i++) pthread_create(&th[i],NULL,worker,&w[i]);
     for(int i=0;i<nw;i++) pthread_join(th[i],NULL);
     double wall=now_ms()-t0;
-    printf("  %d 帧 / %.2f s = %.2f FPS   框合计 %d（%.1f/帧）\n",
-           frames, wall/1000.0, frames/(wall/1000.0), g_nbox[0], (double)g_nbox[0]/frames);
+
+    // ---- NMS ----
+    double tn0 = now_ms();
+    int raw_total = 0, keep_total = 0;
+    box_t *outbuf = malloc(sizeof(box_t)*MAXPF);
+    box_t *inbuf  = malloc(sizeof(box_t)*MAXPF);
+    for (int fr = 0; fr < frames; fr++) {
+        int n = g_fbn[fr];
+        raw_total += n;
+        if (n == 0) continue;
+        memcpy(inbuf, g_fb + (size_t)fr*MAXPF, sizeof(box_t)*n);
+        keep_total += nms_greedy(inbuf, n, outbuf, 0.45f);
+    }
+    free(inbuf); free(outbuf);
+    double tnms = now_ms() - tn0;
+    double total = (wall + tnms)/1000.0;
+    printf("  %d 帧 / %.2f s (推理 %.2f s + NMS %.3f s) = %.2f FPS\n",
+           frames, total, wall/1000.0, tnms/1000.0, frames/total);
+    printf("  原始框 %d（%.1f/帧） → NMS 后 %d（%.1f/帧）\n",
+           raw_total, (double)raw_total/frames, keep_total, (double)keep_total/frames);
     for(int i=0;i<nw;i++){ rknn_destroy_mem(ctx[i],w[i].in_mem); rknn_destroy(ctx[i]); }
-    free(model); free(g_tile); free(g_boxes[0]);
+    free(model); free(g_tile); free(g_fb); free(g_fbn);
     return 0;
 }
